@@ -1,111 +1,95 @@
-"""Page 3 – Neighbourhood Analysis."""
+"""Neighbourhoods: ranking, comparison, districts and location quality, in four tabs."""
 from __future__ import annotations
 
-import pandas as pd
 import streamlit as st
 
 from app import shared
-from letura.analytics import stats, transforms as T
+from letura.analytics import transforms as T
 from letura.ui import components as C
+
+LOCATION_LABELS = {"normal": "Normal location", "gut": "Good location"}
 
 
 def render() -> None:
-    C.page_header("Neighbourhood Analysis", "Compare advertised rents across Hamburg neighbourhoods (Stadtteile) and districts (Bezirke).")
+    C.page_header("Neighbourhoods", "Which parts of Hamburg are expensive, and how they compare.")
     df_all = shared.load_listings_or_stop()
     f = shared.current_filters(df_all)
     df = shared.filtered(df_all, f)
-    C.banner(C.HISTORICAL_NOTE, "info")
     if df.empty:
         C.empty_state()
         return
     df = df.assign(snapshot=df["snapshot"].astype(str))
 
-    c1, c2, c3 = st.columns([1, 1, 1])
-    min_n = c1.slider("Minimum listings per neighbourhood", 1, 50, 10, help="Neighbourhoods below this size are hidden from rankings to avoid misleading medians.")
-    metric = c2.radio("Rank by", ["Median €/m²", "Mean €/m²"], horizontal=True)
-    top_n = c3.slider("Neighbourhoods shown in charts", 5, 40, 15)
-
+    c1, c2 = st.columns([2, 3])
+    metric = c1.segmented_control("Rank by", ["Median €/m²", "Mean €/m²"], default="Median €/m²", key="nb_metric") or "Median €/m²"
+    with c2.expander("Options"):
+        min_n = st.slider("Hide neighbourhoods with fewer listings than", 1, 50, 10,
+                          help="Medians based on very few listings are unreliable, so small neighbourhoods are hidden by default.")
     tbl = C.summary_table(df, "neighbourhood", "Neighbourhood")
     ranked = tbl[tbl["Listings"] >= min_n].sort_values(metric, ascending=False)
-    hidden = len(tbl) - len(ranked)
-    C.kpi_row([
-        ("Neighbourhoods shown", f"{len(ranked)}", f"{hidden} hidden (n < {min_n})"),
-        ("Highest median", ranked.iloc[0]["Neighbourhood"] if len(ranked) else "–", C.eur_sqm(ranked["Median €/m²"].max()) if len(ranked) else ""),
-        ("Lowest median", ranked.sort_values("Median €/m²").iloc[0]["Neighbourhood"] if len(ranked) else "–",
-         C.eur_sqm(ranked["Median €/m²"].min()) if len(ranked) else ""),
-        ("Most listings", tbl.sort_values("Listings", ascending=False).iloc[0]["Neighbourhood"], f"{int(tbl['Listings'].max())} listings"),
-    ])
     if ranked.empty:
-        C.empty_state("No neighbourhood meets the minimum sample size. Lower the threshold.")
+        C.empty_state("No neighbourhood has enough listings. Lower the minimum in Options.")
         return
 
-    c1, c2 = st.columns(2)
-    with c1:
-        top = ranked.head(top_n)
-        C.show(C.bar(top, "Neighbourhood", metric, f"{metric} by neighbourhood", horizontal=True, hover=["Listings", "P25", "P75"]),
-               max(340, 22 * len(top) + 80), "p3_rank")
-    with c2:
-        vol = tbl.sort_values("Listings", ascending=False).head(top_n)
-        C.show(C.bar(vol, "Neighbourhood", "Listings", "Listing volume by neighbourhood", horizontal=True, text="Listings"),
-               max(340, 22 * len(vol) + 80), "p3_vol")
+    tab_rank, tab_compare, tab_district, tab_loc = st.tabs(["Ranking", "Compare", "Districts", "Location quality"])
 
-    C.section("Neighbourhood ranking table", "Small samples are flagged. Sort by any column.")
-    shown = ranked.copy()
-    shown.insert(0, "Rank", range(1, len(shown) + 1))
-    st.dataframe(shown, hide_index=True, width="stretch", height=380)
-    C.download_csv(tbl, "neighbourhood_summary.csv", "Download full neighbourhood table (CSV)", key="p3_dl")
+    with tab_rank:
+        C.kpi_row([
+            ("Most expensive", ranked.iloc[0]["Neighbourhood"], C.eur_sqm(ranked.iloc[0][metric])),
+            ("Most affordable", ranked.sort_values(metric).iloc[0]["Neighbourhood"], C.eur_sqm(ranked.sort_values(metric).iloc[0][metric])),
+            ("Most listings", tbl.sort_values("Listings", ascending=False).iloc[0]["Neighbourhood"],
+             f"{int(tbl['Listings'].max())} listings"),
+        ])
+        top = ranked.head(15)
+        C.show(C.bar(top, "Neighbourhood", metric, f"Top 15 by {metric.lower()}", horizontal=True, hover=["Listings", "P25", "P75"]),
+               max(340, 24 * len(top) + 90), "p3_rank")
+        with st.expander("Full table"):
+            shown = ranked.copy()
+            shown.insert(0, "Rank", range(1, len(shown) + 1))
+            st.dataframe(shown, hide_index=True, width="stretch", height=360)
+            C.download_csv(tbl, "neighbourhoods.csv", "Download CSV", key="p3_dl")
+        st.caption(f"{len(tbl) - len(ranked)} neighbourhoods with fewer than {min_n} listings are hidden.")
 
-    C.section("Compare neighbourhoods")
-    default = ranked.sort_values("Listings", ascending=False).head(6)["Neighbourhood"].tolist()
-    sel = st.multiselect("Neighbourhoods to compare", sorted(tbl["Neighbourhood"]), default=default)
-    if sel:
-        sub = df[df["neighbourhood"].isin(sel)]
-        c1, c2 = st.columns(2)
-        with c1:
+    with tab_compare:
+        default = ranked.sort_values("Listings", ascending=False).head(5)["Neighbourhood"].tolist()
+        sel = st.multiselect("Choose neighbourhoods", sorted(tbl["Neighbourhood"]), default=default)
+        if sel:
+            sub = df[df["neighbourhood"].isin(sel)]
             order = sub.groupby("neighbourhood")["rent_per_sqm"].median().sort_values(ascending=False).index.tolist()
-            C.show(C.box(sub, "neighbourhood", "rent_per_sqm", "Rent distribution by neighbourhood", order=order), 380, "p3_box")
-        with c2:
-            tr = sub.groupby(["snapshot", "neighbourhood"]).agg(median=("rent_per_sqm", "median"), n=("rent_per_sqm", "size")).reset_index()
-            fig = C.line(tr, "snapshot", "median", "Median rent trend by snapshot", color="neighbourhood", ylabel="€/m²", order=T.SNAPSHOT_ORDER)
-            C.show(fig, 380, "p3_trend")
-            thin = tr[tr["n"] < 10]
-            if len(thin):
-                st.caption(f"⚠ {len(thin)} neighbourhood-snapshot points have fewer than 10 listings; treat their medians as indicative.")
-        st.dataframe(tbl[tbl["Neighbourhood"].isin(sel)].sort_values("Median €/m²", ascending=False), hide_index=True, width="stretch")
-
-    C.section("District (Bezirk) comparison")
-    bz = C.summary_table(df.dropna(subset=["bezirk"]), "bezirk", "Bezirk").sort_values("Median €/m²", ascending=False)
-    c1, c2 = st.columns([3, 2])
-    with c1:
-        C.show(C.bar(bz, "Bezirk", "Median €/m²", "Median rent by district", text="Median €/m²", hover=["Listings"]), 320, "p3_bezirk")
-    with c2:
-        st.dataframe(bz[["Bezirk", "Listings", "Median €/m²", "Mean €/m²", "P25", "P75"]], hide_index=True, width="stretch")
-
-    C.section("Residential location classes (Wohnlagenverzeichnis 2025)",
-              "Matched conservatively by street + house-number range + odd/even numbering. Unmatched or ambiguous addresses are NOT assigned a class.")
-    cov = df["location_match_status"].value_counts().rename_axis("Match status").reset_index(name="Listings")
-    cov["Share"] = (100 * cov["Listings"] / len(df)).round(1).astype(str) + "%"
-    matched = df[df["location_class"].notna()]
-    c1, c2 = st.columns([2, 3])
-    with c1:
-        st.dataframe(cov, hide_index=True, width="stretch")
-        C.banner("The Wohnlagenverzeichnis is a 2025 classification applied to 2018–2020 listings. "
-                 "It describes the address's current class, not the class at listing time.", "warn")
-    with c2:
-        if matched.empty or matched["location_class"].nunique() < 1:
-            C.empty_state("No listings could be matched to a residential location class under these filters.")
+            c1, c2 = st.columns(2)
+            with c1:
+                C.show(C.box(sub, "neighbourhood", "rent_per_sqm", "Rent range (€/m²)", order=order), 360, "p3_box")
+            with c2:
+                tr = sub.groupby(["snapshot", "neighbourhood"]).agg(median=("rent_per_sqm", "median"), n=("rent_per_sqm", "size")).reset_index()
+                C.show(C.line(tr, "snapshot", "median", "Median over time (€/m²)", color="neighbourhood", ylabel="€/m²", order=T.SNAPSHOT_ORDER), 360, "p3_trend")
+            st.dataframe(tbl[tbl["Neighbourhood"].isin(sel)].sort_values("Median €/m²", ascending=False), hide_index=True, width="stretch")
+            if (tr["n"] < 10).any():
+                st.caption("Some points rest on fewer than 10 listings and are only indicative.")
         else:
-            m = matched.assign(location=matched["location_class"].map({"normal": "Normal Wohnlage", "gut": "Gute Wohnlage"}))
-            C.show(C.box(m, "location", "rent_per_sqm", "Advertised rent: normal vs good location (matched listings)"), 300, "p3_loc")
-    if len(matched):
-        lt = C.summary_table(matched.assign(location=matched["location_class"].map({"normal": "Normal Wohnlage", "gut": "Gute Wohnlage"})), "location", "Location class")
-        st.dataframe(lt, hide_index=True, width="stretch")
-        top = matched.groupby(["neighbourhood", "location_class"]).size().unstack(fill_value=0)
-        top["Matched"] = top.sum(axis=1)
-        top = top.sort_values("Matched", ascending=False).head(15).reset_index()
-        with st.expander("Matched listings by neighbourhood and class"):
-            st.dataframe(top, hide_index=True, width="stretch")
+            C.empty_state("Pick at least one neighbourhood.")
 
-    C.section("Geographic view")
-    st.info("No reliable coordinates exist in the source data (only postcode, street and neighbourhood name), so a map is intentionally not shown "
-            "rather than inventing locations.")
+    with tab_district:
+        bz = C.summary_table(df.dropna(subset=["bezirk"]), "bezirk", "District").sort_values("Median €/m²", ascending=False)
+        c1, c2 = st.columns([3, 2])
+        with c1:
+            C.show(C.bar(bz, "District", "Median €/m²", "Median rent by district (€/m²)", text="Median €/m²"), 340, "p3_bezirk")
+        with c2:
+            st.dataframe(bz[["District", "Listings", "Median €/m²", "P25", "P75"]], hide_index=True, width="stretch")
+
+    with tab_loc:
+        st.caption("Hamburg's official 2025 list marks streets as normal or good residential locations. "
+                   "A listing gets a class only when its street and house number match the list exactly. The list is from 2025; the listings are 2018–2020.")
+        matched = df[df["location_class"].notna()]
+        share = 100 * len(matched) / len(df)
+        C.kpi_row([("Listings with a location class", f"{len(matched):,}", f"{share:.0f}% of listings in view"),
+                   ("Without one", f"{len(df) - len(matched):,}", "no street or number, or no exact match")])
+        if matched["location_class"].nunique() < 2:
+            C.empty_state("Not enough matched listings in view to compare good and normal locations.")
+        else:
+            m = matched.assign(location=matched["location_class"].map(LOCATION_LABELS))
+            c1, c2 = st.columns([3, 2])
+            with c1:
+                C.show(C.box(m, "location", "rent_per_sqm", "Rent by location quality (€/m²)"), 330, "p3_loc")
+            with c2:
+                st.dataframe(C.summary_table(m, "location", "Location"), hide_index=True, width="stretch")
+        st.caption("No map is shown because the data has no exact coordinates.")

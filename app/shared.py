@@ -57,20 +57,19 @@ def sidebar_theme_toggle() -> None:
 
 
 def sidebar_filters(df) -> FilterState:
-    with st.sidebar.expander("Filters", expanded=True):
-        st.caption("Apply to Pages 1–4 and the AI analyst.")
-        st.multiselect("Snapshot", T.SNAPSHOT_ORDER, key="f_snap")
-        nbh = sorted(df["neighbourhood"].dropna().unique())
-        st.multiselect("Neighbourhood", nbh, key="f_nbh")
-        st.multiselect("Property type", sorted(df["property_type"].dropna().unique()), key="f_type")
-        st.multiselect("Rooms", T.ROOM_BAND_ORDER, key="f_rooms")
-        hi = float(df["livingSpace"].max())
+    """Compact, collapsed filters. Shown only on pages where they apply."""
+    active = current_filters(df).is_active()
+    with st.sidebar.expander("Filters" + (" · on" if active else ""), expanded=active):
+        st.multiselect("Period", T.SNAPSHOT_ORDER, key="f_snap", placeholder="All")
+        st.multiselect("Neighbourhood", sorted(df["neighbourhood"].dropna().unique()), key="f_nbh", placeholder="All")
+        st.multiselect("Property type", sorted(df["property_type"].dropna().unique()), key="f_type", placeholder="All")
+        st.multiselect("Rooms", T.ROOM_BAND_ORDER, key="f_rooms", placeholder="Any")
         st.slider("Living area (m²)", 0.0, AREA_MAX, (0.0, AREA_MAX), step=1.0, key="f_area",
-                  help=f"Slider capped at {AREA_MAX:.0f} m²; the largest listing is {hi:.0f} m² (use 250 to include all).")
-        st.slider("Construction year", 1850, 2020, (1850, 2020), key="f_year",
-                  help="Applies only to listings with a construction year; the rest are excluded when this is narrowed.")
-        st.multiselect("Amenities (all selected)", list(AMENITIES), format_func=AMENITIES.get, key="f_amen")
-        st.button("Reset filters", on_click=reset_filters, width="stretch")
+                  help=f"Capped at {AREA_MAX:.0f} m²; drag to the far right to include larger flats.")
+        st.slider("Year built", 1850, 2020, (1850, 2020), key="f_year",
+                  help="Only flats with a known year are kept when this is narrowed.")
+        st.multiselect("Must have", list(AMENITIES), format_func=AMENITIES.get, key="f_amen", placeholder="Any")
+        st.button("Clear filters", on_click=reset_filters, width="stretch")
     return current_filters(df)
 
 
@@ -89,5 +88,6 @@ def current_filters(df=None) -> FilterState:
 
 def filtered(df, f: FilterState):
     out = apply_filters(df, f)
-    st.caption(f"**{len(out):,}** of {len(df):,} listings · {f.describe()}")
+    if f.is_active():
+        st.caption(f"Showing **{len(out):,}** of {len(df):,} listings · {f.describe()}")
     return out

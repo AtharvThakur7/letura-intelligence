@@ -10,16 +10,16 @@ from letura.analytics.filters import AMENITIES
 from letura.ui import components as C
 
 TABLE_COLUMNS = {
-    "snapshot": "Snapshot", "neighbourhood": "Neighbourhood", "property_type": "Type", "baseRent": "Base rent €",
+    "snapshot": "Period", "neighbourhood": "Neighbourhood", "property_type": "Type", "baseRent": "Base rent €",
     "livingSpace": "Area m²", "noRooms": "Rooms", "rent_per_sqm": "€/m²", "yearConstructed": "Year built",
-    "street_decoded": "Street", "geo_plz": "PLZ", "outlier_iqr_global": "Outlier (IQR)", "quality_flags": "Quality flags",
+    "street_decoded": "Street", "geo_plz": "PLZ", "outlier_iqr_global": "Price flag", "quality_flags": "Notes",
 }
 
 
 def listing_table(df: pd.DataFrame, key: str, filename: str) -> None:
     """Searchable, sortable listing table + CSV export. Outliers are flagged, never removed."""
-    q = st.text_input("Search listings (neighbourhood, street, type, PLZ)", key=f"{key}_q", placeholder="e.g. Eppendorf")
-    only_flagged = st.checkbox("Show only flagged records (outliers / quality flags)", key=f"{key}_flag")
+    q = st.text_input("Search", key=f"{key}_q", placeholder="Neighbourhood, street, type or postcode, e.g. Eppendorf")
+    only_flagged = st.checkbox("Only unusual listings (very high prices or odd values)", key=f"{key}_flag")
     t = df
     if q:
         hay = (t["neighbourhood"].fillna("") + " " + t["street_decoded"].fillna("") + " " + t["property_type"].fillna("")
@@ -28,12 +28,12 @@ def listing_table(df: pd.DataFrame, key: str, filename: str) -> None:
     if only_flagged:
         t = t[t["is_flagged"].astype(bool)]
     out = t[list(TABLE_COLUMNS)].rename(columns=TABLE_COLUMNS).copy()
-    out["Snapshot"] = out["Snapshot"].astype(str)
+    out["Period"] = out["Period"].astype(str)
     st.caption(f"{len(out):,} listings shown. Click a column header to sort.")
     st.dataframe(out, width="stretch", hide_index=True, height=380, column_config={
         "€/m²": st.column_config.NumberColumn(format="%.2f"), "Base rent €": st.column_config.NumberColumn(format="%.0f"),
         "Year built": st.column_config.NumberColumn(format="%d")})
-    C.download_csv(out, filename, "Download filtered listings (CSV)", key=f"{key}_dl")
+    C.download_csv(out, filename, "Download as CSV", key=f"{key}_dl")
 
 
 def render() -> None:

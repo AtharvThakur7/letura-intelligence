@@ -36,10 +36,10 @@ def test_main_entrypoint_loads():
 
 
 def test_filters_change_listing_counts():
-    all_ = page_app("p2_explorer").run()
-    filt = page_app("p2_explorer", 'st.session_state.f_snap = ["Feb 2020"]').run()
-    assert "3,759" in all_.caption[0].value and "**3,759** of" in all_.caption[0].value
-    assert "**1,113** of" in filt.caption[0].value
+    all_ = page_app("p1_executive").run()
+    filt = page_app("p1_executive", 'st.session_state.f_snap = ["Feb 2020"]').run()
+    assert not any("Showing" in c.value for c in all_.caption)          # no filter -> no count line
+    assert any("Showing **1,113** of 3,759" in c.value for c in filt.caption)
 
 
 def test_empty_filter_result_is_handled():

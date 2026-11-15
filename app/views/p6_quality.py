@@ -26,7 +26,7 @@ LIMITATIONS = [
 
 
 def render() -> None:
-    C.page_header("Data Quality & Pipeline Monitoring", "Source inventory, reconciliation, missing values, outliers and pipeline execution status.")
+    C.page_header("Data & sources", "Where the data comes from, what it covers, and how it was checked.")
     try:
         dq = repo.load_table("analytics_data_quality")
     except (DatabaseUnavailable, Exception) as exc:  # noqa: BLE001
@@ -50,7 +50,7 @@ def render() -> None:
     if st_counts.get("fail", 0):
         C.banner(f"{st_counts['fail']} data-quality check(s) FAILED – see the reconciliation table.", "warn")
 
-    tabs = st.tabs(["Reconciliation", "Missing values", "Duplicates & suspicious", "Outliers", "Coverage & locations", "Pipeline", "Limitations"])
+    tabs = st.tabs(["Checks", "Missing values", "Unusual values", "Outliers", "Sources", "Updates", "Limitations"])
 
     with tabs[0]:
         C.section("Raw → staging → analytics record counts")
