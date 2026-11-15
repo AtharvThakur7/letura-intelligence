@@ -1,0 +1,57 @@
+check_id,category,check_name,object_name,column_name,metric_value,metric_pct,expected_value,status,details,checked_at
+1,row_counts,expected_row_count,raw_rental_listings,,268850.0,,268850.0,pass,"expected 268,850, found 268,850",2026-11-15 19:17:01
+2,row_counts,expected_row_count,raw_mietenspiegel,,88.0,,88.0,pass,"expected 88, found 88",2026-11-15 19:17:01
+3,row_counts,expected_row_count,raw_mietenspiegel_metadata,,1.0,,1.0,pass,"expected 1, found 1",2026-11-15 19:17:01
+4,row_counts,expected_row_count,raw_residential_locations,,26205.0,,26205.0,pass,"expected 26,205, found 26,205",2026-11-15 19:17:01
+5,row_counts,expected_row_count,stg_hamburg_listings,,3759.0,,3759.0,pass,"expected 3,759, found 3,759",2026-11-15 19:17:01
+6,row_counts,expected_row_count,fact_mietenspiegel_benchmarks,,88.0,,88.0,pass,"expected 88, found 88",2026-11-15 19:17:01
+7,reconciliation,raw_hamburg_to_staging,stg_hamburg_listings,,3759.0,,3759.0,pass,"raw Hamburg rows 3,759 vs transformed 3,759",2026-11-15 19:17:01
+8,reconciliation,snapshot_count_Sep 2018,int_hamburg_listings,,673.0,,673.0,pass,"raw 673, expected 673, transformed 673",2026-11-15 19:17:01
+9,reconciliation,snapshot_count_May 2019,int_hamburg_listings,,1071.0,,1071.0,pass,"raw 1071, expected 1071, transformed 1071",2026-11-15 19:17:01
+10,reconciliation,snapshot_count_Oct 2019,int_hamburg_listings,,902.0,,902.0,pass,"raw 902, expected 902, transformed 902",2026-11-15 19:17:01
+11,reconciliation,snapshot_count_Feb 2020,int_hamburg_listings,,1113.0,,1113.0,pass,"raw 1113, expected 1113, transformed 1113",2026-11-15 19:17:01
+12,reconciliation,rent_per_sqm_recalculation,int_hamburg_listings,,0.0,,0.0,pass,rows where baseRent/livingSpace differs from staged rent_per_sqm by > €0.01,2026-11-15 19:17:01
+13,reconciliation,na_token_preserved_yearConstructed,int_hamburg_listings,yearConstructed,508.0,,508.0,pass,raw literal 'NA' count 508 → NULL count 508,2026-11-15 19:17:01
+14,reconciliation,na_token_preserved_totalRent,int_hamburg_listings,totalRent,364.0,,364.0,pass,raw literal 'NA' count 364 → NULL count 364,2026-11-15 19:17:01
+15,reconciliation,na_token_preserved_serviceCharge,int_hamburg_listings,serviceCharge,91.0,,91.0,pass,raw literal 'NA' count 91 → NULL count 91,2026-11-15 19:17:01
+16,reconciliation,na_token_preserved_heatingCosts,int_hamburg_listings,heatingCosts,2050.0,,2050.0,pass,raw literal 'NA' count 2050 → NULL count 2050,2026-11-15 19:17:01
+17,missing_values,missing_count,int_hamburg_listings,baseRent,0.0,0.0,,pass,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+18,missing_values,missing_count,int_hamburg_listings,livingSpace,0.0,0.0,,pass,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+19,missing_values,missing_count,int_hamburg_listings,noRooms,0.0,0.0,,pass,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+20,missing_values,missing_count,int_hamburg_listings,rent_per_sqm,0.0,0.0,,pass,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+21,missing_values,missing_count,int_hamburg_listings,totalRent,364.0,9.68,,info,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+22,missing_values,missing_count,int_hamburg_listings,serviceCharge,91.0,2.42,,info,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+23,missing_values,missing_count,int_hamburg_listings,heatingCosts,2050.0,54.54,,warn,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+24,missing_values,missing_count,int_hamburg_listings,yearConstructed,508.0,13.51,,info,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+25,missing_values,missing_count,int_hamburg_listings,property_type,319.0,8.49,,info,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+26,missing_values,missing_count,int_hamburg_listings,condition,824.0,21.92,,warn,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+27,missing_values,missing_count,int_hamburg_listings,interiorQual,1797.0,47.81,,warn,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+28,missing_values,missing_count,int_hamburg_listings,heatingType,647.0,17.21,,info,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+29,missing_values,missing_count,int_hamburg_listings,street_decoded,1205.0,32.06,,warn,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+30,missing_values,missing_count,int_hamburg_listings,houseNumber,1205.0,32.06,,warn,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+31,missing_values,missing_count,int_hamburg_listings,energyEfficiencyClass,2709.0,72.07,,warn,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+32,missing_values,missing_count,int_hamburg_listings,lastRefurbish,2868.0,76.3,,warn,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+33,missing_values,missing_count,int_hamburg_listings,floor,870.0,23.14,,warn,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+34,missing_values,missing_count,int_hamburg_listings,numberOfFloors,1549.0,41.21,,warn,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+35,missing_values,missing_count,int_hamburg_listings,petsAllowed,1995.0,53.07,,warn,NA / empty / no_information tokens treated as missing,2026-11-15 19:17:01
+36,duplicates,duplicate_scout_id,int_hamburg_listings,,0.0,,0.0,pass,duplicate listing IDs (scoutId),2026-11-15 19:17:01
+37,duplicates,duplicate_source_record_id,int_hamburg_listings,,0.0,,0.0,pass,duplicate primary keys,2026-11-15 19:17:01
+38,duplicates,possible_duplicate_within_snapshot,int_hamburg_listings,,33.0,,,info,same address + area + rent within one snapshot (kept; flagged for investigation),2026-11-15 19:17:01
+39,duplicates,possible_relisting_across_snapshots,int_hamburg_listings,,21.0,,,info,same address + area + rent in a different snapshot (re-advertised units; kept),2026-11-15 19:17:01
+40,duplicates,location_range_duplicates,raw_residential_locations,,5.0,,,info,identical street + range + numbering type rows in the Wohnlagenverzeichnis extract,2026-11-15 19:17:01
+41,suspicious_values,rent_sqm_below_5,int_hamburg_listings,,3.0,0.08,,warn,"rent/m² < €5 – flagged, not removed",2026-11-15 19:17:01
+42,suspicious_values,rent_sqm_above_40,int_hamburg_listings,,14.0,0.37,,warn,"rent/m² > €40 – flagged, not removed",2026-11-15 19:17:01
+43,suspicious_values,living_space_below_15,int_hamburg_listings,,7.0,0.19,,warn,"living area < 15 m² – flagged, not removed",2026-11-15 19:17:01
+44,suspicious_values,implausible_construction_year,int_hamburg_listings,,2.0,0.05,,warn,"construction year outside 1800–2021 – flagged, not removed",2026-11-15 19:17:01
+45,suspicious_values,total_rent_below_base_rent,int_hamburg_listings,,3.0,0.08,,warn,"total rent lower than base rent – flagged, not removed",2026-11-15 19:17:01
+46,suspicious_values,area_per_room_below_8,int_hamburg_listings,,2.0,0.05,,warn,"less than 8 m² per room – flagged, not removed",2026-11-15 19:17:01
+47,outliers,iqr_outlier_high,int_hamburg_listings,rent_per_sqm,183.0,4.87,,info,1.5×IQR fences €3.94–€23.34/m²; records retained,2026-11-15 19:17:01
+48,outliers,iqr_outlier_low,int_hamburg_listings,rent_per_sqm,0.0,0.0,,info,1.5×IQR fences €3.94–€23.34/m²; records retained,2026-11-15 19:17:01
+49,benchmark,min_le_mean_le_max,fact_mietenspiegel_benchmarks,,0.0,,0.0,pass,every reference value lies within its official range,2026-11-15 19:17:01
+50,benchmark,missing_reference_values,fact_mietenspiegel_benchmarks,,0.0,,0.0,pass,,2026-11-15 19:17:01
+51,benchmark,characteristic_grid_coverage,fact_mietenspiegel_benchmarks,,88.0,,90.0,info,88 of 90 possible period × location × area cells published (2 cells not published for 'Gute Wohnlage'),2026-11-15 19:17:01
+52,locations,pdf_vs_loaded_count,raw_residential_locations,,26205.0,,25786.0,info,"loaded 26,205 vs PDF-stated 25,786: +419 extracted rows preserved (see docs)",2026-11-15 19:17:01
+53,locations,listing_match_matched,int_hamburg_listings,,2422.0,64.43,,info,conservative Wohnlagen address match result,2026-11-15 19:17:01
+54,locations,listing_match_no_address,int_hamburg_listings,,1269.0,33.76,,info,conservative Wohnlagen address match result,2026-11-15 19:17:01
+55,locations,listing_match_unmatched_street,int_hamburg_listings,,41.0,1.09,,info,conservative Wohnlagen address match result,2026-11-15 19:17:01
+56,locations,listing_match_unmatched_number,int_hamburg_listings,,27.0,0.72,,info,conservative Wohnlagen address match result,2026-11-15 19:17:01

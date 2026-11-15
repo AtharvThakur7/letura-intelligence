@@ -1,0 +1,13 @@
+streamlit>=1.40
+plotly>=5.24
+pandas>=2.2
+numpy>=1.26
+sqlalchemy>=2.0
+pymysql>=1.1
+cryptography>=42        # required by PyMySQL for MySQL 8 caching_sha2_password
+openai>=1.50
+pydantic>=2.7
+python-dotenv>=1.0
+pytest>=8.0
+# Only needed for the original one-off ingestion script ingest_residential_locations.py:
+# pdfplumber>=0.11
