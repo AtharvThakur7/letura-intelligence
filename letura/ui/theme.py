@@ -94,6 +94,12 @@ svg[data-baseweb="icon"] { fill:var(--text2); }
 button[data-baseweb="tab"] { color:var(--text2); }
 button[data-baseweb="tab"][aria-selected="true"] { color:var(--accent); }
 hr { border-color:var(--border); }
+[data-testid="stBottom"], [data-testid="stBottom"] > div, [data-testid="stBottomBlockContainer"] { background-color:var(--bg) !important; }
+[data-testid="stChatInput"] textarea, [data-testid="stChatInputTextArea"] { color:var(--text) !important; caret-color:var(--text); -webkit-text-fill-color:var(--text); }
+[data-testid="stChatInput"] textarea::placeholder, [data-testid="stChatInputTextArea"]::placeholder { color:var(--muted) !important; -webkit-text-fill-color:var(--muted) !important; opacity:1 !important; }
+[data-testid="stChatInput"] button { background:var(--surface2) !important; color:var(--text) !important; }
+code, [data-testid="stMarkdownContainer"] code, .lt-pill code { background:var(--surface2) !important; color:var(--text) !important; border-radius:4px; }
+[data-testid="stChatInput"] button svg { fill:var(--text2) !important; color:var(--text2) !important; }
 [data-testid="stAlert"], [data-testid="stAlertContainer"] { background:var(--surface2) !important; color:var(--text) !important; border:1px solid var(--border) !important; border-radius:8px; }
 [data-testid="stAlert"] *, [data-testid="stAlertContainer"] * { color:var(--text) !important; }
 .lt-brand { display:flex; align-items:center; gap:.6rem; padding:.2rem 0 .8rem; }
