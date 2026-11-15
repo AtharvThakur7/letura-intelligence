@@ -375,20 +375,65 @@ def get_rent_distribution(ctx: Context, a: DistributionArgs) -> ToolResult:
                       caveats=[HIST, f"{n_out} listings lie outside the IQR fences (€{lo:.2f}–€{hi:.2f}); they are retained."] + ctx.notes, **_ctx_fields(ctx, df.loc[s.index], fdesc))
 
 
+def resolve_ms_period(text: str, periods: list[str]) -> str | None:
+    """Accept '1994 bis 2010', '1994-2010', '1994 to 2010', or a single year such as 1985."""
+    s = str(text).strip()
+    if s in periods:
+        return s
+    years = [int(y) for y in re.findall(r"(?<!\d)(1[89]\d{2}|20\d{2})(?!\d)", s)]
+    if len(years) >= 2:
+        for p in periods:
+            if [int(y) for y in re.findall(r"(?<!\d)(1[89]\d{2}|20\d{2})(?!\d)", p)] == years[:2]:
+                return p
+    if len(years) == 1:
+        return T.ms_construction_period(years[0])
+    hits = [p for p in periods if s.lower() in p.lower()]
+    return hits[0] if len(hits) == 1 else None
+
+
+def resolve_ms_area(text: str, areas: list[str]) -> str | None:
+    s = str(text).strip().lower().replace("m2", "m²").replace("sqm", "m²")
+    exact = [x for x in areas if x.lower() == s]
+    if exact:
+        return exact[0]
+    nums = re.findall(r"\d+", s)
+    if nums:
+        n = int(nums[0])
+        if any(w in s for w in ("under", "unter", "below", "<", "less")):
+            hits = [x for x in areas if x.lower().startswith(f"bis unter {n}")]
+        elif "ab" in s or "+" in s or "over" in s or "more" in s:
+            hits = [x for x in areas if x.lower().startswith(f"ab {n}")]
+        else:
+            hits = [x for x in areas if x.lower().startswith(f"{n}m²") or x.lower().startswith(f"bis unter {n}")]
+        if len(hits) == 1:
+            return hits[0]
+    hits = [x for x in areas if s in x.lower()]
+    return hits[0] if len(hits) == 1 else None
+
+
 def get_mietenspiegel_benchmark(ctx: Context, a: BenchmarkArgs) -> ToolResult:
     try:
         ref = repo.load_table("analytics_mietenspiegel_reference")
     except Exception as exc:  # noqa: BLE001
         return fail("get_mietenspiegel_benchmark", f"Benchmark table unavailable: {str(exc)[:150]}")
     m = ref
+    periods = sorted(ref.construction_period.unique(), key=lambda p: T.MS_PERIODS.index(p) if p in T.MS_PERIODS else 99)
+    areas = sorted(ref.living_area_category.unique(), key=lambda p: T.MS_AREA_ORDER.index(p) if p in T.MS_AREA_ORDER else 99)
+    hint = f" Valid construction periods: {', '.join(periods)}. Valid living-area categories: {', '.join(areas)}."
     if a.construction_period:
-        m = m[m.construction_period.str.contains(re.escape(a.construction_period), case=False)]
+        period = resolve_ms_period(a.construction_period, periods)
+        if period is None:
+            return fail("get_mietenspiegel_benchmark", f"Could not match construction period '{a.construction_period}'.{hint}")
+        m = m[m.construction_period == period]
     if a.residential_location:
         m = m[m.residential_location == a.residential_location]
     if a.living_area_category:
-        m = m[m.living_area_category.str.contains(re.escape(a.living_area_category), case=False)]
+        area = resolve_ms_area(a.living_area_category, areas)
+        if area is None:
+            return fail("get_mietenspiegel_benchmark", f"Could not match living-area category '{a.living_area_category}'.{hint}")
+        m = m[m.living_area_category == area]
     if m.empty:
-        return fail("get_mietenspiegel_benchmark", "The Mietenspiegel publishes no cell for this combination; no value is estimated.")
+        return fail("get_mietenspiegel_benchmark", "The Mietenspiegel publishes no cell for this exact combination (some cells are not published); no value is estimated." + hint)
     cols = ["construction_period", "residential_location", "living_area_category", "reference_rent_per_sqm", "minimum_rent_per_sqm", "maximum_rent_per_sqm"]
     if a.compare_with_listings:
         cols += ["hist_listing_count", "hist_median_rent_sqm"]

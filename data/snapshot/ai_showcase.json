@@ -1,0 +1,5270 @@
+{
+ "answers": {
+  "What is the median advertised rent per square metre in Hamburg?": {
+   "text": "**Verified findings:**\nThe median advertised cold rent per square metre in Hamburg, based on 3,759 listings across four independent snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020), is €13.5/m². The distribution has a mean of €14.35/m², with the 25th and 75th percentiles at €11.22/m² and €16.06/m² respectively. Median living space in these listings is 76 m² and the median number of rooms is 3.\n\n**Interpretation:**\nThis median rent per square metre reflects advertised cold rents from historical snapshots and provides a broad picture of rental levels in Hamburg around the 2018-2020 period. It should not be confused with present-day market rents or official reference rents for 2025. The variation in rent per m² is considerable, indicating heterogeneous housing offers across neighborhoods and property types.\n\n**Suggested follow-up:**\nTo gain deeper insight, analysis by residential location class, construction period, or property type could be informative. Also, comparison with the official Mietenspiegel 2025 might help understand shifts or gaps between advertised rents and reference rents.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:25:43",
+   "tool_calls": [
+    {
+     "name": "get_market_summary",
+     "args": {}
+    }
+   ],
+   "results": [
+    {
+     "tool": "get_market_summary",
+     "ok": true,
+     "title": "Market summary",
+     "summary": {
+      "listings": 3759,
+      "median_rent_per_sqm": 13.5,
+      "mean_rent_per_sqm": 14.35291034849694,
+      "p25": 11.215,
+      "p75": 16.064999999999998,
+      "p90": 19.9,
+      "min": 4.35,
+      "max": 61.25,
+      "median_living_space_sqm": 76.0,
+      "median_rooms": 3.0,
+      "median_base_rent_eur": 1014.0,
+      "neighbourhoods": 94
+     },
+     "rows": [
+      {
+       "listings": 3759,
+       "median_rent_per_sqm": 13.5,
+       "mean_rent_per_sqm": 14.353,
+       "p25": 11.215,
+       "p75": 16.065,
+       "p90": 19.9,
+       "min": 4.35,
+       "max": 61.25,
+       "median_living_space_sqm": 76.0,
+       "median_rooms": 3.0,
+       "median_base_rent_eur": 1014.0,
+       "neighbourhoods": 94
+      }
+     ],
+     "chart": null,
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "rent_per_sqm = baseRent ÷ livingSpace; percentiles by linear interpolation.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "How did median advertised rent change across the available snapshots?": {
+   "text": "Verified findings: The median advertised rent per m² in Hamburg increased across the four snapshots from September 2018 to February 2020. It was 12.94 €/m² in Sep 2018, then rose to 13.2 €/m² in May 2019, 13.515 €/m² in Oct 2019, and finally 13.89 €/m² in Feb 2020. This corresponds to a 7.3% increase in median rent from the first to the last snapshot. Sample sizes were robust, ranging from 673 to 1,113 listings per snapshot, totaling 3,759 listings.\n\nInterpretation: These data suggest a gradual upward trend in median advertised rents per m² in Hamburg over the period Sep 2018 to Feb 2020. However, since each snapshot consists of different listings, this is not a direct price change for the same properties but a tendency in the market samples. No filters were applied.\n\nSuggested follow-up: Further analysis could explore if this trend varies by neighborhood, property type, or size to understand drivers of rent changes.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:25:46",
+   "tool_calls": [
+    {
+     "name": "get_rent_trends",
+     "args": {}
+    }
+   ],
+   "results": [
+    {
+     "tool": "get_rent_trends",
+     "ok": true,
+     "title": "Median advertised rent per m² by snapshot",
+     "summary": {
+      "first_snapshot": "Sep 2018",
+      "last_snapshot": "Feb 2020",
+      "first_median": 12.94,
+      "last_median": 13.89,
+      "change_pct_between_medians": 7.3
+     },
+     "rows": [
+      {
+       "snapshot": "Sep 2018",
+       "listings": 673,
+       "median_rent_per_sqm": 12.94,
+       "mean_rent_per_sqm": 13.96,
+       "p25": 10.88,
+       "p75": 16.06,
+       "sample_flag": "ok"
+      },
+      {
+       "snapshot": "May 2019",
+       "listings": 1071,
+       "median_rent_per_sqm": 13.2,
+       "mean_rent_per_sqm": 13.925,
+       "p25": 11.0,
+       "p75": 15.715,
+       "sample_flag": "ok"
+      },
+      {
+       "snapshot": "Oct 2019",
+       "listings": 902,
+       "median_rent_per_sqm": 13.515,
+       "mean_rent_per_sqm": 14.416,
+       "p25": 11.355,
+       "p75": 16.185,
+       "sample_flag": "ok"
+      },
+      {
+       "snapshot": "Feb 2020",
+       "listings": 1113,
+       "median_rent_per_sqm": 13.89,
+       "mean_rent_per_sqm": 14.951,
+       "p25": 11.75,
+       "p75": 16.4,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "line",
+      "x": "snapshot",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median advertised rent (€/m²) by snapshot",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": [
+       "Sep 2018",
+       "May 2019",
+       "Oct 2019",
+       "Feb 2020"
+      ]
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Median of baseRent ÷ livingSpace within each snapshot.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents.",
+      "Snapshots are different samples of listings; a change in medians is not a like-for-like price change."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "Which neighbourhoods have the highest median advertised rents?": {
+   "text": "Verified findings:\nThe top 10 Hamburg neighbourhoods with the highest median advertised rents per m² (based on 3,759 listings from Sep 2018 to Feb 2020, no filters applied) are:\n1. Hamburg-Altstadt: 21.14 €/m² (47 listings)\n2. Harvestehude: 20.61 €/m² (78 listings)\n3. HafenCity: 20.29 €/m² (89 listings)\n4. Rotherbaum: 18.51 €/m² (63 listings)\n5. Hohenfelde: 18.37 €/m² (47 listings)\n6. Hoheluft-West: 18.07 €/m² (13 listings)\n7. Uhlenhorst: 17.60 €/m² (56 listings)\n8. St. Georg: 17.42 €/m² (58 listings)\n9. Winterhude: 17.00 €/m² (139 listings)\n10. Altona-Nord: 16.82 €/m² (47 listings)\n\nInterpretation:\nThese neighbourhoods tend to have the highest median advertised cold rents per m² historically on ImmoScout24, with Hamburg-Altstadt leading. The sample sizes are generally sufficient, though Hoheluft-West has only 13 listings and should be interpreted with some caution.\n\nSuggested follow-up:\nFurther analysis could explore how these neighbourhood median rents have trended over time or vary by housing type and size. Also, comparisons with official Mietenspiegel 2025 reference rents might offer additional context.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:25:50",
+   "tool_calls": [
+    {
+     "name": "compare_neighbourhoods",
+     "args": {
+      "metric": "median",
+      "top_n": 10
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "compare_neighbourhoods",
+     "ok": true,
+     "title": "Neighbourhood comparison",
+     "summary": {
+      "ranked_by": "median",
+      "top_neighbourhood": "Hamburg-Altstadt",
+      "top_value": 21.14,
+      "neighbourhoods_returned": 10
+     },
+     "rows": [
+      {
+       "neighbourhood": "Hamburg-Altstadt",
+       "listings": 47,
+       "median_rent_per_sqm": 21.14,
+       "mean_rent_per_sqm": 22.126,
+       "p25": 17.8,
+       "p75": 25.035,
+       "min": 13.49,
+       "max": 50.71,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Harvestehude",
+       "listings": 78,
+       "median_rent_per_sqm": 20.605,
+       "mean_rent_per_sqm": 24.143,
+       "p25": 17.218,
+       "p75": 26.63,
+       "min": 10.68,
+       "max": 52.86,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "HafenCity",
+       "listings": 89,
+       "median_rent_per_sqm": 20.29,
+       "mean_rent_per_sqm": 20.587,
+       "p25": 17.28,
+       "p75": 23.13,
+       "min": 12.19,
+       "max": 30.0,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Rotherbaum",
+       "listings": 63,
+       "median_rent_per_sqm": 18.51,
+       "mean_rent_per_sqm": 19.831,
+       "p25": 16.165,
+       "p75": 23.095,
+       "min": 10.0,
+       "max": 35.71,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Hohenfelde",
+       "listings": 47,
+       "median_rent_per_sqm": 18.37,
+       "mean_rent_per_sqm": 18.725,
+       "p25": 15.515,
+       "p75": 21.48,
+       "min": 7.63,
+       "max": 33.55,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Hoheluft-West",
+       "listings": 13,
+       "median_rent_per_sqm": 18.07,
+       "mean_rent_per_sqm": 17.587,
+       "p25": 15.69,
+       "p75": 19.13,
+       "min": 12.26,
+       "max": 22.71,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Uhlenhorst",
+       "listings": 56,
+       "median_rent_per_sqm": 17.595,
+       "mean_rent_per_sqm": 18.363,
+       "p25": 15.12,
+       "p75": 20.072,
+       "min": 9.63,
+       "max": 28.51,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "St. Georg",
+       "listings": 58,
+       "median_rent_per_sqm": 17.42,
+       "mean_rent_per_sqm": 18.93,
+       "p25": 15.725,
+       "p75": 21.33,
+       "min": 12.28,
+       "max": 33.35,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Winterhude",
+       "listings": 139,
+       "median_rent_per_sqm": 17.0,
+       "mean_rent_per_sqm": 17.52,
+       "p25": 14.655,
+       "p75": 19.605,
+       "min": 8.37,
+       "max": 45.63,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Altona-Nord",
+       "listings": 47,
+       "median_rent_per_sqm": 16.82,
+       "mean_rent_per_sqm": 18.72,
+       "p25": 14.955,
+       "p75": 19.65,
+       "min": 8.6,
+       "max": 41.19,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "hbar",
+      "x": "neighbourhood",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median by neighbourhood",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": null
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Per neighbourhood: median of baseRent ÷ livingSpace; neighbourhoods with < 10 listings excluded.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "Which neighbourhoods have the most rental listings?": {
+   "text": "Verified findings:\nThe top 10 Hamburg neighbourhoods by number of rental listings in the dataset (n=3,759) are:\n1. Rahlstedt with 187 listings\n2. Winterhude with 139 listings\n3. Bergedorf with 133 listings\n4. Langenhorn with 126 listings\n5. Harburg with 97 listings\n6. HafenCity with 89 listings\n7. Wellingsbüttel with 87 listings\n8. Bramfeld with 85 listings\n9. Poppenbüttel with 84 listings\n10. Wandsbek with 84 listings\n\nAll these listings are from combined snapshots Sep 2018 to Feb 2020. Neighbourhoods with fewer than 10 listings were excluded.\n\nInterpretation:\nRahlstedt had the largest supply of rental listings within this data, indicating it might be a popular or accessible area for rental housing at the time of data collection. Inner-city or central districts like Winterhude and HafenCity also show strong listing activity but in smaller absolute numbers compared to Rahlstedt.\n\nSuggested follow-up:\nIf you want, I can analyze median rents or rent distributions for these top neighbourhoods or investigate other characteristics like housing types or room counts.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:25:54",
+   "tool_calls": [
+    {
+     "name": "compare_neighbourhoods",
+     "args": {
+      "metric": "count",
+      "top_n": 10,
+      "ascending": false
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "compare_neighbourhoods",
+     "ok": true,
+     "title": "Neighbourhood comparison",
+     "summary": {
+      "ranked_by": "count",
+      "top_neighbourhood": "Rahlstedt",
+      "top_value": "187",
+      "neighbourhoods_returned": 10
+     },
+     "rows": [
+      {
+       "neighbourhood": "Rahlstedt",
+       "listings": 187,
+       "median_rent_per_sqm": 11.41,
+       "mean_rent_per_sqm": 11.595,
+       "p25": 10.195,
+       "p75": 12.845,
+       "min": 5.32,
+       "max": 32.22,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Winterhude",
+       "listings": 139,
+       "median_rent_per_sqm": 17.0,
+       "mean_rent_per_sqm": 17.52,
+       "p25": 14.655,
+       "p75": 19.605,
+       "min": 8.37,
+       "max": 45.63,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Bergedorf",
+       "listings": 133,
+       "median_rent_per_sqm": 12.1,
+       "mean_rent_per_sqm": 12.055,
+       "p25": 11.08,
+       "p75": 13.08,
+       "min": 7.22,
+       "max": 16.84,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Langenhorn",
+       "listings": 126,
+       "median_rent_per_sqm": 13.08,
+       "mean_rent_per_sqm": 12.705,
+       "p25": 11.33,
+       "p75": 13.832,
+       "min": 8.99,
+       "max": 16.96,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Harburg",
+       "listings": 97,
+       "median_rent_per_sqm": 12.68,
+       "mean_rent_per_sqm": 12.366,
+       "p25": 11.0,
+       "p75": 14.0,
+       "min": 6.33,
+       "max": 24.8,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "HafenCity",
+       "listings": 89,
+       "median_rent_per_sqm": 20.29,
+       "mean_rent_per_sqm": 20.587,
+       "p25": 17.28,
+       "p75": 23.13,
+       "min": 12.19,
+       "max": 30.0,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Wellingsbüttel",
+       "listings": 87,
+       "median_rent_per_sqm": 13.75,
+       "mean_rent_per_sqm": 14.037,
+       "p25": 12.845,
+       "p75": 15.86,
+       "min": 8.99,
+       "max": 19.73,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Bramfeld",
+       "listings": 85,
+       "median_rent_per_sqm": 12.55,
+       "mean_rent_per_sqm": 12.481,
+       "p25": 10.5,
+       "p75": 13.8,
+       "min": 8.33,
+       "max": 37.17,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Poppenbüttel",
+       "listings": 84,
+       "median_rent_per_sqm": 12.975,
+       "mean_rent_per_sqm": 13.123,
+       "p25": 11.0,
+       "p75": 14.893,
+       "min": 8.6,
+       "max": 17.83,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Wandsbek",
+       "listings": 84,
+       "median_rent_per_sqm": 12.015,
+       "mean_rent_per_sqm": 12.917,
+       "p25": 11.0,
+       "p75": 14.285,
+       "min": 7.88,
+       "max": 31.32,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "hbar",
+      "x": "neighbourhood",
+      "y": "listings",
+      "color": null,
+      "title": "Count by neighbourhood",
+      "xlabel": "",
+      "ylabel": "Listings",
+      "order": null
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Per neighbourhood: count of baseRent ÷ livingSpace; neighbourhoods with < 10 listings excluded.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "Do larger apartments have lower advertised rent per square metre?": {
+   "text": "Verified findings: From 3,759 Hamburg listings across four snapshots 2018-2020, median rent per m² for apartments smaller than 40 m² is 16.74 €/m², the highest among size bands. For medium size bands (40-60 m², 60-80 m², 80-100 m², 100-130 m²), median rents per m² range narrowly from about 12.64 to 13.59 €/m². For apartments of 130 m² or larger median rent per m² rises slightly to 14.44 €/m². The Spearman correlation between apartment size and rent per m² is very low (0.006), indicating no clear monotonic relationship.\n\nInterpretation: Larger apartments tend not to have a straightforward lower rent per m² compared to smaller ones. The smallest units under 40 m² often have the highest rent per m², but beyond that size, rents per m² show little consistent decline and may slightly rise again above 130 m². Hence, advertised rent per m² does not systematically decrease with apartment size in this data.\n\nSuggested follow-up: Explore other factors (location, age, amenities) that interact with apartment size to explain rent per m² variations more fully.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:25:57",
+   "tool_calls": [
+    {
+     "name": "analyse_property_characteristics",
+     "args": {
+      "dimension": "size_band"
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "analyse_property_characteristics",
+     "ok": true,
+     "title": "Rent per m² by size_band",
+     "summary": {
+      "dimension": "size_band",
+      "coverage_pct": 100.0,
+      "spearman_area_vs_rent_per_sqm": 0.006
+     },
+     "rows": [
+      {
+       "segment": "< 40 m²",
+       "listings": 264,
+       "median_rent_per_sqm": 16.735,
+       "mean_rent_per_sqm": 20.179,
+       "p25": 12.935,
+       "p75": 25.455,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "40–60 m²",
+       "listings": 725,
+       "median_rent_per_sqm": 13.21,
+       "mean_rent_per_sqm": 14.169,
+       "p25": 11.01,
+       "p75": 16.36,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "60–80 m²",
+       "listings": 1036,
+       "median_rent_per_sqm": 12.64,
+       "mean_rent_per_sqm": 13.175,
+       "p25": 10.508,
+       "p75": 15.0,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "80–100 m²",
+       "listings": 751,
+       "median_rent_per_sqm": 13.54,
+       "mean_rent_per_sqm": 13.906,
+       "p25": 11.36,
+       "p75": 15.85,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "100–130 m²",
+       "listings": 570,
+       "median_rent_per_sqm": 13.585,
+       "mean_rent_per_sqm": 14.122,
+       "p25": 11.55,
+       "p75": 15.965,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "≥ 130 m²",
+       "listings": 413,
+       "median_rent_per_sqm": 14.44,
+       "mean_rent_per_sqm": 15.038,
+       "p25": 12.29,
+       "p75": 17.0,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "segment",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median rent per m² by size band",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": [
+       "< 40 m²",
+       "40–60 m²",
+       "60–80 m²",
+       "80–100 m²",
+       "100–130 m²",
+       "≥ 130 m²"
+      ]
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Median/mean/P25/P75 of baseRent ÷ livingSpace per segment; rows with missing values grouped as 'Missing / unknown'.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents.",
+      "Coverage: 100.0% of listings have a value for this characteristic.",
+      "Differences are associations; characteristics correlate with each other (size, age, location), so they are not causal effects."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "How does rent differ between apartments with and without balconies?": {
+   "text": "Verified findings: Among 3,759 Hamburg apartment listings from 2018 to 2020, 2,792 had balconies and 967 did not. Apartments without balconies had a median rent per m² of €13.42 and a mean of €14.86. Apartments with balconies had a slightly higher median rent per m² of €13.50 but a lower mean of €14.18. The interquartile ranges (P25 to P75) were €11.00 to €16.56 without balconies and €11.30 to €16.00 with balconies.\n\nInterpretation: Rent per m² tends to be very similar between apartments with and without balconies in this sample. The slight differences in median and mean rents per m² are small and likely reflect correlations with other characteristics rather than a direct effect of having a balcony.\n\nSuggested follow-up: Investigate if accounting for other factors such as apartment size, location, or building age changes the association of balcony presence with rent levels.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:26:00",
+   "tool_calls": [
+    {
+     "name": "analyse_property_characteristics",
+     "args": {
+      "dimension": "has_balcony"
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "analyse_property_characteristics",
+     "ok": true,
+     "title": "Rent per m² by has_balcony",
+     "summary": {
+      "dimension": "has_balcony",
+      "coverage_pct": 100.0
+     },
+     "rows": [
+      {
+       "segment": "No",
+       "listings": 967,
+       "median_rent_per_sqm": 13.42,
+       "mean_rent_per_sqm": 14.856,
+       "p25": 11.0,
+       "p75": 16.56,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "Yes",
+       "listings": 2792,
+       "median_rent_per_sqm": 13.5,
+       "mean_rent_per_sqm": 14.179,
+       "p25": 11.3,
+       "p75": 16.0,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "segment",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median rent per m² by has balcony",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": null
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Median/mean/P25/P75 of baseRent ÷ livingSpace per segment; rows with missing values grouped as 'Missing / unknown'.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents.",
+      "Coverage: 100.0% of listings have a value for this characteristic.",
+      "Differences are associations; characteristics correlate with each other (size, age, location), so they are not causal effects."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "Compare properties with two rooms and three rooms.": {
+   "text": "**Verified findings:**\n\n- For two-room properties (1.5–2 rooms, n=1,231 listings), median rent per m² is €13.26, mean rent per m² is €14.06; the interquartile range (P25–P75) is €11.08 to €16.00.\n- For three-room properties (2.5–3 rooms, n=1,465 listings), median rent per m² is €13.24, mean rent per m² is €13.77; the interquartile range is €11.00 to €15.85.\n- Median rents per m² for two- and three-room properties are very similar.\n- Overall, among 3,759 Hamburg listings across all room categories, the median rent per m² is approximately €13.5.\n\n**Interpretation:**\n\nTwo- and three-room apartments tend to have almost the same rent per square meter, with a very slight difference favoring two-room units by a few cents. The sample sizes are robust and representative for these segments. The distribution ranges indicate some overlap in rent per m² between the two room sizes. This suggests that the number of rooms alone does not strongly associate with differences in rent per m² in the Hamburg market for these categories during the studied period.\n\n**Suggested follow-up:**\n\n- Investigate influence of location class, construction period, or specific neighborhoods on these room categories' rents per m².\n- Explore rent trends over time for these room types to see if relationships change.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:26:04",
+   "tool_calls": [
+    {
+     "name": "analyse_property_characteristics",
+     "args": {
+      "dimension": "room_band",
+      "snapshot": null
+     }
+    },
+    {
+     "name": "get_market_summary",
+     "args": {
+      "rooms": "1.5-2"
+     }
+    },
+    {
+     "name": "get_market_summary",
+     "args": {
+      "rooms": "2.5-3"
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "analyse_property_characteristics",
+     "ok": true,
+     "title": "Rent per m² by room_band",
+     "summary": {
+      "dimension": "room_band",
+      "coverage_pct": 100.0
+     },
+     "rows": [
+      {
+       "segment": "1",
+       "listings": 337,
+       "median_rent_per_sqm": 15.03,
+       "mean_rent_per_sqm": 18.671,
+       "p25": 12.05,
+       "p75": 23.44,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "1.5–2",
+       "listings": 1231,
+       "median_rent_per_sqm": 13.26,
+       "mean_rent_per_sqm": 14.06,
+       "p25": 11.075,
+       "p75": 16.0,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "2.5–3",
+       "listings": 1465,
+       "median_rent_per_sqm": 13.24,
+       "mean_rent_per_sqm": 13.769,
+       "p25": 11.0,
+       "p75": 15.85,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "3.5–4",
+       "listings": 529,
+       "median_rent_per_sqm": 13.68,
+       "mean_rent_per_sqm": 13.914,
+       "p25": 11.69,
+       "p75": 15.52,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "4.5+",
+       "listings": 197,
+       "median_rent_per_sqm": 13.93,
+       "mean_rent_per_sqm": 14.318,
+       "p25": 11.79,
+       "p75": 16.34,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "segment",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median rent per m² by room band",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": [
+       "1",
+       "1.5–2",
+       "2.5–3",
+       "3.5–4",
+       "4.5+"
+      ]
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Median/mean/P25/P75 of baseRent ÷ livingSpace per segment; rows with missing values grouped as 'Missing / unknown'.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents.",
+      "Coverage: 100.0% of listings have a value for this characteristic.",
+      "Differences are associations; characteristics correlate with each other (size, age, location), so they are not causal effects."
+     ],
+     "error": ""
+    },
+    {
+     "tool": "get_market_summary",
+     "ok": true,
+     "title": "Market summary",
+     "summary": {
+      "listings": 3759,
+      "median_rent_per_sqm": 13.5,
+      "mean_rent_per_sqm": 14.35291034849694,
+      "p25": 11.215,
+      "p75": 16.064999999999998,
+      "p90": 19.9,
+      "min": 4.35,
+      "max": 61.25,
+      "median_living_space_sqm": 76.0,
+      "median_rooms": 3.0,
+      "median_base_rent_eur": 1014.0,
+      "neighbourhoods": 94
+     },
+     "rows": [
+      {
+       "listings": 3759,
+       "median_rent_per_sqm": 13.5,
+       "mean_rent_per_sqm": 14.353,
+       "p25": 11.215,
+       "p75": 16.065,
+       "p90": 19.9,
+       "min": 4.35,
+       "max": 61.25,
+       "median_living_space_sqm": 76.0,
+       "median_rooms": 3.0,
+       "median_base_rent_eur": 1014.0,
+       "neighbourhoods": 94
+      }
+     ],
+     "chart": null,
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "rent_per_sqm = baseRent ÷ livingSpace; percentiles by linear interpolation.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents."
+     ],
+     "error": ""
+    },
+    {
+     "tool": "get_market_summary",
+     "ok": true,
+     "title": "Market summary",
+     "summary": {
+      "listings": 3759,
+      "median_rent_per_sqm": 13.5,
+      "mean_rent_per_sqm": 14.35291034849694,
+      "p25": 11.215,
+      "p75": 16.064999999999998,
+      "p90": 19.9,
+      "min": 4.35,
+      "max": 61.25,
+      "median_living_space_sqm": 76.0,
+      "median_rooms": 3.0,
+      "median_base_rent_eur": 1014.0,
+      "neighbourhoods": 94
+     },
+     "rows": [
+      {
+       "listings": 3759,
+       "median_rent_per_sqm": 13.5,
+       "mean_rent_per_sqm": 14.353,
+       "p25": 11.215,
+       "p75": 16.065,
+       "p90": 19.9,
+       "min": 4.35,
+       "max": 61.25,
+       "median_living_space_sqm": 76.0,
+       "median_rooms": 3.0,
+       "median_base_rent_eur": 1014.0,
+       "neighbourhoods": 94
+      }
+     ],
+     "chart": null,
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "rent_per_sqm = baseRent ÷ livingSpace; percentiles by linear interpolation.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "Which property types have the highest median rent per square metre?": {
+   "text": "Verified findings: Among 3,759 Hamburg listings from 2018-2020 without filters, the property types with the highest median rent per square meter are half_basement (15.79 €/m², n=23), penthouse (15.5 €/m², n=113), and loft (14.48 €/m², n=14). Apartments have a median rent of 13.68 €/m² (n=2,090). Other property types have median rents mostly between about 12.35 and 13.5 €/m².\n\nInterpretation: Penthouse and half_basement types tend to have the highest advertised median cold rents per square meter, but note the small sample sizes for half_basement and loft. Apartments dominate the sample and have a median rent slightly below those. Roof_storey units show somewhat lower median rents. Differences are associations and may reflect other factors like size, age, or location.\n\nSuggested follow-up: Investigate rent per m² by property type combined with location class or construction period to see if property type effects persist within finer strata.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:26:07",
+   "tool_calls": [
+    {
+     "name": "analyse_property_characteristics",
+     "args": {
+      "dimension": "property_type"
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "analyse_property_characteristics",
+     "ok": true,
+     "title": "Rent per m² by property_type",
+     "summary": {
+      "dimension": "property_type",
+      "coverage_pct": 91.5
+     },
+     "rows": [
+      {
+       "segment": "Missing / unknown",
+       "listings": 319,
+       "median_rent_per_sqm": 13.51,
+       "mean_rent_per_sqm": 14.129,
+       "p25": 10.575,
+       "p75": 15.98,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "apartment",
+       "listings": 2090,
+       "median_rent_per_sqm": 13.675,
+       "mean_rent_per_sqm": 14.753,
+       "p25": 11.34,
+       "p75": 16.633,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "ground_floor",
+       "listings": 393,
+       "median_rent_per_sqm": 13.11,
+       "mean_rent_per_sqm": 13.602,
+       "p25": 10.95,
+       "p75": 14.8,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "half_basement",
+       "listings": 23,
+       "median_rent_per_sqm": 15.79,
+       "mean_rent_per_sqm": 15.366,
+       "p25": 11.735,
+       "p75": 17.985,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "loft",
+       "listings": 14,
+       "median_rent_per_sqm": 14.48,
+       "mean_rent_per_sqm": 14.968,
+       "p25": 12.475,
+       "p75": 16.53,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "maisonette",
+       "listings": 179,
+       "median_rent_per_sqm": 13.16,
+       "mean_rent_per_sqm": 13.779,
+       "p25": 11.485,
+       "p75": 15.74,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "other",
+       "listings": 117,
+       "median_rent_per_sqm": 13.15,
+       "mean_rent_per_sqm": 13.965,
+       "p25": 11.22,
+       "p75": 15.0,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "penthouse",
+       "listings": 113,
+       "median_rent_per_sqm": 15.5,
+       "mean_rent_per_sqm": 15.857,
+       "p25": 12.96,
+       "p75": 18.39,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "raised_ground_floor",
+       "listings": 91,
+       "median_rent_per_sqm": 13.5,
+       "mean_rent_per_sqm": 14.45,
+       "p25": 11.45,
+       "p75": 16.25,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "roof_storey",
+       "listings": 348,
+       "median_rent_per_sqm": 12.35,
+       "mean_rent_per_sqm": 12.862,
+       "p25": 10.41,
+       "p75": 14.532,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "terraced_flat",
+       "listings": 72,
+       "median_rent_per_sqm": 13.405,
+       "mean_rent_per_sqm": 14.17,
+       "p25": 11.967,
+       "p75": 15.46,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "segment",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median rent per m² by property type",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": null
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Median/mean/P25/P75 of baseRent ÷ livingSpace per segment; rows with missing values grouped as 'Missing / unknown'.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents.",
+      "Coverage: 91.5% of listings have a value for this characteristic.",
+      "Differences are associations; characteristics correlate with each other (size, age, location), so they are not causal effects."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "Explain the Hamburg Mietenspiegel 2025.": {
+   "text": "Verified findings:\nThe Hamburg Mietenspiegel 2025 provides official reference rents (net cold rent, excluding heating and operating costs) for residential apartments in Hamburg as of April 1, 2025. It includes 88 data cells covering rent per m² by construction period of the building, residential location class (\"Normale Wohnlage\" or \"Gute Wohnlage\"), and living area category (size bands). The median reference rent across all cells is about €12.75/m². Minimum rents can be as low as €6.25/m², and maximum rents reach up to €31.65/m². The rent values are separated by categories such as construction period (e.g., up to 1918, 1919–1948, 1948–1960, and onward), quality of residential location (normal or good), and living area size bands (e.g., under 41m², 41–66m², 66–91m², etc.). The Mietenspiegel lists reference rent, minimum rent, and maximum rent per m² for each category and also reports the count of historical ImmoScout24 listings matched to those conditions and their median rents for contextual comparison.\n\nInterpretation:\nThe Hamburg Mietenspiegel 2025 is a comprehensive official rent benchmark used primarily for regulatory and informational purposes to indicate typical and permissible rental levels in various segments of Hamburg’s rental housing market. It categorizes rents by building age, local residential quality, and apartment size, making it a detailed tool for estimating baseline rents based on property characteristics. It does not reflect actual current market asking rents but a regulatory reference. The matched historical listing data (n varies by category) helps see how market listings relate to these reference rents.\n\nSuggested follow-up (if needed):\nIf you want, I can provide detailed reference rents for specific construction periods, locations, or apartment sizes to illustrate further how rents vary by these categories in the Mietenspiegel 2025.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:26:13",
+   "tool_calls": [
+    {
+     "name": "get_data_quality_report",
+     "args": {
+      "topic": "overview"
+     }
+    },
+    {
+     "name": "get_mietenspiegel_benchmark",
+     "args": {}
+    }
+   ],
+   "results": [
+    {
+     "tool": "get_data_quality_report",
+     "ok": true,
+     "title": "Data quality – overview",
+     "summary": {
+      "checks_total": 56,
+      "checks_pass": 24,
+      "checks_info": 16,
+      "checks_warn": 16,
+      "rows_returned": 56
+     },
+     "rows": [
+      {
+       "category": "row_counts",
+       "check_name": "expected_row_count",
+       "column_name": null,
+       "metric_value": 268850.0,
+       "metric_pct": null,
+       "expected_value": 268850.0,
+       "status": "pass",
+       "details": "expected 268,850, found 268,850"
+      },
+      {
+       "category": "row_counts",
+       "check_name": "expected_row_count",
+       "column_name": null,
+       "metric_value": 88.0,
+       "metric_pct": null,
+       "expected_value": 88.0,
+       "status": "pass",
+       "details": "expected 88, found 88"
+      },
+      {
+       "category": "row_counts",
+       "check_name": "expected_row_count",
+       "column_name": null,
+       "metric_value": 1.0,
+       "metric_pct": null,
+       "expected_value": 1.0,
+       "status": "pass",
+       "details": "expected 1, found 1"
+      },
+      {
+       "category": "row_counts",
+       "check_name": "expected_row_count",
+       "column_name": null,
+       "metric_value": 26205.0,
+       "metric_pct": null,
+       "expected_value": 26205.0,
+       "status": "pass",
+       "details": "expected 26,205, found 26,205"
+      },
+      {
+       "category": "row_counts",
+       "check_name": "expected_row_count",
+       "column_name": null,
+       "metric_value": 3759.0,
+       "metric_pct": null,
+       "expected_value": 3759.0,
+       "status": "pass",
+       "details": "expected 3,759, found 3,759"
+      },
+      {
+       "category": "row_counts",
+       "check_name": "expected_row_count",
+       "column_name": null,
+       "metric_value": 88.0,
+       "metric_pct": null,
+       "expected_value": 88.0,
+       "status": "pass",
+       "details": "expected 88, found 88"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "raw_hamburg_to_staging",
+       "column_name": null,
+       "metric_value": 3759.0,
+       "metric_pct": null,
+       "expected_value": 3759.0,
+       "status": "pass",
+       "details": "raw Hamburg rows 3,759 vs transformed 3,759"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "snapshot_count_Sep 2018",
+       "column_name": null,
+       "metric_value": 673.0,
+       "metric_pct": null,
+       "expected_value": 673.0,
+       "status": "pass",
+       "details": "raw 673, expected 673, transformed 673"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "snapshot_count_May 2019",
+       "column_name": null,
+       "metric_value": 1071.0,
+       "metric_pct": null,
+       "expected_value": 1071.0,
+       "status": "pass",
+       "details": "raw 1071, expected 1071, transformed 1071"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "snapshot_count_Oct 2019",
+       "column_name": null,
+       "metric_value": 902.0,
+       "metric_pct": null,
+       "expected_value": 902.0,
+       "status": "pass",
+       "details": "raw 902, expected 902, transformed 902"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "snapshot_count_Feb 2020",
+       "column_name": null,
+       "metric_value": 1113.0,
+       "metric_pct": null,
+       "expected_value": 1113.0,
+       "status": "pass",
+       "details": "raw 1113, expected 1113, transformed 1113"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "rent_per_sqm_recalculation",
+       "column_name": null,
+       "metric_value": 0.0,
+       "metric_pct": null,
+       "expected_value": 0.0,
+       "status": "pass",
+       "details": "rows where baseRent/livingSpace differs from staged rent_per_sqm by > €0.01"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "na_token_preserved_yearConstructed",
+       "column_name": "yearConstructed",
+       "metric_value": 508.0,
+       "metric_pct": null,
+       "expected_value": 508.0,
+       "status": "pass",
+       "details": "raw literal 'NA' count 508 → NULL count 508"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "na_token_preserved_totalRent",
+       "column_name": "totalRent",
+       "metric_value": 364.0,
+       "metric_pct": null,
+       "expected_value": 364.0,
+       "status": "pass",
+       "details": "raw literal 'NA' count 364 → NULL count 364"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "na_token_preserved_serviceCharge",
+       "column_name": "serviceCharge",
+       "metric_value": 91.0,
+       "metric_pct": null,
+       "expected_value": 91.0,
+       "status": "pass",
+       "details": "raw literal 'NA' count 91 → NULL count 91"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "na_token_preserved_heatingCosts",
+       "column_name": "heatingCosts",
+       "metric_value": 2050.0,
+       "metric_pct": null,
+       "expected_value": 2050.0,
+       "status": "pass",
+       "details": "raw literal 'NA' count 2050 → NULL count 2050"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "baseRent",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "pass",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "livingSpace",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "pass",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "noRooms",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "pass",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "rent_per_sqm",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "pass",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "totalRent",
+       "metric_value": 364.0,
+       "metric_pct": 9.68,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "serviceCharge",
+       "metric_value": 91.0,
+       "metric_pct": 2.42,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "heatingCosts",
+       "metric_value": 2050.0,
+       "metric_pct": 54.54,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "yearConstructed",
+       "metric_value": 508.0,
+       "metric_pct": 13.51,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "property_type",
+       "metric_value": 319.0,
+       "metric_pct": 8.49,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "condition",
+       "metric_value": 824.0,
+       "metric_pct": 21.92,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "interiorQual",
+       "metric_value": 1797.0,
+       "metric_pct": 47.81,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "heatingType",
+       "metric_value": 647.0,
+       "metric_pct": 17.21,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "street_decoded",
+       "metric_value": 1205.0,
+       "metric_pct": 32.06,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "houseNumber",
+       "metric_value": 1205.0,
+       "metric_pct": 32.06,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "energyEfficiencyClass",
+       "metric_value": 2709.0,
+       "metric_pct": 72.07,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "lastRefurbish",
+       "metric_value": 2868.0,
+       "metric_pct": 76.3,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "floor",
+       "metric_value": 870.0,
+       "metric_pct": 23.14,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "numberOfFloors",
+       "metric_value": 1549.0,
+       "metric_pct": 41.21,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "petsAllowed",
+       "metric_value": 1995.0,
+       "metric_pct": 53.07,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "duplicates",
+       "check_name": "duplicate_scout_id",
+       "column_name": null,
+       "metric_value": 0.0,
+       "metric_pct": null,
+       "expected_value": 0.0,
+       "status": "pass",
+       "details": "duplicate listing IDs (scoutId)"
+      },
+      {
+       "category": "duplicates",
+       "check_name": "duplicate_source_record_id",
+       "column_name": null,
+       "metric_value": 0.0,
+       "metric_pct": null,
+       "expected_value": 0.0,
+       "status": "pass",
+       "details": "duplicate primary keys"
+      },
+      {
+       "category": "duplicates",
+       "check_name": "possible_duplicate_within_snapshot",
+       "column_name": null,
+       "metric_value": 33.0,
+       "metric_pct": null,
+       "expected_value": null,
+       "status": "info",
+       "details": "same address + area + rent within one snapshot (kept; flagged for investigation)"
+      },
+      {
+       "category": "duplicates",
+       "check_name": "possible_relisting_across_snapshots",
+       "column_name": null,
+       "metric_value": 21.0,
+       "metric_pct": null,
+       "expected_value": null,
+       "status": "info",
+       "details": "same address + area + rent in a different snapshot (re-advertised units; kept)"
+      },
+      {
+       "category": "duplicates",
+       "check_name": "location_range_duplicates",
+       "column_name": null,
+       "metric_value": 5.0,
+       "metric_pct": null,
+       "expected_value": null,
+       "status": "info",
+       "details": "identical street + range + numbering type rows in the Wohnlagenverzeichnis extract"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "rent_sqm_below_5",
+       "column_name": null,
+       "metric_value": 3.0,
+       "metric_pct": 0.08,
+       "expected_value": null,
+       "status": "warn",
+       "details": "rent/m² < €5 – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "rent_sqm_above_40",
+       "column_name": null,
+       "metric_value": 14.0,
+       "metric_pct": 0.37,
+       "expected_value": null,
+       "status": "warn",
+       "details": "rent/m² > €40 – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "living_space_below_15",
+       "column_name": null,
+       "metric_value": 7.0,
+       "metric_pct": 0.19,
+       "expected_value": null,
+       "status": "warn",
+       "details": "living area < 15 m² – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "implausible_construction_year",
+       "column_name": null,
+       "metric_value": 2.0,
+       "metric_pct": 0.05,
+       "expected_value": null,
+       "status": "warn",
+       "details": "construction year outside 1800–2021 – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "total_rent_below_base_rent",
+       "column_name": null,
+       "metric_value": 3.0,
+       "metric_pct": 0.08,
+       "expected_value": null,
+       "status": "warn",
+       "details": "total rent lower than base rent – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "area_per_room_below_8",
+       "column_name": null,
+       "metric_value": 2.0,
+       "metric_pct": 0.05,
+       "expected_value": null,
+       "status": "warn",
+       "details": "less than 8 m² per room – flagged, not removed"
+      },
+      {
+       "category": "outliers",
+       "check_name": "iqr_outlier_high",
+       "column_name": "rent_per_sqm",
+       "metric_value": 183.0,
+       "metric_pct": 4.87,
+       "expected_value": null,
+       "status": "info",
+       "details": "1.5×IQR fences €3.94–€23.34/m²; records retained"
+      },
+      {
+       "category": "outliers",
+       "check_name": "iqr_outlier_low",
+       "column_name": "rent_per_sqm",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "info",
+       "details": "1.5×IQR fences €3.94–€23.34/m²; records retained"
+      },
+      {
+       "category": "benchmark",
+       "check_name": "min_le_mean_le_max",
+       "column_name": null,
+       "metric_value": 0.0,
+       "metric_pct": null,
+       "expected_value": 0.0,
+       "status": "pass",
+       "details": "every reference value lies within its official range"
+      },
+      {
+       "category": "benchmark",
+       "check_name": "missing_reference_values",
+       "column_name": null,
+       "metric_value": 0.0,
+       "metric_pct": null,
+       "expected_value": 0.0,
+       "status": "pass",
+       "details": ""
+      },
+      {
+       "category": "benchmark",
+       "check_name": "characteristic_grid_coverage",
+       "column_name": null,
+       "metric_value": 88.0,
+       "metric_pct": null,
+       "expected_value": 90.0,
+       "status": "info",
+       "details": "88 of 90 possible period × location × area cells published (2 cells not published for 'Gute Wohnlage')"
+      },
+      {
+       "category": "locations",
+       "check_name": "pdf_vs_loaded_count",
+       "column_name": null,
+       "metric_value": 26205.0,
+       "metric_pct": null,
+       "expected_value": 25786.0,
+       "status": "info",
+       "details": "loaded 26,205 vs PDF-stated 25,786: +419 extracted rows preserved (see docs)"
+      },
+      {
+       "category": "locations",
+       "check_name": "listing_match_matched",
+       "column_name": null,
+       "metric_value": 2422.0,
+       "metric_pct": 64.43,
+       "expected_value": null,
+       "status": "info",
+       "details": "conservative Wohnlagen address match result"
+      },
+      {
+       "category": "locations",
+       "check_name": "listing_match_no_address",
+       "column_name": null,
+       "metric_value": 1269.0,
+       "metric_pct": 33.76,
+       "expected_value": null,
+       "status": "info",
+       "details": "conservative Wohnlagen address match result"
+      },
+      {
+       "category": "locations",
+       "check_name": "listing_match_unmatched_street",
+       "column_name": null,
+       "metric_value": 41.0,
+       "metric_pct": 1.09,
+       "expected_value": null,
+       "status": "info",
+       "details": "conservative Wohnlagen address match result"
+      },
+      {
+       "category": "locations",
+       "check_name": "listing_match_unmatched_number",
+       "column_name": null,
+       "metric_value": 27.0,
+       "metric_pct": 0.72,
+       "expected_value": null,
+       "status": "info",
+       "details": "conservative Wohnlagen address match result"
+      }
+     ],
+     "chart": null,
+     "n_records": 56,
+     "source": "MySQL table analytics_data_quality (written by the pipeline)",
+     "filters_applied": "not filtered (quality checks always cover all 3,759 Hamburg records)",
+     "period": "Whole dataset, Sep 2018 – Feb 2020",
+     "calculation": "Pipeline checks: reconciliation to raw, NA-token missingness, duplicates, rule-based flags and 1.5×IQR outlier flags.",
+     "caveats": [
+      "Outliers and suspicious records are flagged, never deleted."
+     ],
+     "error": ""
+    },
+    {
+     "tool": "get_mietenspiegel_benchmark",
+     "ok": true,
+     "title": "Hamburg Mietenspiegel 2025 reference rents",
+     "summary": {
+      "cells_returned": 88,
+      "reference_date": "2025-04-01",
+      "publisher": "Behörde für Stadtentwicklung und Wohnen - Amt für Wohnen, Stadterneuerung und Bodenordnung",
+      "median_reference_rent": 12.754999999999999,
+      "lowest_min": 6.25,
+      "highest_max": 31.65
+     },
+     "rows": [
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 13.02,
+       "minimum_rent_per_sqm": 6.6,
+       "maximum_rent_per_sqm": 15.3,
+       "hist_listing_count": 5,
+       "hist_median_rent_sqm": 22.5
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 12.93,
+       "minimum_rent_per_sqm": 10.8,
+       "maximum_rent_per_sqm": 16.56,
+       "hist_listing_count": 19,
+       "hist_median_rent_sqm": 15.45
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 13.62,
+       "minimum_rent_per_sqm": 10.97,
+       "maximum_rent_per_sqm": 17.04,
+       "hist_listing_count": 17,
+       "hist_median_rent_sqm": 15.29
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 12.54,
+       "minimum_rent_per_sqm": 10.47,
+       "maximum_rent_per_sqm": 16.95,
+       "hist_listing_count": 19,
+       "hist_median_rent_sqm": 15.49
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 12.62,
+       "minimum_rent_per_sqm": 10.8,
+       "maximum_rent_per_sqm": 16.25,
+       "hist_listing_count": 25,
+       "hist_median_rent_sqm": 15.33
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 12.01,
+       "minimum_rent_per_sqm": 9.44,
+       "maximum_rent_per_sqm": 14.4,
+       "hist_listing_count": 1,
+       "hist_median_rent_sqm": 14.72
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 11.41,
+       "minimum_rent_per_sqm": 9.3,
+       "maximum_rent_per_sqm": 14.73,
+       "hist_listing_count": 9,
+       "hist_median_rent_sqm": 13.0
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 11.74,
+       "minimum_rent_per_sqm": 8.53,
+       "maximum_rent_per_sqm": 16.0,
+       "hist_listing_count": 8,
+       "hist_median_rent_sqm": 15.875
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 11.5,
+       "minimum_rent_per_sqm": 8.59,
+       "maximum_rent_per_sqm": 14.8,
+       "hist_listing_count": 6,
+       "hist_median_rent_sqm": 15.445
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 14.23,
+       "minimum_rent_per_sqm": 11.52,
+       "maximum_rent_per_sqm": 16.82,
+       "hist_listing_count": 4,
+       "hist_median_rent_sqm": 11.585
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 13.5,
+       "minimum_rent_per_sqm": 9.48,
+       "maximum_rent_per_sqm": 16.06,
+       "hist_listing_count": 8,
+       "hist_median_rent_sqm": 19.055
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 11.04,
+       "minimum_rent_per_sqm": 8.34,
+       "maximum_rent_per_sqm": 14.83,
+       "hist_listing_count": 9,
+       "hist_median_rent_sqm": 14.0
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 11.42,
+       "minimum_rent_per_sqm": 8.44,
+       "maximum_rent_per_sqm": 14.96,
+       "hist_listing_count": 11,
+       "hist_median_rent_sqm": 13.04
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 13.36,
+       "minimum_rent_per_sqm": 9.34,
+       "maximum_rent_per_sqm": 15.8,
+       "hist_listing_count": 9,
+       "hist_median_rent_sqm": 14.57
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 13.02,
+       "minimum_rent_per_sqm": 12.24,
+       "maximum_rent_per_sqm": 17.49,
+       "hist_listing_count": 3,
+       "hist_median_rent_sqm": 13.43
+      },
+      {
+       "construction_period": "1961 bis 1967",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 12.89,
+       "minimum_rent_per_sqm": 11.06,
+       "maximum_rent_per_sqm": 15.66,
+       "hist_listing_count": 1,
+       "hist_median_rent_sqm": 10.93
+      },
+      {
+       "construction_period": "1961 bis 1967",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 10.48,
+       "minimum_rent_per_sqm": 7.97,
+       "maximum_rent_per_sqm": 14.02,
+       "hist_listing_count": 4,
+       "hist_median_rent_sqm": 11.895
+      },
+      {
+       "construction_period": "1961 bis 1967",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 9.48,
+       "minimum_rent_per_sqm": 7.4,
+       "maximum_rent_per_sqm": 13.5,
+       "hist_listing_count": 11,
+       "hist_median_rent_sqm": 12.81
+      },
+      {
+       "construction_period": "1961 bis 1967",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 11.73,
+       "minimum_rent_per_sqm": 9.62,
+       "maximum_rent_per_sqm": 14.35,
+       "hist_listing_count": 4,
+       "hist_median_rent_sqm": 11.27
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 13.46,
+       "minimum_rent_per_sqm": 11.48,
+       "maximum_rent_per_sqm": 17.67,
+       "hist_listing_count": 5,
+       "hist_median_rent_sqm": 21.43
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 12.43,
+       "minimum_rent_per_sqm": 9.05,
+       "maximum_rent_per_sqm": 16.47,
+       "hist_listing_count": 4,
+       "hist_median_rent_sqm": 14.785
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 11.39,
+       "minimum_rent_per_sqm": 7.83,
+       "maximum_rent_per_sqm": 15.28,
+       "hist_listing_count": 16,
+       "hist_median_rent_sqm": 12.03
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 12.51,
+       "minimum_rent_per_sqm": 9.68,
+       "maximum_rent_per_sqm": 15.68,
+       "hist_listing_count": 14,
+       "hist_median_rent_sqm": 13.485
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 13.04,
+       "minimum_rent_per_sqm": 11.55,
+       "maximum_rent_per_sqm": 16.24,
+       "hist_listing_count": 11,
+       "hist_median_rent_sqm": 13.94
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 13.74,
+       "minimum_rent_per_sqm": 9.24,
+       "maximum_rent_per_sqm": 16.1,
+       "hist_listing_count": 1,
+       "hist_median_rent_sqm": 19.0
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 11.95,
+       "minimum_rent_per_sqm": 9.06,
+       "maximum_rent_per_sqm": 15.45,
+       "hist_listing_count": 16,
+       "hist_median_rent_sqm": 12.14
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 12.04,
+       "minimum_rent_per_sqm": 8.62,
+       "maximum_rent_per_sqm": 15.92,
+       "hist_listing_count": 17,
+       "hist_median_rent_sqm": 12.5
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 12.39,
+       "minimum_rent_per_sqm": 9.94,
+       "maximum_rent_per_sqm": 14.84,
+       "hist_listing_count": 15,
+       "hist_median_rent_sqm": 12.5
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 14.31,
+       "minimum_rent_per_sqm": 11.04,
+       "maximum_rent_per_sqm": 17.84,
+       "hist_listing_count": 2,
+       "hist_median_rent_sqm": 12.735
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 14.19,
+       "minimum_rent_per_sqm": 12.02,
+       "maximum_rent_per_sqm": 17.11,
+       "hist_listing_count": 3,
+       "hist_median_rent_sqm": 17.0
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 13.78,
+       "minimum_rent_per_sqm": 10.72,
+       "maximum_rent_per_sqm": 15.76,
+       "hist_listing_count": 8,
+       "hist_median_rent_sqm": 16.965
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 13.18,
+       "minimum_rent_per_sqm": 10.03,
+       "maximum_rent_per_sqm": 16.29,
+       "hist_listing_count": 15,
+       "hist_median_rent_sqm": 12.32
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 14.63,
+       "minimum_rent_per_sqm": 11.59,
+       "maximum_rent_per_sqm": 19.0,
+       "hist_listing_count": 29,
+       "hist_median_rent_sqm": 15.2
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 16.0,
+       "minimum_rent_per_sqm": 12.06,
+       "maximum_rent_per_sqm": 19.31,
+       "hist_listing_count": 23,
+       "hist_median_rent_sqm": 13.88
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 15.91,
+       "minimum_rent_per_sqm": 14.05,
+       "maximum_rent_per_sqm": 19.91,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 16.12,
+       "minimum_rent_per_sqm": 13.2,
+       "maximum_rent_per_sqm": 18.69,
+       "hist_listing_count": 2,
+       "hist_median_rent_sqm": 15.02
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 16.07,
+       "minimum_rent_per_sqm": 13.63,
+       "maximum_rent_per_sqm": 18.44,
+       "hist_listing_count": 10,
+       "hist_median_rent_sqm": 15.995
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 15.58,
+       "minimum_rent_per_sqm": 12.74,
+       "maximum_rent_per_sqm": 19.09,
+       "hist_listing_count": 22,
+       "hist_median_rent_sqm": 14.03
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 18.19,
+       "minimum_rent_per_sqm": 15.12,
+       "maximum_rent_per_sqm": 21.45,
+       "hist_listing_count": 4,
+       "hist_median_rent_sqm": 20.125
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 19.37,
+       "minimum_rent_per_sqm": 16.77,
+       "maximum_rent_per_sqm": 25.04,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 16.08,
+       "minimum_rent_per_sqm": 13.17,
+       "maximum_rent_per_sqm": 20.3,
+       "hist_listing_count": 25,
+       "hist_median_rent_sqm": 17.0
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 16.43,
+       "minimum_rent_per_sqm": 13.89,
+       "maximum_rent_per_sqm": 20.25,
+       "hist_listing_count": 25,
+       "hist_median_rent_sqm": 14.29
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 16.55,
+       "minimum_rent_per_sqm": 14.67,
+       "maximum_rent_per_sqm": 20.0,
+       "hist_listing_count": 38,
+       "hist_median_rent_sqm": 15.805
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 19.14,
+       "minimum_rent_per_sqm": 15.96,
+       "maximum_rent_per_sqm": 24.59,
+       "hist_listing_count": 11,
+       "hist_median_rent_sqm": 18.98
+      },
+      {
+       "construction_period": "2021 bis 2024",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 20.24,
+       "minimum_rent_per_sqm": 15.65,
+       "maximum_rent_per_sqm": 31.65,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "2021 bis 2024",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 18.38,
+       "minimum_rent_per_sqm": 13.96,
+       "maximum_rent_per_sqm": 24.7,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "2021 bis 2024",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 19.6,
+       "minimum_rent_per_sqm": 15.66,
+       "maximum_rent_per_sqm": 23.25,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "2021 bis 2024",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 22.34,
+       "minimum_rent_per_sqm": 17.43,
+       "maximum_rent_per_sqm": 25.46,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 13.77,
+       "minimum_rent_per_sqm": 10.81,
+       "maximum_rent_per_sqm": 17.17,
+       "hist_listing_count": 13,
+       "hist_median_rent_sqm": 17.19
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 11.5,
+       "minimum_rent_per_sqm": 9.65,
+       "maximum_rent_per_sqm": 15.0,
+       "hist_listing_count": 54,
+       "hist_median_rent_sqm": 14.36
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 11.57,
+       "minimum_rent_per_sqm": 9.16,
+       "maximum_rent_per_sqm": 15.61,
+       "hist_listing_count": 34,
+       "hist_median_rent_sqm": 14.5
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "ab 91m²",
+       "reference_rent_per_sqm": 10.89,
+       "minimum_rent_per_sqm": 9.49,
+       "maximum_rent_per_sqm": 14.72,
+       "hist_listing_count": 32,
+       "hist_median_rent_sqm": 13.825
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 10.49,
+       "minimum_rent_per_sqm": 9.57,
+       "maximum_rent_per_sqm": 12.88,
+       "hist_listing_count": 4,
+       "hist_median_rent_sqm": 13.955
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 9.34,
+       "minimum_rent_per_sqm": 7.95,
+       "maximum_rent_per_sqm": 12.41,
+       "hist_listing_count": 41,
+       "hist_median_rent_sqm": 13.17
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 9.29,
+       "minimum_rent_per_sqm": 7.81,
+       "maximum_rent_per_sqm": 11.94,
+       "hist_listing_count": 12,
+       "hist_median_rent_sqm": 12.505
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "ab 91m²",
+       "reference_rent_per_sqm": 11.94,
+       "minimum_rent_per_sqm": 8.46,
+       "maximum_rent_per_sqm": 13.37,
+       "hist_listing_count": 14,
+       "hist_median_rent_sqm": 11.645
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 9.46,
+       "minimum_rent_per_sqm": 8.52,
+       "maximum_rent_per_sqm": 12.42,
+       "hist_listing_count": 20,
+       "hist_median_rent_sqm": 14.275
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 8.59,
+       "minimum_rent_per_sqm": 7.7,
+       "maximum_rent_per_sqm": 11.31,
+       "hist_listing_count": 119,
+       "hist_median_rent_sqm": 12.0
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 8.5,
+       "minimum_rent_per_sqm": 7.8,
+       "maximum_rent_per_sqm": 11.13,
+       "hist_listing_count": 49,
+       "hist_median_rent_sqm": 12.0
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "ab 91m²",
+       "reference_rent_per_sqm": 11.1,
+       "minimum_rent_per_sqm": 6.87,
+       "maximum_rent_per_sqm": 14.52,
+       "hist_listing_count": 15,
+       "hist_median_rent_sqm": 12.92
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "construction_period",
+      "y": "reference_rent_per_sqm",
+      "color": "residential_location",
+      "title": "Official reference rent (€/m²)",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": [
+       "bis 31.12.1918",
+       "01.01.1919 bis 20.06.1948",
+       "21.06.1948 bis 31.12.1960",
+       "1961 bis 1967",
+       "1968 bis 1977",
+       "1978 bis 1993",
+       "1994 bis 2010",
+       "2011 bis 2015",
+       "2016 bis 2020",
+       "2021 bis 2024"
+      ]
+     },
+     "n_records": 88,
+     "source": "MySQL view analytics_mietenspiegel_reference (official Hamburg Mietenspiegel 2025, ref. date 2025-04-01)",
+     "filters_applied": "none",
+     "period": "Reference date 1 April 2025 (official); historical listings 2018–2020",
+     "calculation": "Official published Mittelwert, Spanne min/max (net cold rent excl. heating and operating costs). hist_* columns = 2018–20 listings mapped to the same characteristics.",
+     "caveats": [
+      "These datasets differ in reference period, population and methodology. This comparison is contextual, not a same-period market premium or legal rent determination.",
+      "Reference rents are official benchmarks, not advertised rents."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "What are the differences between normal and good residential locations?": {
+   "text": "Verified findings:\n- The official Hamburg Mietenspiegel 2025 provides reference net cold rents per square meter (€/m²) for two residential location classes: \"Normale Wohnlage\" (normal residential location) and \"Gute Wohnlage\" (good residential location).\n- For various construction periods and living-area categories, rents in good residential locations tend to be higher than in normal residential locations. For example:\n  - For buildings constructed by 31.12.1918 with living area under 41m², the reference rent is about 13.77 €/m² in a normal location vs. 13.02 €/m² in a good location, but the maximum and median rents from listings tend to be higher in good locations.\n  - For buildings constructed 1968-1977, median reference rents in good locations generally range from about 6.6 to 31.65 €/m², higher than normal locations' range which has some lower limits around 6.25 €/m² and maximums around 25 €/m².\n- The Mietenspiegel shows differentiated rent scales by both residential location and living-area category, indicating these characteristics are key factors in rent estimation.\n- Sample sizes for historical listings vary and can be small in some categories (often below 10 listings), so median listing rents should be interpreted cautiously.\n\nInterpretation:\n- Good residential location is associated with generally higher reference rents and higher maximum rent ceilings compared to normal residential location in Hamburg, reflecting the perceived attractiveness or demand for these areas.\n- The rent differences vary by building age and size segments, showing that location quality is one important dimension among others.\n- Small sample sizes in some categories reduce reliability of listing-based median rent comparisons.\n\nSuggested follow-up (if needed):\n- Analyze rent differences by construction period and size more closely for a quantitative summary.\n- Compare rent distributions spatially using neighbourhood-level data to refine understanding of location class effects.\n\nLet me know if you want a more detailed rent comparison by location and other factors.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:26:17",
+   "tool_calls": [
+    {
+     "name": "get_mietenspiegel_benchmark",
+     "args": {
+      "residential_location": "Normale Wohnlage"
+     }
+    },
+    {
+     "name": "get_mietenspiegel_benchmark",
+     "args": {
+      "residential_location": "Gute Wohnlage"
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "get_mietenspiegel_benchmark",
+     "ok": true,
+     "title": "Hamburg Mietenspiegel 2025 reference rents",
+     "summary": {
+      "cells_returned": 40,
+      "reference_date": "2025-04-01",
+      "publisher": "Behörde für Stadtentwicklung und Wohnen - Amt für Wohnen, Stadterneuerung und Bodenordnung",
+      "median_reference_rent": 11.225,
+      "lowest_min": 6.25,
+      "highest_max": 25.01
+     },
+     "rows": [
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 13.77,
+       "minimum_rent_per_sqm": 10.81,
+       "maximum_rent_per_sqm": 17.17,
+       "hist_listing_count": 13,
+       "hist_median_rent_sqm": 17.19
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 11.5,
+       "minimum_rent_per_sqm": 9.65,
+       "maximum_rent_per_sqm": 15.0,
+       "hist_listing_count": 54,
+       "hist_median_rent_sqm": 14.36
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 11.57,
+       "minimum_rent_per_sqm": 9.16,
+       "maximum_rent_per_sqm": 15.61,
+       "hist_listing_count": 34,
+       "hist_median_rent_sqm": 14.5
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "ab 91m²",
+       "reference_rent_per_sqm": 10.89,
+       "minimum_rent_per_sqm": 9.49,
+       "maximum_rent_per_sqm": 14.72,
+       "hist_listing_count": 32,
+       "hist_median_rent_sqm": 13.825
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 10.49,
+       "minimum_rent_per_sqm": 9.57,
+       "maximum_rent_per_sqm": 12.88,
+       "hist_listing_count": 4,
+       "hist_median_rent_sqm": 13.955
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 9.34,
+       "minimum_rent_per_sqm": 7.95,
+       "maximum_rent_per_sqm": 12.41,
+       "hist_listing_count": 41,
+       "hist_median_rent_sqm": 13.17
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 9.29,
+       "minimum_rent_per_sqm": 7.81,
+       "maximum_rent_per_sqm": 11.94,
+       "hist_listing_count": 12,
+       "hist_median_rent_sqm": 12.505
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "ab 91m²",
+       "reference_rent_per_sqm": 11.94,
+       "minimum_rent_per_sqm": 8.46,
+       "maximum_rent_per_sqm": 13.37,
+       "hist_listing_count": 14,
+       "hist_median_rent_sqm": 11.645
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 9.46,
+       "minimum_rent_per_sqm": 8.52,
+       "maximum_rent_per_sqm": 12.42,
+       "hist_listing_count": 20,
+       "hist_median_rent_sqm": 14.275
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 8.59,
+       "minimum_rent_per_sqm": 7.7,
+       "maximum_rent_per_sqm": 11.31,
+       "hist_listing_count": 119,
+       "hist_median_rent_sqm": 12.0
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 8.5,
+       "minimum_rent_per_sqm": 7.8,
+       "maximum_rent_per_sqm": 11.13,
+       "hist_listing_count": 49,
+       "hist_median_rent_sqm": 12.0
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "ab 91m²",
+       "reference_rent_per_sqm": 11.1,
+       "minimum_rent_per_sqm": 6.87,
+       "maximum_rent_per_sqm": 14.52,
+       "hist_listing_count": 15,
+       "hist_median_rent_sqm": 12.92
+      },
+      {
+       "construction_period": "1961 bis 1967",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 9.01,
+       "minimum_rent_per_sqm": 8.01,
+       "maximum_rent_per_sqm": 14.05,
+       "hist_listing_count": 20,
+       "hist_median_rent_sqm": 11.78
+      },
+      {
+       "construction_period": "1961 bis 1967",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 7.56,
+       "minimum_rent_per_sqm": 7.25,
+       "maximum_rent_per_sqm": 10.82,
+       "hist_listing_count": 43,
+       "hist_median_rent_sqm": 11.9
+      },
+      {
+       "construction_period": "1961 bis 1967",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 6.93,
+       "minimum_rent_per_sqm": 6.44,
+       "maximum_rent_per_sqm": 10.0,
+       "hist_listing_count": 30,
+       "hist_median_rent_sqm": 10.57
+      },
+      {
+       "construction_period": "1961 bis 1967",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "ab 91m²",
+       "reference_rent_per_sqm": 8.0,
+       "minimum_rent_per_sqm": 6.92,
+       "maximum_rent_per_sqm": 12.49,
+       "hist_listing_count": 2,
+       "hist_median_rent_sqm": 9.805
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 10.26,
+       "minimum_rent_per_sqm": 8.28,
+       "maximum_rent_per_sqm": 14.16,
+       "hist_listing_count": 39,
+       "hist_median_rent_sqm": 12.61
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 9.73,
+       "minimum_rent_per_sqm": 7.33,
+       "maximum_rent_per_sqm": 13.66,
+       "hist_listing_count": 54,
+       "hist_median_rent_sqm": 11.15
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 6.76,
+       "minimum_rent_per_sqm": 6.25,
+       "maximum_rent_per_sqm": 9.48,
+       "hist_listing_count": 48,
+       "hist_median_rent_sqm": 10.335
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "ab 91m²",
+       "reference_rent_per_sqm": 7.73,
+       "minimum_rent_per_sqm": 6.4,
+       "maximum_rent_per_sqm": 11.18,
+       "hist_listing_count": 17,
+       "hist_median_rent_sqm": 10.06
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 11.55,
+       "minimum_rent_per_sqm": 8.57,
+       "maximum_rent_per_sqm": 14.93,
+       "hist_listing_count": 5,
+       "hist_median_rent_sqm": 13.31
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 9.33,
+       "minimum_rent_per_sqm": 7.69,
+       "maximum_rent_per_sqm": 12.91,
+       "hist_listing_count": 39,
+       "hist_median_rent_sqm": 11.11
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 8.59,
+       "minimum_rent_per_sqm": 7.17,
+       "maximum_rent_per_sqm": 12.32,
+       "hist_listing_count": 38,
+       "hist_median_rent_sqm": 10.23
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "ab 91m²",
+       "reference_rent_per_sqm": 8.95,
+       "minimum_rent_per_sqm": 6.57,
+       "maximum_rent_per_sqm": 11.59,
+       "hist_listing_count": 12,
+       "hist_median_rent_sqm": 10.44
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 12.23,
+       "minimum_rent_per_sqm": 10.17,
+       "maximum_rent_per_sqm": 16.37,
+       "hist_listing_count": 10,
+       "hist_median_rent_sqm": 14.265
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 11.35,
+       "minimum_rent_per_sqm": 9.12,
+       "maximum_rent_per_sqm": 13.72,
+       "hist_listing_count": 52,
+       "hist_median_rent_sqm": 10.695
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 10.69,
+       "minimum_rent_per_sqm": 8.93,
+       "maximum_rent_per_sqm": 13.5,
+       "hist_listing_count": 83,
+       "hist_median_rent_sqm": 10.56
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "ab 91m²",
+       "reference_rent_per_sqm": 11.92,
+       "minimum_rent_per_sqm": 9.62,
+       "maximum_rent_per_sqm": 14.51,
+       "hist_listing_count": 57,
+       "hist_median_rent_sqm": 11.65
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 18.5,
+       "minimum_rent_per_sqm": 16.19,
+       "maximum_rent_per_sqm": 19.66,
+       "hist_listing_count": 4,
+       "hist_median_rent_sqm": 23.875
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 15.26,
+       "minimum_rent_per_sqm": 12.18,
+       "maximum_rent_per_sqm": 18.03,
+       "hist_listing_count": 30,
+       "hist_median_rent_sqm": 13.705
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 14.86,
+       "minimum_rent_per_sqm": 11.95,
+       "maximum_rent_per_sqm": 17.32,
+       "hist_listing_count": 60,
+       "hist_median_rent_sqm": 13.32
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "ab 91m²",
+       "reference_rent_per_sqm": 15.17,
+       "minimum_rent_per_sqm": 12.22,
+       "maximum_rent_per_sqm": 18.32,
+       "hist_listing_count": 94,
+       "hist_median_rent_sqm": 13.5
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 16.64,
+       "minimum_rent_per_sqm": 13.72,
+       "maximum_rent_per_sqm": 18.86,
+       "hist_listing_count": 17,
+       "hist_median_rent_sqm": 25.26
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 14.77,
+       "minimum_rent_per_sqm": 12.18,
+       "maximum_rent_per_sqm": 18.83,
+       "hist_listing_count": 109,
+       "hist_median_rent_sqm": 13.89
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 15.28,
+       "minimum_rent_per_sqm": 12.18,
+       "maximum_rent_per_sqm": 18.44,
+       "hist_listing_count": 219,
+       "hist_median_rent_sqm": 14.01
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "ab 91m²",
+       "reference_rent_per_sqm": 14.31,
+       "minimum_rent_per_sqm": 12.76,
+       "maximum_rent_per_sqm": 18.33,
+       "hist_listing_count": 146,
+       "hist_median_rent_sqm": 13.885
+      },
+      {
+       "construction_period": "2021 bis 2024",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 19.78,
+       "minimum_rent_per_sqm": 13.05,
+       "maximum_rent_per_sqm": 25.01,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "2021 bis 2024",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 17.41,
+       "minimum_rent_per_sqm": 12.0,
+       "maximum_rent_per_sqm": 21.15,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "2021 bis 2024",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 17.61,
+       "minimum_rent_per_sqm": 14.26,
+       "maximum_rent_per_sqm": 21.42,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "2021 bis 2024",
+       "residential_location": "Normale Wohnlage",
+       "living_area_category": "ab 91m²",
+       "reference_rent_per_sqm": 17.18,
+       "minimum_rent_per_sqm": 13.5,
+       "maximum_rent_per_sqm": 20.93,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "construction_period",
+      "y": "reference_rent_per_sqm",
+      "color": null,
+      "title": "Official reference rent (€/m²)",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": [
+       "bis 31.12.1918",
+       "01.01.1919 bis 20.06.1948",
+       "21.06.1948 bis 31.12.1960",
+       "1961 bis 1967",
+       "1968 bis 1977",
+       "1978 bis 1993",
+       "1994 bis 2010",
+       "2011 bis 2015",
+       "2016 bis 2020",
+       "2021 bis 2024"
+      ]
+     },
+     "n_records": 40,
+     "source": "MySQL view analytics_mietenspiegel_reference (official Hamburg Mietenspiegel 2025, ref. date 2025-04-01)",
+     "filters_applied": "residential_location=Normale Wohnlage",
+     "period": "Reference date 1 April 2025 (official); historical listings 2018–2020",
+     "calculation": "Official published Mittelwert, Spanne min/max (net cold rent excl. heating and operating costs). hist_* columns = 2018–20 listings mapped to the same characteristics.",
+     "caveats": [
+      "These datasets differ in reference period, population and methodology. This comparison is contextual, not a same-period market premium or legal rent determination.",
+      "Reference rents are official benchmarks, not advertised rents."
+     ],
+     "error": ""
+    },
+    {
+     "tool": "get_mietenspiegel_benchmark",
+     "ok": true,
+     "title": "Hamburg Mietenspiegel 2025 reference rents",
+     "summary": {
+      "cells_returned": 48,
+      "reference_date": "2025-04-01",
+      "publisher": "Behörde für Stadtentwicklung und Wohnen - Amt für Wohnen, Stadterneuerung und Bodenordnung",
+      "median_reference_rent": 13.41,
+      "lowest_min": 6.6,
+      "highest_max": 31.65
+     },
+     "rows": [
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 13.02,
+       "minimum_rent_per_sqm": 6.6,
+       "maximum_rent_per_sqm": 15.3,
+       "hist_listing_count": 5,
+       "hist_median_rent_sqm": 22.5
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 12.93,
+       "minimum_rent_per_sqm": 10.8,
+       "maximum_rent_per_sqm": 16.56,
+       "hist_listing_count": 19,
+       "hist_median_rent_sqm": 15.45
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 13.62,
+       "minimum_rent_per_sqm": 10.97,
+       "maximum_rent_per_sqm": 17.04,
+       "hist_listing_count": 17,
+       "hist_median_rent_sqm": 15.29
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 12.54,
+       "minimum_rent_per_sqm": 10.47,
+       "maximum_rent_per_sqm": 16.95,
+       "hist_listing_count": 19,
+       "hist_median_rent_sqm": 15.49
+      },
+      {
+       "construction_period": "bis 31.12.1918",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 12.62,
+       "minimum_rent_per_sqm": 10.8,
+       "maximum_rent_per_sqm": 16.25,
+       "hist_listing_count": 25,
+       "hist_median_rent_sqm": 15.33
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 12.01,
+       "minimum_rent_per_sqm": 9.44,
+       "maximum_rent_per_sqm": 14.4,
+       "hist_listing_count": 1,
+       "hist_median_rent_sqm": 14.72
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 11.41,
+       "minimum_rent_per_sqm": 9.3,
+       "maximum_rent_per_sqm": 14.73,
+       "hist_listing_count": 9,
+       "hist_median_rent_sqm": 13.0
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 11.74,
+       "minimum_rent_per_sqm": 8.53,
+       "maximum_rent_per_sqm": 16.0,
+       "hist_listing_count": 8,
+       "hist_median_rent_sqm": 15.875
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 11.5,
+       "minimum_rent_per_sqm": 8.59,
+       "maximum_rent_per_sqm": 14.8,
+       "hist_listing_count": 6,
+       "hist_median_rent_sqm": 15.445
+      },
+      {
+       "construction_period": "01.01.1919 bis 20.06.1948",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 14.23,
+       "minimum_rent_per_sqm": 11.52,
+       "maximum_rent_per_sqm": 16.82,
+       "hist_listing_count": 4,
+       "hist_median_rent_sqm": 11.585
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 13.5,
+       "minimum_rent_per_sqm": 9.48,
+       "maximum_rent_per_sqm": 16.06,
+       "hist_listing_count": 8,
+       "hist_median_rent_sqm": 19.055
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 11.04,
+       "minimum_rent_per_sqm": 8.34,
+       "maximum_rent_per_sqm": 14.83,
+       "hist_listing_count": 9,
+       "hist_median_rent_sqm": 14.0
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 11.42,
+       "minimum_rent_per_sqm": 8.44,
+       "maximum_rent_per_sqm": 14.96,
+       "hist_listing_count": 11,
+       "hist_median_rent_sqm": 13.04
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 13.36,
+       "minimum_rent_per_sqm": 9.34,
+       "maximum_rent_per_sqm": 15.8,
+       "hist_listing_count": 9,
+       "hist_median_rent_sqm": 14.57
+      },
+      {
+       "construction_period": "21.06.1948 bis 31.12.1960",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 13.02,
+       "minimum_rent_per_sqm": 12.24,
+       "maximum_rent_per_sqm": 17.49,
+       "hist_listing_count": 3,
+       "hist_median_rent_sqm": 13.43
+      },
+      {
+       "construction_period": "1961 bis 1967",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 12.89,
+       "minimum_rent_per_sqm": 11.06,
+       "maximum_rent_per_sqm": 15.66,
+       "hist_listing_count": 1,
+       "hist_median_rent_sqm": 10.93
+      },
+      {
+       "construction_period": "1961 bis 1967",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 10.48,
+       "minimum_rent_per_sqm": 7.97,
+       "maximum_rent_per_sqm": 14.02,
+       "hist_listing_count": 4,
+       "hist_median_rent_sqm": 11.895
+      },
+      {
+       "construction_period": "1961 bis 1967",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 9.48,
+       "minimum_rent_per_sqm": 7.4,
+       "maximum_rent_per_sqm": 13.5,
+       "hist_listing_count": 11,
+       "hist_median_rent_sqm": 12.81
+      },
+      {
+       "construction_period": "1961 bis 1967",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 11.73,
+       "minimum_rent_per_sqm": 9.62,
+       "maximum_rent_per_sqm": 14.35,
+       "hist_listing_count": 4,
+       "hist_median_rent_sqm": 11.27
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 13.46,
+       "minimum_rent_per_sqm": 11.48,
+       "maximum_rent_per_sqm": 17.67,
+       "hist_listing_count": 5,
+       "hist_median_rent_sqm": 21.43
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 12.43,
+       "minimum_rent_per_sqm": 9.05,
+       "maximum_rent_per_sqm": 16.47,
+       "hist_listing_count": 4,
+       "hist_median_rent_sqm": 14.785
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 11.39,
+       "minimum_rent_per_sqm": 7.83,
+       "maximum_rent_per_sqm": 15.28,
+       "hist_listing_count": 16,
+       "hist_median_rent_sqm": 12.03
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 12.51,
+       "minimum_rent_per_sqm": 9.68,
+       "maximum_rent_per_sqm": 15.68,
+       "hist_listing_count": 14,
+       "hist_median_rent_sqm": 13.485
+      },
+      {
+       "construction_period": "1968 bis 1977",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 13.04,
+       "minimum_rent_per_sqm": 11.55,
+       "maximum_rent_per_sqm": 16.24,
+       "hist_listing_count": 11,
+       "hist_median_rent_sqm": 13.94
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 13.74,
+       "minimum_rent_per_sqm": 9.24,
+       "maximum_rent_per_sqm": 16.1,
+       "hist_listing_count": 1,
+       "hist_median_rent_sqm": 19.0
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 11.95,
+       "minimum_rent_per_sqm": 9.06,
+       "maximum_rent_per_sqm": 15.45,
+       "hist_listing_count": 16,
+       "hist_median_rent_sqm": 12.14
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 12.04,
+       "minimum_rent_per_sqm": 8.62,
+       "maximum_rent_per_sqm": 15.92,
+       "hist_listing_count": 17,
+       "hist_median_rent_sqm": 12.5
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 12.39,
+       "minimum_rent_per_sqm": 9.94,
+       "maximum_rent_per_sqm": 14.84,
+       "hist_listing_count": 15,
+       "hist_median_rent_sqm": 12.5
+      },
+      {
+       "construction_period": "1978 bis 1993",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 14.31,
+       "minimum_rent_per_sqm": 11.04,
+       "maximum_rent_per_sqm": 17.84,
+       "hist_listing_count": 2,
+       "hist_median_rent_sqm": 12.735
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 14.19,
+       "minimum_rent_per_sqm": 12.02,
+       "maximum_rent_per_sqm": 17.11,
+       "hist_listing_count": 3,
+       "hist_median_rent_sqm": 17.0
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 13.78,
+       "minimum_rent_per_sqm": 10.72,
+       "maximum_rent_per_sqm": 15.76,
+       "hist_listing_count": 8,
+       "hist_median_rent_sqm": 16.965
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 13.18,
+       "minimum_rent_per_sqm": 10.03,
+       "maximum_rent_per_sqm": 16.29,
+       "hist_listing_count": 15,
+       "hist_median_rent_sqm": 12.32
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 14.63,
+       "minimum_rent_per_sqm": 11.59,
+       "maximum_rent_per_sqm": 19.0,
+       "hist_listing_count": 29,
+       "hist_median_rent_sqm": 15.2
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 16.0,
+       "minimum_rent_per_sqm": 12.06,
+       "maximum_rent_per_sqm": 19.31,
+       "hist_listing_count": 23,
+       "hist_median_rent_sqm": 13.88
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 15.91,
+       "minimum_rent_per_sqm": 14.05,
+       "maximum_rent_per_sqm": 19.91,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 16.12,
+       "minimum_rent_per_sqm": 13.2,
+       "maximum_rent_per_sqm": 18.69,
+       "hist_listing_count": 2,
+       "hist_median_rent_sqm": 15.02
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 16.07,
+       "minimum_rent_per_sqm": 13.63,
+       "maximum_rent_per_sqm": 18.44,
+       "hist_listing_count": 10,
+       "hist_median_rent_sqm": 15.995
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 15.58,
+       "minimum_rent_per_sqm": 12.74,
+       "maximum_rent_per_sqm": 19.09,
+       "hist_listing_count": 22,
+       "hist_median_rent_sqm": 14.03
+      },
+      {
+       "construction_period": "2011 bis 2015",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 18.19,
+       "minimum_rent_per_sqm": 15.12,
+       "maximum_rent_per_sqm": 21.45,
+       "hist_listing_count": 4,
+       "hist_median_rent_sqm": 20.125
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 19.37,
+       "minimum_rent_per_sqm": 16.77,
+       "maximum_rent_per_sqm": 25.04,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 16.08,
+       "minimum_rent_per_sqm": 13.17,
+       "maximum_rent_per_sqm": 20.3,
+       "hist_listing_count": 25,
+       "hist_median_rent_sqm": 17.0
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 16.43,
+       "minimum_rent_per_sqm": 13.89,
+       "maximum_rent_per_sqm": 20.25,
+       "hist_listing_count": 25,
+       "hist_median_rent_sqm": 14.29
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 16.55,
+       "minimum_rent_per_sqm": 14.67,
+       "maximum_rent_per_sqm": 20.0,
+       "hist_listing_count": 38,
+       "hist_median_rent_sqm": 15.805
+      },
+      {
+       "construction_period": "2016 bis 2020",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 19.14,
+       "minimum_rent_per_sqm": 15.96,
+       "maximum_rent_per_sqm": 24.59,
+       "hist_listing_count": 11,
+       "hist_median_rent_sqm": 18.98
+      },
+      {
+       "construction_period": "2021 bis 2024",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 20.24,
+       "minimum_rent_per_sqm": 15.65,
+       "maximum_rent_per_sqm": 31.65,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "2021 bis 2024",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 18.38,
+       "minimum_rent_per_sqm": 13.96,
+       "maximum_rent_per_sqm": 24.7,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "2021 bis 2024",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 19.6,
+       "minimum_rent_per_sqm": 15.66,
+       "maximum_rent_per_sqm": 23.25,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      },
+      {
+       "construction_period": "2021 bis 2024",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 22.34,
+       "minimum_rent_per_sqm": 17.43,
+       "maximum_rent_per_sqm": 25.46,
+       "hist_listing_count": 0,
+       "hist_median_rent_sqm": null
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "construction_period",
+      "y": "reference_rent_per_sqm",
+      "color": null,
+      "title": "Official reference rent (€/m²)",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": [
+       "bis 31.12.1918",
+       "01.01.1919 bis 20.06.1948",
+       "21.06.1948 bis 31.12.1960",
+       "1961 bis 1967",
+       "1968 bis 1977",
+       "1978 bis 1993",
+       "1994 bis 2010",
+       "2011 bis 2015",
+       "2016 bis 2020",
+       "2021 bis 2024"
+      ]
+     },
+     "n_records": 48,
+     "source": "MySQL view analytics_mietenspiegel_reference (official Hamburg Mietenspiegel 2025, ref. date 2025-04-01)",
+     "filters_applied": "residential_location=Gute Wohnlage",
+     "period": "Reference date 1 April 2025 (official); historical listings 2018–2020",
+     "calculation": "Official published Mittelwert, Spanne min/max (net cold rent excl. heating and operating costs). hist_* columns = 2018–20 listings mapped to the same characteristics.",
+     "caveats": [
+      "These datasets differ in reference period, population and methodology. This comparison is contextual, not a same-period market premium or legal rent determination.",
+      "Reference rents are official benchmarks, not advertised rents."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "Which columns have the most missing values?": {
+   "text": "Verified findings:\nThe columns with the highest proportion of missing values in the Hamburg rental dataset (3,759 records, Sep 2018 – Feb 2020) are:\n- lastRefurbish: 2,868 missing (76.3%)\n- energyEfficiencyClass: 2,709 missing (72.07%)\n- heatingCosts: 2,050 missing (54.54%)\n- petsAllowed: 1,995 missing (53.07%)\n- interiorQual: 1,797 missing (47.81%)\n- numberOfFloors: 1,549 missing (41.21%)\n- houseNumber and street_decoded: 1,205 each missing (32.06%)\n- floor: 870 missing (23.14%)\n- condition: 824 missing (21.92%)\n- heatingType: 647 missing (17.21%)\n- yearConstructed: 508 missing (13.51%)\n\nColumns critical for rent calculations such as baseRent, livingSpace, and noRooms have no missing values.\n\nInterpretation:\nSome key descriptive and building-feature columns have substantial missing information, especially refurbishment date and energy efficiency class. This might affect analyses relying on these attributes for historical or quality-based rent comparisons. Core rental pricing data fields are complete.\n\nSuggested follow-up:\nFor analyses using these attributes, consider the impact of this missingness or methods to address it. Otherwise, analysis can rely on fully reported rent and area data without sample size reduction.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:26:30",
+   "tool_calls": [
+    {
+     "name": "get_data_quality_report",
+     "args": {
+      "topic": "missing_values"
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "get_data_quality_report",
+     "ok": true,
+     "title": "Data quality – missing values",
+     "summary": {
+      "checks_total": 56,
+      "checks_pass": 24,
+      "checks_info": 16,
+      "checks_warn": 16,
+      "rows_returned": 19
+     },
+     "rows": [
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "lastRefurbish",
+       "metric_value": 2868.0,
+       "metric_pct": 76.3,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "energyEfficiencyClass",
+       "metric_value": 2709.0,
+       "metric_pct": 72.07,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "heatingCosts",
+       "metric_value": 2050.0,
+       "metric_pct": 54.54,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "petsAllowed",
+       "metric_value": 1995.0,
+       "metric_pct": 53.07,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "interiorQual",
+       "metric_value": 1797.0,
+       "metric_pct": 47.81,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "numberOfFloors",
+       "metric_value": 1549.0,
+       "metric_pct": 41.21,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "houseNumber",
+       "metric_value": 1205.0,
+       "metric_pct": 32.06,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "street_decoded",
+       "metric_value": 1205.0,
+       "metric_pct": 32.06,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "floor",
+       "metric_value": 870.0,
+       "metric_pct": 23.14,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "condition",
+       "metric_value": 824.0,
+       "metric_pct": 21.92,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "heatingType",
+       "metric_value": 647.0,
+       "metric_pct": 17.21,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "yearConstructed",
+       "metric_value": 508.0,
+       "metric_pct": 13.51,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "totalRent",
+       "metric_value": 364.0,
+       "metric_pct": 9.68,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "property_type",
+       "metric_value": 319.0,
+       "metric_pct": 8.49,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "serviceCharge",
+       "metric_value": 91.0,
+       "metric_pct": 2.42,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "noRooms",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "pass",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "livingSpace",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "pass",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "baseRent",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "pass",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "rent_per_sqm",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "pass",
+       "details": "NA / empty / no_information tokens treated as missing"
+      }
+     ],
+     "chart": {
+      "kind": "hbar",
+      "x": "column_name",
+      "y": "metric_pct",
+      "color": null,
+      "title": "Missing values (% of listings)",
+      "xlabel": "",
+      "ylabel": "% missing",
+      "order": null
+     },
+     "n_records": 19,
+     "source": "MySQL table analytics_data_quality (written by the pipeline)",
+     "filters_applied": "not filtered (quality checks always cover all 3,759 Hamburg records)",
+     "period": "Whole dataset, Sep 2018 – Feb 2020",
+     "calculation": "Pipeline checks: reconciliation to raw, NA-token missingness, duplicates, rule-based flags and 1.5×IQR outlier flags.",
+     "caveats": [
+      "Outliers and suspicious records are flagged, never deleted."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "How many records are available for each snapshot?": {
+   "text": "Verified findings: \nThe number of records available for each snapshot of the Hamburg rental listings are:\n- Sep 2018: 673 records\n- May 2019: 1,071 records\n- Oct 2019: 902 records\n- Feb 2020: 1,113 records\nTotal combined records: 3,759.\n\nInterpretation:\nThe dataset covers a substantial number of listings for each snapshot period, suitable for trend and comparative analyses over time. The counts match expected values with no missing data reported for these snapshots.\n\nNo filters were applied in this data quality check. \n\nSuggested follow-up:\nNone needed unless you want granular stats or specific segment breakdowns for a snapshot.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:26:32",
+   "tool_calls": [
+    {
+     "name": "get_data_quality_report",
+     "args": {
+      "topic": "snapshot_counts"
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "get_data_quality_report",
+     "ok": true,
+     "title": "Data quality – snapshot counts",
+     "summary": {
+      "checks_total": 56,
+      "checks_pass": 24,
+      "checks_info": 16,
+      "checks_warn": 16,
+      "rows_returned": 4
+     },
+     "rows": [
+      {
+       "category": "reconciliation",
+       "check_name": "snapshot_count_Sep 2018",
+       "column_name": null,
+       "metric_value": 673.0,
+       "metric_pct": null,
+       "expected_value": 673.0,
+       "status": "pass",
+       "details": "raw 673, expected 673, transformed 673"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "snapshot_count_May 2019",
+       "column_name": null,
+       "metric_value": 1071.0,
+       "metric_pct": null,
+       "expected_value": 1071.0,
+       "status": "pass",
+       "details": "raw 1071, expected 1071, transformed 1071"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "snapshot_count_Oct 2019",
+       "column_name": null,
+       "metric_value": 902.0,
+       "metric_pct": null,
+       "expected_value": 902.0,
+       "status": "pass",
+       "details": "raw 902, expected 902, transformed 902"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "snapshot_count_Feb 2020",
+       "column_name": null,
+       "metric_value": 1113.0,
+       "metric_pct": null,
+       "expected_value": 1113.0,
+       "status": "pass",
+       "details": "raw 1113, expected 1113, transformed 1113"
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "check_name",
+      "y": "metric_value",
+      "color": null,
+      "title": "Records per snapshot",
+      "xlabel": "",
+      "ylabel": "Listings",
+      "order": null
+     },
+     "n_records": 4,
+     "source": "MySQL table analytics_data_quality (written by the pipeline)",
+     "filters_applied": "not filtered (quality checks always cover all 3,759 Hamburg records)",
+     "period": "Whole dataset, Sep 2018 – Feb 2020",
+     "calculation": "Pipeline checks: reconciliation to raw, NA-token missingness, duplicates, rule-based flags and 1.5×IQR outlier flags.",
+     "caveats": [
+      "Outliers and suspicious records are flagged, never deleted."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "Are there suspicious rent-per-square-metre values?": {
+   "text": "Verified findings: \n- There are 3.0 listings (0.08% of 3,759) with suspiciously low rent per m² below €5. \n- There are 14.0 listings (0.37%) with suspiciously high rent per m² above €40. \n- The usual outlier fences for rent per m² are €3.94 to €23.34/m² according to the 1.5×IQR rule, with 183 listings (4.87%) flagged as high outliers but retained. No low-side outliers flagged. \n- Other suspicious values include small living space (<15 m², 7 listings, 0.19%) and some anomalies in construction year, total rent, and area per room, but these are smaller counts.\n\nInterpretation: \nSome listings show rent per m² values significantly outside common ranges seen in the dataset, particularly above €40/m² and below €5/m². These could reflect data entry errors, exceptional properties, or unusual cases but are not removed from the dataset. The largest group of flagged outliers are high rents above the typical interquartile range.\n\nSuggested follow-up: \nIt may be helpful to review a sample of these flagged records for potential quality issues or special property conditions to better understand their context and impact on analysis.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:26:35",
+   "tool_calls": [
+    {
+     "name": "get_data_quality_report",
+     "args": {
+      "topic": "outliers"
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "get_data_quality_report",
+     "ok": true,
+     "title": "Data quality – outliers",
+     "summary": {
+      "checks_total": 56,
+      "checks_pass": 24,
+      "checks_info": 16,
+      "checks_warn": 16,
+      "rows_returned": 8
+     },
+     "rows": [
+      {
+       "category": "suspicious_values",
+       "check_name": "rent_sqm_below_5",
+       "column_name": null,
+       "metric_value": 3.0,
+       "metric_pct": 0.08,
+       "expected_value": null,
+       "status": "warn",
+       "details": "rent/m² < €5 – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "rent_sqm_above_40",
+       "column_name": null,
+       "metric_value": 14.0,
+       "metric_pct": 0.37,
+       "expected_value": null,
+       "status": "warn",
+       "details": "rent/m² > €40 – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "living_space_below_15",
+       "column_name": null,
+       "metric_value": 7.0,
+       "metric_pct": 0.19,
+       "expected_value": null,
+       "status": "warn",
+       "details": "living area < 15 m² – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "implausible_construction_year",
+       "column_name": null,
+       "metric_value": 2.0,
+       "metric_pct": 0.05,
+       "expected_value": null,
+       "status": "warn",
+       "details": "construction year outside 1800–2021 – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "total_rent_below_base_rent",
+       "column_name": null,
+       "metric_value": 3.0,
+       "metric_pct": 0.08,
+       "expected_value": null,
+       "status": "warn",
+       "details": "total rent lower than base rent – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "area_per_room_below_8",
+       "column_name": null,
+       "metric_value": 2.0,
+       "metric_pct": 0.05,
+       "expected_value": null,
+       "status": "warn",
+       "details": "less than 8 m² per room – flagged, not removed"
+      },
+      {
+       "category": "outliers",
+       "check_name": "iqr_outlier_high",
+       "column_name": "rent_per_sqm",
+       "metric_value": 183.0,
+       "metric_pct": 4.87,
+       "expected_value": null,
+       "status": "info",
+       "details": "1.5×IQR fences €3.94–€23.34/m²; records retained"
+      },
+      {
+       "category": "outliers",
+       "check_name": "iqr_outlier_low",
+       "column_name": "rent_per_sqm",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "info",
+       "details": "1.5×IQR fences €3.94–€23.34/m²; records retained"
+      }
+     ],
+     "chart": null,
+     "n_records": 8,
+     "source": "MySQL table analytics_data_quality (written by the pipeline)",
+     "filters_applied": "not filtered (quality checks always cover all 3,759 Hamburg records)",
+     "period": "Whole dataset, Sep 2018 – Feb 2020",
+     "calculation": "Pipeline checks: reconciliation to raw, NA-token missingness, duplicates, rule-based flags and 1.5×IQR outlier flags.",
+     "caveats": [
+      "Outliers and suspicious records are flagged, never deleted."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "Explain the data-quality limitations of this dataset.": {
+   "text": "Verified findings:\n- The dataset contains 3,759 listings for Hamburg across four snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020).\n- There are no missing values for baseRent, livingSpace, noRooms, or rent_per_sqm fields (0% missing).\n- There is some missing data for totalRent (9.7% missing), serviceCharge (2.4% missing), heatingCosts (54.5% missing), and yearConstructed (13.5% missing).\n- The \"NA\" literal values have been correctly preserved as NULLs in relevant columns.\n- No discrepancies found between raw and transformed data counts or rent_per_sqm recalculation, indicating good data consistency.\n- Out of 56 data quality checks, 24 passed, 16 gave informational messages, and 16 gave warnings, a mixture indicating known minor quality issues.\n- Missing heatingCosts is a significant limitation with over half of these values absent.\n- The data includes flagged outliers (none removed).\n\nInterpretation:\nThe dataset is generally internally consistent with full coverage of key rent and size metrics. However, the relatively high proportion of missing heating costs data limits analysis on total and operating costs. Missing year constructed for about 13.5% of listings reduces granularity for age-related rent analysis. These factors reduce completeness but not the reliability of the core rent and size data.\n\nSuggested follow-up:\n- Investigate if missing heatingCosts are concentrated by snapshot, location, or property type to assess bias.\n- Explore possible imputation or supplemental data sources for missing heating costs or year of construction.\n- Consider the missingness patterns when using total rent or construction period variables in analysis.\n\nLet me know if you want detailed missing value stats or issues by snapshot or other breakdowns.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:26:39",
+   "tool_calls": [
+    {
+     "name": "get_data_quality_report",
+     "args": {
+      "topic": "overview"
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "get_data_quality_report",
+     "ok": true,
+     "title": "Data quality – overview",
+     "summary": {
+      "checks_total": 56,
+      "checks_pass": 24,
+      "checks_info": 16,
+      "checks_warn": 16,
+      "rows_returned": 56
+     },
+     "rows": [
+      {
+       "category": "row_counts",
+       "check_name": "expected_row_count",
+       "column_name": null,
+       "metric_value": 268850.0,
+       "metric_pct": null,
+       "expected_value": 268850.0,
+       "status": "pass",
+       "details": "expected 268,850, found 268,850"
+      },
+      {
+       "category": "row_counts",
+       "check_name": "expected_row_count",
+       "column_name": null,
+       "metric_value": 88.0,
+       "metric_pct": null,
+       "expected_value": 88.0,
+       "status": "pass",
+       "details": "expected 88, found 88"
+      },
+      {
+       "category": "row_counts",
+       "check_name": "expected_row_count",
+       "column_name": null,
+       "metric_value": 1.0,
+       "metric_pct": null,
+       "expected_value": 1.0,
+       "status": "pass",
+       "details": "expected 1, found 1"
+      },
+      {
+       "category": "row_counts",
+       "check_name": "expected_row_count",
+       "column_name": null,
+       "metric_value": 26205.0,
+       "metric_pct": null,
+       "expected_value": 26205.0,
+       "status": "pass",
+       "details": "expected 26,205, found 26,205"
+      },
+      {
+       "category": "row_counts",
+       "check_name": "expected_row_count",
+       "column_name": null,
+       "metric_value": 3759.0,
+       "metric_pct": null,
+       "expected_value": 3759.0,
+       "status": "pass",
+       "details": "expected 3,759, found 3,759"
+      },
+      {
+       "category": "row_counts",
+       "check_name": "expected_row_count",
+       "column_name": null,
+       "metric_value": 88.0,
+       "metric_pct": null,
+       "expected_value": 88.0,
+       "status": "pass",
+       "details": "expected 88, found 88"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "raw_hamburg_to_staging",
+       "column_name": null,
+       "metric_value": 3759.0,
+       "metric_pct": null,
+       "expected_value": 3759.0,
+       "status": "pass",
+       "details": "raw Hamburg rows 3,759 vs transformed 3,759"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "snapshot_count_Sep 2018",
+       "column_name": null,
+       "metric_value": 673.0,
+       "metric_pct": null,
+       "expected_value": 673.0,
+       "status": "pass",
+       "details": "raw 673, expected 673, transformed 673"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "snapshot_count_May 2019",
+       "column_name": null,
+       "metric_value": 1071.0,
+       "metric_pct": null,
+       "expected_value": 1071.0,
+       "status": "pass",
+       "details": "raw 1071, expected 1071, transformed 1071"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "snapshot_count_Oct 2019",
+       "column_name": null,
+       "metric_value": 902.0,
+       "metric_pct": null,
+       "expected_value": 902.0,
+       "status": "pass",
+       "details": "raw 902, expected 902, transformed 902"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "snapshot_count_Feb 2020",
+       "column_name": null,
+       "metric_value": 1113.0,
+       "metric_pct": null,
+       "expected_value": 1113.0,
+       "status": "pass",
+       "details": "raw 1113, expected 1113, transformed 1113"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "rent_per_sqm_recalculation",
+       "column_name": null,
+       "metric_value": 0.0,
+       "metric_pct": null,
+       "expected_value": 0.0,
+       "status": "pass",
+       "details": "rows where baseRent/livingSpace differs from staged rent_per_sqm by > €0.01"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "na_token_preserved_yearConstructed",
+       "column_name": "yearConstructed",
+       "metric_value": 508.0,
+       "metric_pct": null,
+       "expected_value": 508.0,
+       "status": "pass",
+       "details": "raw literal 'NA' count 508 → NULL count 508"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "na_token_preserved_totalRent",
+       "column_name": "totalRent",
+       "metric_value": 364.0,
+       "metric_pct": null,
+       "expected_value": 364.0,
+       "status": "pass",
+       "details": "raw literal 'NA' count 364 → NULL count 364"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "na_token_preserved_serviceCharge",
+       "column_name": "serviceCharge",
+       "metric_value": 91.0,
+       "metric_pct": null,
+       "expected_value": 91.0,
+       "status": "pass",
+       "details": "raw literal 'NA' count 91 → NULL count 91"
+      },
+      {
+       "category": "reconciliation",
+       "check_name": "na_token_preserved_heatingCosts",
+       "column_name": "heatingCosts",
+       "metric_value": 2050.0,
+       "metric_pct": null,
+       "expected_value": 2050.0,
+       "status": "pass",
+       "details": "raw literal 'NA' count 2050 → NULL count 2050"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "baseRent",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "pass",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "livingSpace",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "pass",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "noRooms",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "pass",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "rent_per_sqm",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "pass",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "totalRent",
+       "metric_value": 364.0,
+       "metric_pct": 9.68,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "serviceCharge",
+       "metric_value": 91.0,
+       "metric_pct": 2.42,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "heatingCosts",
+       "metric_value": 2050.0,
+       "metric_pct": 54.54,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "yearConstructed",
+       "metric_value": 508.0,
+       "metric_pct": 13.51,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "property_type",
+       "metric_value": 319.0,
+       "metric_pct": 8.49,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "condition",
+       "metric_value": 824.0,
+       "metric_pct": 21.92,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "interiorQual",
+       "metric_value": 1797.0,
+       "metric_pct": 47.81,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "heatingType",
+       "metric_value": 647.0,
+       "metric_pct": 17.21,
+       "expected_value": null,
+       "status": "info",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "street_decoded",
+       "metric_value": 1205.0,
+       "metric_pct": 32.06,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "houseNumber",
+       "metric_value": 1205.0,
+       "metric_pct": 32.06,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "energyEfficiencyClass",
+       "metric_value": 2709.0,
+       "metric_pct": 72.07,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "lastRefurbish",
+       "metric_value": 2868.0,
+       "metric_pct": 76.3,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "floor",
+       "metric_value": 870.0,
+       "metric_pct": 23.14,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "numberOfFloors",
+       "metric_value": 1549.0,
+       "metric_pct": 41.21,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "missing_values",
+       "check_name": "missing_count",
+       "column_name": "petsAllowed",
+       "metric_value": 1995.0,
+       "metric_pct": 53.07,
+       "expected_value": null,
+       "status": "warn",
+       "details": "NA / empty / no_information tokens treated as missing"
+      },
+      {
+       "category": "duplicates",
+       "check_name": "duplicate_scout_id",
+       "column_name": null,
+       "metric_value": 0.0,
+       "metric_pct": null,
+       "expected_value": 0.0,
+       "status": "pass",
+       "details": "duplicate listing IDs (scoutId)"
+      },
+      {
+       "category": "duplicates",
+       "check_name": "duplicate_source_record_id",
+       "column_name": null,
+       "metric_value": 0.0,
+       "metric_pct": null,
+       "expected_value": 0.0,
+       "status": "pass",
+       "details": "duplicate primary keys"
+      },
+      {
+       "category": "duplicates",
+       "check_name": "possible_duplicate_within_snapshot",
+       "column_name": null,
+       "metric_value": 33.0,
+       "metric_pct": null,
+       "expected_value": null,
+       "status": "info",
+       "details": "same address + area + rent within one snapshot (kept; flagged for investigation)"
+      },
+      {
+       "category": "duplicates",
+       "check_name": "possible_relisting_across_snapshots",
+       "column_name": null,
+       "metric_value": 21.0,
+       "metric_pct": null,
+       "expected_value": null,
+       "status": "info",
+       "details": "same address + area + rent in a different snapshot (re-advertised units; kept)"
+      },
+      {
+       "category": "duplicates",
+       "check_name": "location_range_duplicates",
+       "column_name": null,
+       "metric_value": 5.0,
+       "metric_pct": null,
+       "expected_value": null,
+       "status": "info",
+       "details": "identical street + range + numbering type rows in the Wohnlagenverzeichnis extract"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "rent_sqm_below_5",
+       "column_name": null,
+       "metric_value": 3.0,
+       "metric_pct": 0.08,
+       "expected_value": null,
+       "status": "warn",
+       "details": "rent/m² < €5 – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "rent_sqm_above_40",
+       "column_name": null,
+       "metric_value": 14.0,
+       "metric_pct": 0.37,
+       "expected_value": null,
+       "status": "warn",
+       "details": "rent/m² > €40 – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "living_space_below_15",
+       "column_name": null,
+       "metric_value": 7.0,
+       "metric_pct": 0.19,
+       "expected_value": null,
+       "status": "warn",
+       "details": "living area < 15 m² – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "implausible_construction_year",
+       "column_name": null,
+       "metric_value": 2.0,
+       "metric_pct": 0.05,
+       "expected_value": null,
+       "status": "warn",
+       "details": "construction year outside 1800–2021 – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "total_rent_below_base_rent",
+       "column_name": null,
+       "metric_value": 3.0,
+       "metric_pct": 0.08,
+       "expected_value": null,
+       "status": "warn",
+       "details": "total rent lower than base rent – flagged, not removed"
+      },
+      {
+       "category": "suspicious_values",
+       "check_name": "area_per_room_below_8",
+       "column_name": null,
+       "metric_value": 2.0,
+       "metric_pct": 0.05,
+       "expected_value": null,
+       "status": "warn",
+       "details": "less than 8 m² per room – flagged, not removed"
+      },
+      {
+       "category": "outliers",
+       "check_name": "iqr_outlier_high",
+       "column_name": "rent_per_sqm",
+       "metric_value": 183.0,
+       "metric_pct": 4.87,
+       "expected_value": null,
+       "status": "info",
+       "details": "1.5×IQR fences €3.94–€23.34/m²; records retained"
+      },
+      {
+       "category": "outliers",
+       "check_name": "iqr_outlier_low",
+       "column_name": "rent_per_sqm",
+       "metric_value": 0.0,
+       "metric_pct": 0.0,
+       "expected_value": null,
+       "status": "info",
+       "details": "1.5×IQR fences €3.94–€23.34/m²; records retained"
+      },
+      {
+       "category": "benchmark",
+       "check_name": "min_le_mean_le_max",
+       "column_name": null,
+       "metric_value": 0.0,
+       "metric_pct": null,
+       "expected_value": 0.0,
+       "status": "pass",
+       "details": "every reference value lies within its official range"
+      },
+      {
+       "category": "benchmark",
+       "check_name": "missing_reference_values",
+       "column_name": null,
+       "metric_value": 0.0,
+       "metric_pct": null,
+       "expected_value": 0.0,
+       "status": "pass",
+       "details": ""
+      },
+      {
+       "category": "benchmark",
+       "check_name": "characteristic_grid_coverage",
+       "column_name": null,
+       "metric_value": 88.0,
+       "metric_pct": null,
+       "expected_value": 90.0,
+       "status": "info",
+       "details": "88 of 90 possible period × location × area cells published (2 cells not published for 'Gute Wohnlage')"
+      },
+      {
+       "category": "locations",
+       "check_name": "pdf_vs_loaded_count",
+       "column_name": null,
+       "metric_value": 26205.0,
+       "metric_pct": null,
+       "expected_value": 25786.0,
+       "status": "info",
+       "details": "loaded 26,205 vs PDF-stated 25,786: +419 extracted rows preserved (see docs)"
+      },
+      {
+       "category": "locations",
+       "check_name": "listing_match_matched",
+       "column_name": null,
+       "metric_value": 2422.0,
+       "metric_pct": 64.43,
+       "expected_value": null,
+       "status": "info",
+       "details": "conservative Wohnlagen address match result"
+      },
+      {
+       "category": "locations",
+       "check_name": "listing_match_no_address",
+       "column_name": null,
+       "metric_value": 1269.0,
+       "metric_pct": 33.76,
+       "expected_value": null,
+       "status": "info",
+       "details": "conservative Wohnlagen address match result"
+      },
+      {
+       "category": "locations",
+       "check_name": "listing_match_unmatched_street",
+       "column_name": null,
+       "metric_value": 41.0,
+       "metric_pct": 1.09,
+       "expected_value": null,
+       "status": "info",
+       "details": "conservative Wohnlagen address match result"
+      },
+      {
+       "category": "locations",
+       "check_name": "listing_match_unmatched_number",
+       "column_name": null,
+       "metric_value": 27.0,
+       "metric_pct": 0.72,
+       "expected_value": null,
+       "status": "info",
+       "details": "conservative Wohnlagen address match result"
+      }
+     ],
+     "chart": null,
+     "n_records": 56,
+     "source": "MySQL table analytics_data_quality (written by the pipeline)",
+     "filters_applied": "not filtered (quality checks always cover all 3,759 Hamburg records)",
+     "period": "Whole dataset, Sep 2018 – Feb 2020",
+     "calculation": "Pipeline checks: reconciliation to raw, NA-token missingness, duplicates, rule-based flags and 1.5×IQR outlier flags.",
+     "caveats": [
+      "Outliers and suspicious records are flagged, never deleted."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "Prepare an executive summary of the available market data.": {
+   "text": "Verified findings: \nThe available data includes 3,759 Hamburg rental listings from four independent ImmoScout24 snapshots between Sep 2018 and Feb 2020 across 94 neighbourhoods. Median rent per m² is 13.5 €/m², with a mean of 14.35 €/m². The interquartile range is from 11.22 €/m² (25th percentile) to 16.07 €/m² (75th percentile), with minimum and maximum rents at 4.35 €/m² and 61.25 €/m² respectively. Median living space is 76 m², median rooms count is 3, and median base cold rent is 1,014 EUR. No filters were applied.\n\nInterpretation:\nThe rent distribution shows a wide range with some higher outliers. The median rent per m² around 13.5 €/m² is a central tendency across various neighbourhoods and types. The typical listing targets around 3-room apartments with moderate living space. These figures represent historic advertised cold rents and should not be considered current or legal rent values.\n\nSuggested follow-up:\nA breakdown by key factors such as construction period, equipment level, and neighbourhood class would provide further insights. Comparing these listings to the official Hamburg Mietenspiegel 2025 benchmarks might clarify rental levels relative to regulatory references.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:26:42",
+   "tool_calls": [
+    {
+     "name": "get_market_summary",
+     "args": {}
+    }
+   ],
+   "results": [
+    {
+     "tool": "get_market_summary",
+     "ok": true,
+     "title": "Market summary",
+     "summary": {
+      "listings": 3759,
+      "median_rent_per_sqm": 13.5,
+      "mean_rent_per_sqm": 14.35291034849694,
+      "p25": 11.215,
+      "p75": 16.064999999999998,
+      "p90": 19.9,
+      "min": 4.35,
+      "max": 61.25,
+      "median_living_space_sqm": 76.0,
+      "median_rooms": 3.0,
+      "median_base_rent_eur": 1014.0,
+      "neighbourhoods": 94
+     },
+     "rows": [
+      {
+       "listings": 3759,
+       "median_rent_per_sqm": 13.5,
+       "mean_rent_per_sqm": 14.353,
+       "p25": 11.215,
+       "p75": 16.065,
+       "p90": 19.9,
+       "min": 4.35,
+       "max": 61.25,
+       "median_living_space_sqm": 76.0,
+       "median_rooms": 3.0,
+       "median_base_rent_eur": 1014.0,
+       "neighbourhoods": 94
+      }
+     ],
+     "chart": null,
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "rent_per_sqm = baseRent ÷ livingSpace; percentiles by linear interpolation.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "Which neighbourhoods should be investigated further?": {
+   "text": "Verified findings:\nThe top 10 neighbourhoods by number of listings (n≥84) in Hamburg are:\n- Rahlstedt (187 listings), median rent per m² 11.41 €\n- Winterhude (139 listings), median 17.00 €\n- Bergedorf (133 listings), median 12.10 €\n- Langenhorn (126 listings), median 13.08 €\n- Harburg (97 listings), median 12.68 €\n- HafenCity (89 listings), median 20.29 €\n- Wellingsbüttel (87 listings), median 13.75 €\n- Bramfeld (85 listings), median 12.55 €\n- Poppenbüttel (84 listings), median 12.98 €\n- Wandsbek (84 listings), median 12.02 €\n\nAll neighbourhood samples have at least 84 listings and stable data coverage with no filters applied.\n\nInterpretation:\nNeighbourhoods with both high listing counts and a broad range of median rents like Winterhude and HafenCity stand out due to upper median rents (17.00 €/m² and 20.29 €/m² respectively). Rahlstedt has the largest sample but a lower median rent (11.41 €/m²). Investigation into price dispersion, outliers, and trends in these areas may be informative. Lower priced neighbourhoods with large samples like Bergedorf and Bramfeld can also be benchmarked.\n\nSuggested follow-up:\nFurther investigation could focus on:\n- Rent trends over time for these neighbourhoods\n- Distribution and outliers in rents within them\n- Comparisons with official Mietenspiegel 2025 benchmarks by location and property type\n- Specific characteristics driving rent variation (size, age, amenities)\n\nThis would help understand differences in rental dynamics across diverse neighbourhoods with good data coverage.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:26:45",
+   "tool_calls": [
+    {
+     "name": "compare_neighbourhoods",
+     "args": {
+      "top_n": 10,
+      "min_listings": 10,
+      "metric": "count"
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "compare_neighbourhoods",
+     "ok": true,
+     "title": "Neighbourhood comparison",
+     "summary": {
+      "ranked_by": "count",
+      "top_neighbourhood": "Rahlstedt",
+      "top_value": "187",
+      "neighbourhoods_returned": 10
+     },
+     "rows": [
+      {
+       "neighbourhood": "Rahlstedt",
+       "listings": 187,
+       "median_rent_per_sqm": 11.41,
+       "mean_rent_per_sqm": 11.595,
+       "p25": 10.195,
+       "p75": 12.845,
+       "min": 5.32,
+       "max": 32.22,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Winterhude",
+       "listings": 139,
+       "median_rent_per_sqm": 17.0,
+       "mean_rent_per_sqm": 17.52,
+       "p25": 14.655,
+       "p75": 19.605,
+       "min": 8.37,
+       "max": 45.63,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Bergedorf",
+       "listings": 133,
+       "median_rent_per_sqm": 12.1,
+       "mean_rent_per_sqm": 12.055,
+       "p25": 11.08,
+       "p75": 13.08,
+       "min": 7.22,
+       "max": 16.84,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Langenhorn",
+       "listings": 126,
+       "median_rent_per_sqm": 13.08,
+       "mean_rent_per_sqm": 12.705,
+       "p25": 11.33,
+       "p75": 13.832,
+       "min": 8.99,
+       "max": 16.96,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Harburg",
+       "listings": 97,
+       "median_rent_per_sqm": 12.68,
+       "mean_rent_per_sqm": 12.366,
+       "p25": 11.0,
+       "p75": 14.0,
+       "min": 6.33,
+       "max": 24.8,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "HafenCity",
+       "listings": 89,
+       "median_rent_per_sqm": 20.29,
+       "mean_rent_per_sqm": 20.587,
+       "p25": 17.28,
+       "p75": 23.13,
+       "min": 12.19,
+       "max": 30.0,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Wellingsbüttel",
+       "listings": 87,
+       "median_rent_per_sqm": 13.75,
+       "mean_rent_per_sqm": 14.037,
+       "p25": 12.845,
+       "p75": 15.86,
+       "min": 8.99,
+       "max": 19.73,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Bramfeld",
+       "listings": 85,
+       "median_rent_per_sqm": 12.55,
+       "mean_rent_per_sqm": 12.481,
+       "p25": 10.5,
+       "p75": 13.8,
+       "min": 8.33,
+       "max": 37.17,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Poppenbüttel",
+       "listings": 84,
+       "median_rent_per_sqm": 12.975,
+       "mean_rent_per_sqm": 13.123,
+       "p25": 11.0,
+       "p75": 14.893,
+       "min": 8.6,
+       "max": 17.83,
+       "sample_flag": "ok"
+      },
+      {
+       "neighbourhood": "Wandsbek",
+       "listings": 84,
+       "median_rent_per_sqm": 12.015,
+       "mean_rent_per_sqm": 12.917,
+       "p25": 11.0,
+       "p75": 14.285,
+       "min": 7.88,
+       "max": 31.32,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "hbar",
+      "x": "neighbourhood",
+      "y": "listings",
+      "color": null,
+      "title": "Count by neighbourhood",
+      "xlabel": "",
+      "ylabel": "Listings",
+      "order": null
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Per neighbourhood: count of baseRent ÷ livingSpace; neighbourhoods with < 10 listings excluded.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "What factors appear associated with higher advertised rents?": {
+   "text": "**Verified findings:**\n\n- Room count: 1-room listings have the highest median rent per m² at 15.03€/m² (n=337), with rents generally decreasing for 1.5–4 rooms, then slightly increasing again beyond 4.5 rooms.\n- Size: Very small apartments (<40 m²) have the highest median rent per m² at 16.74€/m² (n=264). For bigger sizes, median rents tend to be around 12.64–14.44€/m².\n- Construction year: Oldest buildings (before 1919) have a median rent of 15.00€/m² (n=396), newer buildings around 2016–2020 have median 14.76€/m² (n=894), with other periods generally lower.\n- Property type: Penthouse (median 15.5€/m², n=113) and half-basement units (15.79€/m², n=23) stand out with higher rents. Apartments have median 13.68€/m² (n=2090).\n- Features: Listings with a lift have median rent 14.50€/m² (n=1486) vs. 12.63€/m² without (n=2273). New constructions median is 14.68€/m² (n=633) vs. 13.11€/m² older listings (n=3126).\n- Balcony and garden presence show slight median rent differences: balcony yes 13.5€/m² versus no 13.42€/m²; garden yes 13.73€/m² versus no 13.45€/m² (n>600 each).\n\n**Interpretation:**\n\nHigher advertised rents per m² tend to be associated with smaller apartment sizes, fewer rooms (especially 1-room), early or very recent construction years, penthouse or special property types, presence of a lift, and new construction status. Features like balconies and gardens show only mild associations with rent per m².\n\n**Suggested follow-up:**\n\nA multivariate analysis accounting for interaction effects between these factors (location, size, age, features) could provide better understanding of combined influences on advertised rents. Also comparing with Mietenspiegel 2025 reference rents by these factors could help interpret relative positions.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:26:54",
+   "tool_calls": [
+    {
+     "name": "analyse_property_characteristics",
+     "args": {
+      "dimension": "room_band"
+     }
+    },
+    {
+     "name": "analyse_property_characteristics",
+     "args": {
+      "dimension": "size_band"
+     }
+    },
+    {
+     "name": "analyse_property_characteristics",
+     "args": {
+      "dimension": "year_band"
+     }
+    },
+    {
+     "name": "analyse_property_characteristics",
+     "args": {
+      "dimension": "property_type"
+     }
+    },
+    {
+     "name": "analyse_property_characteristics",
+     "args": {
+      "dimension": "has_balcony"
+     }
+    },
+    {
+     "name": "analyse_property_characteristics",
+     "args": {
+      "dimension": "has_garden"
+     }
+    },
+    {
+     "name": "analyse_property_characteristics",
+     "args": {
+      "dimension": "has_lift"
+     }
+    },
+    {
+     "name": "analyse_property_characteristics",
+     "args": {
+      "dimension": "is_new_construction"
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "analyse_property_characteristics",
+     "ok": true,
+     "title": "Rent per m² by room_band",
+     "summary": {
+      "dimension": "room_band",
+      "coverage_pct": 100.0
+     },
+     "rows": [
+      {
+       "segment": "1",
+       "listings": 337,
+       "median_rent_per_sqm": 15.03,
+       "mean_rent_per_sqm": 18.671,
+       "p25": 12.05,
+       "p75": 23.44,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "1.5–2",
+       "listings": 1231,
+       "median_rent_per_sqm": 13.26,
+       "mean_rent_per_sqm": 14.06,
+       "p25": 11.075,
+       "p75": 16.0,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "2.5–3",
+       "listings": 1465,
+       "median_rent_per_sqm": 13.24,
+       "mean_rent_per_sqm": 13.769,
+       "p25": 11.0,
+       "p75": 15.85,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "3.5–4",
+       "listings": 529,
+       "median_rent_per_sqm": 13.68,
+       "mean_rent_per_sqm": 13.914,
+       "p25": 11.69,
+       "p75": 15.52,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "4.5+",
+       "listings": 197,
+       "median_rent_per_sqm": 13.93,
+       "mean_rent_per_sqm": 14.318,
+       "p25": 11.79,
+       "p75": 16.34,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "segment",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median rent per m² by room band",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": [
+       "1",
+       "1.5–2",
+       "2.5–3",
+       "3.5–4",
+       "4.5+"
+      ]
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Median/mean/P25/P75 of baseRent ÷ livingSpace per segment; rows with missing values grouped as 'Missing / unknown'.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents.",
+      "Coverage: 100.0% of listings have a value for this characteristic.",
+      "Differences are associations; characteristics correlate with each other (size, age, location), so they are not causal effects."
+     ],
+     "error": ""
+    },
+    {
+     "tool": "analyse_property_characteristics",
+     "ok": true,
+     "title": "Rent per m² by size_band",
+     "summary": {
+      "dimension": "size_band",
+      "coverage_pct": 100.0,
+      "spearman_area_vs_rent_per_sqm": 0.006
+     },
+     "rows": [
+      {
+       "segment": "< 40 m²",
+       "listings": 264,
+       "median_rent_per_sqm": 16.735,
+       "mean_rent_per_sqm": 20.179,
+       "p25": 12.935,
+       "p75": 25.455,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "40–60 m²",
+       "listings": 725,
+       "median_rent_per_sqm": 13.21,
+       "mean_rent_per_sqm": 14.169,
+       "p25": 11.01,
+       "p75": 16.36,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "60–80 m²",
+       "listings": 1036,
+       "median_rent_per_sqm": 12.64,
+       "mean_rent_per_sqm": 13.175,
+       "p25": 10.508,
+       "p75": 15.0,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "80–100 m²",
+       "listings": 751,
+       "median_rent_per_sqm": 13.54,
+       "mean_rent_per_sqm": 13.906,
+       "p25": 11.36,
+       "p75": 15.85,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "100–130 m²",
+       "listings": 570,
+       "median_rent_per_sqm": 13.585,
+       "mean_rent_per_sqm": 14.122,
+       "p25": 11.55,
+       "p75": 15.965,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "≥ 130 m²",
+       "listings": 413,
+       "median_rent_per_sqm": 14.44,
+       "mean_rent_per_sqm": 15.038,
+       "p25": 12.29,
+       "p75": 17.0,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "segment",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median rent per m² by size band",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": [
+       "< 40 m²",
+       "40–60 m²",
+       "60–80 m²",
+       "80–100 m²",
+       "100–130 m²",
+       "≥ 130 m²"
+      ]
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Median/mean/P25/P75 of baseRent ÷ livingSpace per segment; rows with missing values grouped as 'Missing / unknown'.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents.",
+      "Coverage: 100.0% of listings have a value for this characteristic.",
+      "Differences are associations; characteristics correlate with each other (size, age, location), so they are not causal effects."
+     ],
+     "error": ""
+    },
+    {
+     "tool": "analyse_property_characteristics",
+     "ok": true,
+     "title": "Rent per m² by year_band",
+     "summary": {
+      "dimension": "year_band",
+      "coverage_pct": 86.4
+     },
+     "rows": [
+      {
+       "segment": "Before 1919",
+       "listings": 396,
+       "median_rent_per_sqm": 15.0,
+       "mean_rent_per_sqm": 15.599,
+       "p25": 12.562,
+       "p75": 17.538,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "1919–1948",
+       "listings": 145,
+       "median_rent_per_sqm": 12.99,
+       "mean_rent_per_sqm": 13.969,
+       "p25": 10.55,
+       "p75": 16.64,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "1949–1960",
+       "listings": 335,
+       "median_rent_per_sqm": 12.5,
+       "mean_rent_per_sqm": 13.381,
+       "p25": 10.69,
+       "p75": 15.025,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "1961–1977",
+       "listings": 515,
+       "median_rent_per_sqm": 11.74,
+       "mean_rent_per_sqm": 12.444,
+       "p25": 10.265,
+       "p75": 13.84,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "1978–1993",
+       "listings": 242,
+       "median_rent_per_sqm": 11.37,
+       "mean_rent_per_sqm": 12.057,
+       "p25": 10.02,
+       "p75": 13.5,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "1994–2010",
+       "listings": 415,
+       "median_rent_per_sqm": 12.02,
+       "mean_rent_per_sqm": 12.902,
+       "p25": 10.535,
+       "p75": 14.965,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "2011–2015",
+       "listings": 307,
+       "median_rent_per_sqm": 13.82,
+       "mean_rent_per_sqm": 14.206,
+       "p25": 12.0,
+       "p75": 15.56,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "2016–2020",
+       "listings": 894,
+       "median_rent_per_sqm": 14.76,
+       "mean_rent_per_sqm": 15.731,
+       "p25": 13.16,
+       "p75": 17.273,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "Missing / unknown",
+       "listings": 510,
+       "median_rent_per_sqm": 13.66,
+       "mean_rent_per_sqm": 16.004,
+       "p25": 11.23,
+       "p75": 17.205,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "segment",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median rent per m² by year band",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": [
+       "Before 1919",
+       "1919–1948",
+       "1949–1960",
+       "1961–1977",
+       "1978–1993",
+       "1994–2010",
+       "2011–2015",
+       "2016–2020"
+      ]
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Median/mean/P25/P75 of baseRent ÷ livingSpace per segment; rows with missing values grouped as 'Missing / unknown'.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents.",
+      "Coverage: 86.4% of listings have a value for this characteristic.",
+      "Differences are associations; characteristics correlate with each other (size, age, location), so they are not causal effects."
+     ],
+     "error": ""
+    },
+    {
+     "tool": "analyse_property_characteristics",
+     "ok": true,
+     "title": "Rent per m² by property_type",
+     "summary": {
+      "dimension": "property_type",
+      "coverage_pct": 91.5
+     },
+     "rows": [
+      {
+       "segment": "Missing / unknown",
+       "listings": 319,
+       "median_rent_per_sqm": 13.51,
+       "mean_rent_per_sqm": 14.129,
+       "p25": 10.575,
+       "p75": 15.98,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "apartment",
+       "listings": 2090,
+       "median_rent_per_sqm": 13.675,
+       "mean_rent_per_sqm": 14.753,
+       "p25": 11.34,
+       "p75": 16.633,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "ground_floor",
+       "listings": 393,
+       "median_rent_per_sqm": 13.11,
+       "mean_rent_per_sqm": 13.602,
+       "p25": 10.95,
+       "p75": 14.8,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "half_basement",
+       "listings": 23,
+       "median_rent_per_sqm": 15.79,
+       "mean_rent_per_sqm": 15.366,
+       "p25": 11.735,
+       "p75": 17.985,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "loft",
+       "listings": 14,
+       "median_rent_per_sqm": 14.48,
+       "mean_rent_per_sqm": 14.968,
+       "p25": 12.475,
+       "p75": 16.53,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "maisonette",
+       "listings": 179,
+       "median_rent_per_sqm": 13.16,
+       "mean_rent_per_sqm": 13.779,
+       "p25": 11.485,
+       "p75": 15.74,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "other",
+       "listings": 117,
+       "median_rent_per_sqm": 13.15,
+       "mean_rent_per_sqm": 13.965,
+       "p25": 11.22,
+       "p75": 15.0,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "penthouse",
+       "listings": 113,
+       "median_rent_per_sqm": 15.5,
+       "mean_rent_per_sqm": 15.857,
+       "p25": 12.96,
+       "p75": 18.39,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "raised_ground_floor",
+       "listings": 91,
+       "median_rent_per_sqm": 13.5,
+       "mean_rent_per_sqm": 14.45,
+       "p25": 11.45,
+       "p75": 16.25,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "roof_storey",
+       "listings": 348,
+       "median_rent_per_sqm": 12.35,
+       "mean_rent_per_sqm": 12.862,
+       "p25": 10.41,
+       "p75": 14.532,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "terraced_flat",
+       "listings": 72,
+       "median_rent_per_sqm": 13.405,
+       "mean_rent_per_sqm": 14.17,
+       "p25": 11.967,
+       "p75": 15.46,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "segment",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median rent per m² by property type",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": null
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Median/mean/P25/P75 of baseRent ÷ livingSpace per segment; rows with missing values grouped as 'Missing / unknown'.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents.",
+      "Coverage: 91.5% of listings have a value for this characteristic.",
+      "Differences are associations; characteristics correlate with each other (size, age, location), so they are not causal effects."
+     ],
+     "error": ""
+    },
+    {
+     "tool": "analyse_property_characteristics",
+     "ok": true,
+     "title": "Rent per m² by has_balcony",
+     "summary": {
+      "dimension": "has_balcony",
+      "coverage_pct": 100.0
+     },
+     "rows": [
+      {
+       "segment": "No",
+       "listings": 967,
+       "median_rent_per_sqm": 13.42,
+       "mean_rent_per_sqm": 14.856,
+       "p25": 11.0,
+       "p75": 16.56,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "Yes",
+       "listings": 2792,
+       "median_rent_per_sqm": 13.5,
+       "mean_rent_per_sqm": 14.179,
+       "p25": 11.3,
+       "p75": 16.0,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "segment",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median rent per m² by has balcony",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": null
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Median/mean/P25/P75 of baseRent ÷ livingSpace per segment; rows with missing values grouped as 'Missing / unknown'.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents.",
+      "Coverage: 100.0% of listings have a value for this characteristic.",
+      "Differences are associations; characteristics correlate with each other (size, age, location), so they are not causal effects."
+     ],
+     "error": ""
+    },
+    {
+     "tool": "analyse_property_characteristics",
+     "ok": true,
+     "title": "Rent per m² by has_garden",
+     "summary": {
+      "dimension": "has_garden",
+      "coverage_pct": 100.0
+     },
+     "rows": [
+      {
+       "segment": "No",
+       "listings": 3157,
+       "median_rent_per_sqm": 13.45,
+       "mean_rent_per_sqm": 14.339,
+       "p25": 11.19,
+       "p75": 16.07,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "Yes",
+       "listings": 602,
+       "median_rent_per_sqm": 13.725,
+       "mean_rent_per_sqm": 14.426,
+       "p25": 11.5,
+       "p75": 16.03,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "segment",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median rent per m² by has garden",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": null
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Median/mean/P25/P75 of baseRent ÷ livingSpace per segment; rows with missing values grouped as 'Missing / unknown'.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents.",
+      "Coverage: 100.0% of listings have a value for this characteristic.",
+      "Differences are associations; characteristics correlate with each other (size, age, location), so they are not causal effects."
+     ],
+     "error": ""
+    },
+    {
+     "tool": "analyse_property_characteristics",
+     "ok": true,
+     "title": "Rent per m² by has_lift",
+     "summary": {
+      "dimension": "has_lift",
+      "coverage_pct": 100.0
+     },
+     "rows": [
+      {
+       "segment": "No",
+       "listings": 2273,
+       "median_rent_per_sqm": 12.63,
+       "mean_rent_per_sqm": 13.618,
+       "p25": 10.68,
+       "p75": 15.14,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "Yes",
+       "listings": 1486,
+       "median_rent_per_sqm": 14.5,
+       "mean_rent_per_sqm": 15.476,
+       "p25": 12.5,
+       "p75": 17.16,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "segment",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median rent per m² by has lift",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": null
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Median/mean/P25/P75 of baseRent ÷ livingSpace per segment; rows with missing values grouped as 'Missing / unknown'.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents.",
+      "Coverage: 100.0% of listings have a value for this characteristic.",
+      "Differences are associations; characteristics correlate with each other (size, age, location), so they are not causal effects."
+     ],
+     "error": ""
+    },
+    {
+     "tool": "analyse_property_characteristics",
+     "ok": true,
+     "title": "Rent per m² by is_new_construction",
+     "summary": {
+      "dimension": "is_new_construction",
+      "coverage_pct": 100.0
+     },
+     "rows": [
+      {
+       "segment": "No",
+       "listings": 3126,
+       "median_rent_per_sqm": 13.11,
+       "mean_rent_per_sqm": 14.129,
+       "p25": 11.0,
+       "p75": 15.867,
+       "sample_flag": "ok"
+      },
+      {
+       "segment": "Yes",
+       "listings": 633,
+       "median_rent_per_sqm": 14.68,
+       "mean_rent_per_sqm": 15.456,
+       "p25": 13.05,
+       "p75": 17.02,
+       "sample_flag": "ok"
+      }
+     ],
+     "chart": {
+      "kind": "bar",
+      "x": "segment",
+      "y": "median_rent_per_sqm",
+      "color": null,
+      "title": "Median rent per m² by is new construction",
+      "xlabel": "",
+      "ylabel": "€/m²",
+      "order": null
+     },
+     "n_records": 3759,
+     "source": "MySQL table int_hamburg_listings (via read-only account)",
+     "filters_applied": "No filters (all 3,759 Hamburg listings)",
+     "period": "Sep 2018, May 2019, Oct 2019, Feb 2020",
+     "calculation": "Median/mean/P25/P75 of baseRent ÷ livingSpace per segment; rows with missing values grouped as 'Missing / unknown'.",
+     "caveats": [
+      "Historical advertised cold rents from ImmoScout24 snapshots (Sep 2018, May 2019, Oct 2019, Feb 2020); independent snapshots, not current 2026 rents.",
+      "Coverage: 100.0% of listings have a value for this characteristic.",
+      "Differences are associations; characteristics correlate with each other (size, age, location), so they are not causal effects."
+     ],
+     "error": ""
+    }
+   ]
+  },
+  "Show the Mietenspiegel range for a Gute Wohnlage built 1994 to 2010.": {
+   "text": "Verified findings: \nFor Gute Wohnlage residential location and buildings constructed from 1994 to 2010, the Hamburg Mietenspiegel 2025 gives the following net cold rent per m² ranges by living area category:\n- Up to 41 m²: €12.02 to €17.11, reference €14.19 (n=3 listings)\n- 41 to under 66 m²: €10.72 to €15.76, reference €13.78 (n=8)\n- 66 to under 91 m²: €10.03 to €16.29, reference €13.18 (n=15)\n- 91 to under 131 m²: €11.59 to €19.00, reference €14.63 (n=29)\n- 131 m² and above: €12.06 to €19.31, reference €16.00 (n=23)\n\nInterpretation:\nThe reference rent (official mean) tends to be slightly lower for medium-sized apartments around 66-91 m², with larger apartments above 131 m² showing the highest reference rent. The ranges reflect legal minimum and maximum bandwidths for cold rents excluding heating and operating costs. Sample sizes vary, with some smaller categories (e.g., <41 m²) having low listing counts (n=3), which advises cautious interpretation.\n\nSuggested follow-up:\nIf you want, I can provide corresponding historical listing rents for comparison or focus on a specific living area category or neighborhood within Gute Wohnlage.",
+   "model": "gpt-4.1-mini",
+   "generated_at": "2026-11-15T21:27:54",
+   "tool_calls": [
+    {
+     "name": "get_mietenspiegel_benchmark",
+     "args": {
+      "construction_period": "1994 to 2010",
+      "residential_location": "Gute Wohnlage"
+     }
+    }
+   ],
+   "results": [
+    {
+     "tool": "get_mietenspiegel_benchmark",
+     "ok": true,
+     "title": "Hamburg Mietenspiegel 2025 reference rents",
+     "summary": {
+      "cells_returned": 5,
+      "reference_date": "2025-04-01",
+      "publisher": "Behörde für Stadtentwicklung und Wohnen - Amt für Wohnen, Stadterneuerung und Bodenordnung",
+      "median_reference_rent": 14.19,
+      "lowest_min": 10.03,
+      "highest_max": 19.31
+     },
+     "rows": [
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "bis unter 41m²",
+       "reference_rent_per_sqm": 14.19,
+       "minimum_rent_per_sqm": 12.02,
+       "maximum_rent_per_sqm": 17.11,
+       "hist_listing_count": 3,
+       "hist_median_rent_sqm": 17.0
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "41m² bis unter 66m²",
+       "reference_rent_per_sqm": 13.78,
+       "minimum_rent_per_sqm": 10.72,
+       "maximum_rent_per_sqm": 15.76,
+       "hist_listing_count": 8,
+       "hist_median_rent_sqm": 16.965
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "66m² bis unter 91m²",
+       "reference_rent_per_sqm": 13.18,
+       "minimum_rent_per_sqm": 10.03,
+       "maximum_rent_per_sqm": 16.29,
+       "hist_listing_count": 15,
+       "hist_median_rent_sqm": 12.32
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "91m² bis unter 131m²",
+       "reference_rent_per_sqm": 14.63,
+       "minimum_rent_per_sqm": 11.59,
+       "maximum_rent_per_sqm": 19.0,
+       "hist_listing_count": 29,
+       "hist_median_rent_sqm": 15.2
+      },
+      {
+       "construction_period": "1994 bis 2010",
+       "residential_location": "Gute Wohnlage",
+       "living_area_category": "ab 131m²",
+       "reference_rent_per_sqm": 16.0,
+       "minimum_rent_per_sqm": 12.06,
+       "maximum_rent_per_sqm": 19.31,
+       "hist_listing_count": 23,
+       "hist_median_rent_sqm": 13.88
+      }
+     ],
+     "chart": null,
+     "n_records": 5,
+     "source": "MySQL view analytics_mietenspiegel_reference (official Hamburg Mietenspiegel 2025, ref. date 2025-04-01)",
+     "filters_applied": "construction_period=1994 to 2010, residential_location=Gute Wohnlage",
+     "period": "Reference date 1 April 2025 (official); historical listings 2018–2020",
+     "calculation": "Official published Mittelwert, Spanne min/max (net cold rent excl. heating and operating costs). hist_* columns = 2018–20 listings mapped to the same characteristics.",
+     "caveats": [
+      "These datasets differ in reference period, population and methodology. This comparison is contextual, not a same-period market premium or legal rent determination.",
+      "Reference rents are official benchmarks, not advertised rents."
+     ],
+     "error": ""
+    }
+   ]
+  }
+ }
+}

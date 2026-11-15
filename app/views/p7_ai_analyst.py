@@ -34,6 +34,9 @@ def render() -> None:
                          key="ai_scope", label_visibility="collapsed")
     with top[2]:
         st.button("Reset filters", on_click=shared.reset_filters, width="stretch", key="ai_reset")
+    note = analyst.showcase_note()
+    if note:
+        st.caption(note + " Click a suggested question below; custom questions use the built-in demo analysis.")
     use_filters = scope.startswith("Use")
     if use_filters and filters.is_active():
         C.banner("Active dashboard filters will be applied to every answer: " + filters.describe(), "info")

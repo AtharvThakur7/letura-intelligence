@@ -248,3 +248,21 @@ def test_api_failure_falls_back_gracefully(listings):
 def test_secrets_not_in_repr():
     s = AISettings(api_key="sk-secret-value-abcdefghijk")
     assert "secret-value" not in repr(s) and "secret-value" not in str(s.model_dump())
+
+
+# ---------------------------------------------------------------- Mietenspiegel argument resolution
+PERIODS = ["bis 31.12.1918", "01.01.1919 bis 20.06.1948", "21.06.1948 bis 31.12.1960", "1961 bis 1967", "1968 bis 1977",
+           "1978 bis 1993", "1994 bis 2010", "2011 bis 2015", "2016 bis 2020", "2021 bis 2024"]
+AREAS = ["bis unter 41m²", "41m² bis unter 66m²", "66m² bis unter 91m²", "ab 91m²", "91m² bis unter 131m²", "ab 131m²"]
+
+
+@pytest.mark.parametrize("text,expected", [("1994 bis 2010", "1994 bis 2010"), ("1994-2010", "1994 bis 2010"), ("1994 to 2010", "1994 bis 2010"),
+                                           ("1994–2010", "1994 bis 2010"), ("1985", "1978 bis 1993"), ("1919-1948", "01.01.1919 bis 20.06.1948"),
+                                           ("1950", "21.06.1948 bis 31.12.1960"), ("nonsense", None), ("1948", None)])
+def test_ms_period_resolution(text, expected):
+    assert K.resolve_ms_period(text, PERIODS) == expected
+
+
+@pytest.mark.parametrize("text,expected", [("66 m²", "66m² bis unter 91m²"), ("ab 131", "ab 131m²"), ("under 41", "bis unter 41m²"), ("ab 131m²", "ab 131m²"), ("zzz", None)])
+def test_ms_area_resolution(text, expected):
+    assert K.resolve_ms_area(text, AREAS) == expected
