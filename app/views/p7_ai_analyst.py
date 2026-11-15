@@ -35,7 +35,9 @@ def render() -> None:
     st.session_state.setdefault("ai_tokens", 0)
 
     if analyst.showcase_note():
-        st.caption("Demo version: the suggested questions show answers prepared in advance by the AI analyst. Questions you type use the built-in analysis.")
+        C.banner("Live AI is switched off in this demo to manage API costs and credit usage. "
+                 "The suggested questions show real answers the AI analyst generated from this data in advance. "
+                 "Questions you type are answered by the built-in analysis, which uses the same data.", "info")
 
     use_filters = True
     if filters.is_active():
