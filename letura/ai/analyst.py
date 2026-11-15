@@ -95,6 +95,22 @@ class Analyst:
             return "MOCK mode (AI_ENABLED=false) – deterministic analysis, no API calls"
         return "MOCK mode (no valid OPENAI_API_KEY) – deterministic analysis, no API calls"
 
+    @staticmethod
+    def stored_answer(question: str) -> "AnalystReply | None":
+        """Pre-generated live-AI answer for a suggested question (free; no API call), or None."""
+        entry = showcase.lookup(question)
+        if not entry:
+            return None
+        try:
+            results = [K.ToolResult(**r) for r in entry.get("results", [])]
+        except Exception:  # noqa: BLE001
+            log.warning("Stored showcase answer could not be loaded")
+            return None
+        return AnalystReply(entry["text"], results, "showcase",
+                            notice=f"Pre-generated answer from the live AI analyst ({entry.get('model', 'OpenAI')}, {entry.get('generated_at', '')[:10]}), "
+                                   "computed from the database results shown below.",
+                            tool_calls=entry.get("tool_calls", []))
+
     def showcase_note(self) -> str:
         n = showcase.available()
         return f"{n} suggested questions have pre-generated live-AI answers." if (self.mode == "mock" and n) else ""
@@ -116,16 +132,10 @@ class Analyst:
         # Showcase edition: serve pre-generated live-AI answers for the suggested questions
         # (only when no live AI is available, with no active filters, and on real data).
         if self.mode == "mock" and self._listings is None and not (use_filters and filters.is_active()):
-            entry = showcase.lookup(q)
-            if entry:
-                try:
-                    results = [K.ToolResult(**r) for r in entry.get("results", [])]
-                    return AnalystReply(entry["text"], results, "showcase",
-                                        notice=f"Pre-generated answer from the live AI analyst ({entry.get('model', 'OpenAI')}, {entry.get('generated_at', '')[:10]}), "
-                                               "computed from the database results shown below.",
-                                        tool_calls=entry.get("tool_calls", []), seconds=round(time.time() - t0, 2))
-                except Exception:  # noqa: BLE001
-                    log.warning("Stored showcase answer could not be loaded; falling back to mock analysis")
+            stored = self.stored_answer(q)
+            if stored:
+                stored.seconds = round(time.time() - t0, 2)
+                return stored
         ctx = K.Context(filters if use_filters else FilterState(), self._listings)
         if self.mode == "live":
             try:
