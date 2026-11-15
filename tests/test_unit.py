@@ -266,3 +266,19 @@ def test_ms_period_resolution(text, expected):
 @pytest.mark.parametrize("text,expected", [("66 m²", "66m² bis unter 91m²"), ("ab 131", "ab 131m²"), ("under 41", "bis unter 41m²"), ("ab 131m²", "ab 131m²"), ("zzz", None)])
 def test_ms_area_resolution(text, expected):
     assert K.resolve_ms_area(text, AREAS) == expected
+
+
+# ---------------------------------------------------------------- showcase answers cover every offered question
+def test_every_offered_question_has_a_stored_answer():
+    """If a suggested question is added or reworded without regenerating answers, the cloud demo would
+    silently fall back to the plain analysis. This fails first."""
+    from app.views.p0_home import SHOWCASE_QUESTIONS
+    from app.views.p7_ai_analyst import FEATURED
+    from letura.ai import showcase
+    from letura.ai.analyst import SUGGESTED_QUESTIONS, Analyst
+    offered = {q for qs in SUGGESTED_QUESTIONS.values() for q in qs} | set(FEATURED) | set(SHOWCASE_QUESTIONS)
+    missing = [q for q in offered if showcase.lookup(q) is None]
+    assert not missing, f"no stored answer for: {missing}. Run scripts/generate_showcase_answers.py"
+    for q in offered:
+        reply = Analyst.stored_answer(q)
+        assert reply is not None and reply.results and all(r.ok for r in reply.results)
