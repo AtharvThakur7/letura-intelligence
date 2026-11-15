@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 from letura import APP_NAME, APP_SUBTITLE
 from letura.analytics import repo, transforms as T
@@ -22,6 +23,41 @@ def init_theme() -> None:
     st.markdown(theme.css(st.session_state.theme_mode), unsafe_allow_html=True)
 
 
+DROPDOWN_FIX_JS = """
+<script>
+(function () {
+  const w = window.parent; const d = w.document;
+  if (w.__ltDropdownFix2) return; w.__ltDropdownFix2 = true;
+  // Streamlit 1.67 dropdowns re-open when the arrow is clicked while open. Make the arrow a real toggle:
+  // remember whether the list was open when the press STARTED, then swallow the press and close it.
+  const SEL = '[data-testid="stMultiSelect"] button[aria-haspopup="listbox"], [data-testid="stSelectbox"] button[aria-haspopup="listbox"]';
+  const arrow = el => el && el.closest ? el.closest(SEL) : null;
+  let wasOpen = false, target = null;
+  const stop = e => { e.stopImmediatePropagation(); e.preventDefault(); };
+  d.addEventListener('pointerdown', e => {
+    const b = arrow(e.target); target = b;
+    wasOpen = !!(b && b.getAttribute('aria-expanded') === 'true');
+    if (wasOpen) stop(e);
+  }, true);
+  ['mousedown', 'pointerup', 'mouseup'].forEach(type => d.addEventListener(type, e => { if (wasOpen && arrow(e.target)) stop(e); }, true));
+  d.addEventListener('click', e => {
+    if (!(wasOpen && arrow(e.target))) return;
+    stop(e);
+    const root = target.closest('[data-testid="stMultiSelect"], [data-testid="stSelectbox"]');
+    const input = root && root.querySelector('input');
+    if (input) { input.focus(); input.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true, cancelable: true})); }
+    wasOpen = false;
+  }, true);
+})();
+</script>
+"""
+
+
+def inject_dropdown_fix() -> None:
+    """Zero-height helper so clicking a dropdown's arrow again closes it."""
+    components.html(DROPDOWN_FIX_JS, height=0)
+
+
 def load_listings_or_stop():
     """Load listings; on failure show a helpful message instead of a stack trace."""
     try:
@@ -38,8 +74,11 @@ def load_listings_or_stop():
 
 
 def reset_filters() -> None:
-    for k in FILTER_KEYS:
-        st.session_state.pop(k, None)
+    """Reset every filter widget to its default VALUE. (Deleting the keys instead leaves stale tags on screen.)"""
+    ss = st.session_state
+    ss["f_snap"], ss["f_nbh"], ss["f_type"], ss["f_rooms"], ss["f_amen"] = [], [], [], [], []
+    ss["f_area"] = (0.0, AREA_MAX)
+    ss["f_year"] = (1850, 2020)
 
 
 def sidebar_brand() -> None:
@@ -59,7 +98,9 @@ def sidebar_theme_toggle() -> None:
 def sidebar_filters(df) -> FilterState:
     """Compact, collapsed filters. Shown only on pages where they apply."""
     active = current_filters(df).is_active()
-    with st.sidebar.expander("Filters" + (" · on" if active else ""), expanded=active):
+    # Always open by default. The label must stay constant: a changing label makes Streamlit rebuild
+    # the expander, which would snap it shut when filters are cleared.
+    with st.sidebar.expander("Filters", expanded=True):
         st.multiselect("Period", T.SNAPSHOT_ORDER, key="f_snap", placeholder="All")
         st.multiselect("Neighbourhood", sorted(df["neighbourhood"].dropna().unique()), key="f_nbh", placeholder="All")
         st.multiselect("Property type", sorted(df["property_type"].dropna().unique()), key="f_type", placeholder="All")

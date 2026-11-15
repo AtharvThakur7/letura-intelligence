@@ -34,6 +34,7 @@ FILTER_PAGES = {"Market", "Neighbourhoods", "Properties", "Ask AI"}   # filters 
 
 def main() -> None:
     shared.init_theme()
+    shared.inject_dropdown_fix()
     st.session_state["_pages"] = PAGES
     shared.sidebar_brand()
     nav = st.navigation(PAGES, position="hidden")

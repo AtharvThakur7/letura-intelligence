@@ -9,6 +9,10 @@ AMENITIES = {"has_balcony": "Balcony", "has_garden": "Garden", "has_lift": "Lift
              "has_kitchen": "Fitted kitchen", "is_new_construction": "New construction", "has_cellar": "Cellar"}
 
 
+def _short(items: list[str], noun: str, limit: int = 3) -> str:
+    return ", ".join(items) if len(items) <= limit else f"{', '.join(items[:limit])} +{len(items) - limit} more"
+
+
 @dataclass
 class FilterState:
     snapshots: list[str] = field(default_factory=list)        # empty = all
@@ -31,8 +35,8 @@ class FilterState:
             return "No filters (all 3,759 Hamburg listings)"
         parts = []
         if self.snapshots: parts.append("Snapshot: " + ", ".join(self.snapshots))
-        if self.neighbourhoods: parts.append("Neighbourhood: " + ", ".join(self.neighbourhoods))
-        if self.property_types: parts.append("Type: " + ", ".join(self.property_types))
+        if self.neighbourhoods: parts.append("Neighbourhood: " + _short(self.neighbourhoods, "neighbourhoods"))
+        if self.property_types: parts.append("Type: " + _short(self.property_types, "types"))
         if self.rooms: parts.append("Rooms: " + ", ".join(self.rooms))
         if self.area_range: parts.append(f"Area: {self.area_range[0]:.0f}–{self.area_range[1]:.0f} m²")
         if self.year_range: parts.append(f"Built: {self.year_range[0]}–{self.year_range[1]}")
