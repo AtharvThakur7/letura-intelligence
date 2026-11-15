@@ -14,7 +14,7 @@ if str(ROOT) not in sys.path:
 import streamlit as st  # noqa: E402
 
 from app import shared  # noqa: E402
-from app.views import (p0_home, p1_executive, p3_neighbourhoods, p4_property, p5_mietenspiegel, p6_quality,  # noqa: E402
+from app.views import (p0_home, p1_executive, p3_neighbourhoods, p4_property, p5_mietenspiegel,  # noqa: E402
                        p7_ai_analyst)
 from letura import APP_NAME, APP_SUBTITLE  # noqa: E402
 from letura.db import backend  # noqa: E402
@@ -28,7 +28,6 @@ PAGES = [
     st.Page(p4_property.render, title="Properties", icon=":material/apartment:", url_path="properties"),
     st.Page(p5_mietenspiegel.render, title="Official rents", icon=":material/balance:", url_path="official-rents"),
     st.Page(p7_ai_analyst.render, title="Ask AI", icon=":material/smart_toy:", url_path="ask-ai"),
-    st.Page(p6_quality.render, title="Data & sources", icon=":material/fact_check:", url_path="data"),
 ]
 FILTER_PAGES = {"Market", "Neighbourhoods", "Properties", "Ask AI"}   # filters are only shown where they apply
 

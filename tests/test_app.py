@@ -6,7 +6,7 @@ from tests.conftest import ROOT, requires_db
 
 pytestmark = requires_db
 
-PAGES = ["p0_home", "p1_executive", "p2_explorer", "p3_neighbourhoods", "p4_property", "p5_mietenspiegel", "p6_quality", "p7_ai_analyst"]
+PAGES = ["p0_home", "p1_executive", "p2_explorer", "p3_neighbourhoods", "p4_property", "p5_mietenspiegel", "p7_ai_analyst"]
 
 
 def page_app(mod: str, setup: str = "") -> AppTest:

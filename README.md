@@ -53,17 +53,16 @@ Steps: connection test → source audit & counts → verify staging → verify/b
 
 Objects created: `int_hamburg_listings`, `analytics_hamburg_rental_market`, `analytics_hamburg_neighbourhoods`, `analytics_hamburg_property_insights`, `analytics_mietenspiegel_reference`, `analytics_location_matching`, `analytics_data_quality`, `meta_pipeline_runs`, view `v_ai_listings`.
 
-## Dashboard pages
+## App pages
 
-1. **Executive Overview** – KPIs, snapshot trend, distributions, top neighbourhoods
-2. **Rental Market Explorer** – distributions, scatter, box plots, amenities, searchable listing table + CSV
-3. **Neighbourhood Analysis** – rankings with sample-size guard, comparisons, Bezirk view, normal vs good Wohnlage
-4. **Property Insights** – size, rooms, construction year, type, amenities, new vs existing (associations only)
-5. **Mietenspiegel Benchmark** – characteristic-based official reference rents and range charts
-6. **Data Quality & Pipeline** – reconciliation, missing values, duplicates, outliers, pipeline runs, limitations
-7. **AI Rental Analyst** – chat, suggested questions, charts, tables, "Analysis Details"
+1. **Home**: animated overview, clickable AI questions, Hamburg treemap
+2. **Market**: headline numbers, rent trend and distributions
+3. **Neighbourhoods**: ranking, comparison, districts, location quality
+4. **Properties**: size, building age, type and features, plus a searchable listing table with CSV download
+5. **Official rents**: Hamburg Mietenspiegel 2025 reference rents next to the historical asking rents
+6. **Ask AI**: chat that answers from the data, with charts and "Analysis Details"
 
-Sidebar filters (snapshot, neighbourhood, type, rooms, area, construction year, amenities) apply to pages 1–4 and the AI analyst.
+Sidebar filters (period, neighbourhood, type, rooms, size, year built, features) appear on Market, Neighbourhoods, Properties and Ask AI. Data quality results are written by the pipeline to `reports/data_quality_report.md` and the `analytics_data_quality` table (also available to the AI analyst).
 
 ## AI analyst
 
