@@ -8,8 +8,12 @@ from letura.ai.analyst import SUGGESTED_QUESTIONS, Analyst
 from letura.ui import ai_render, components as C
 
 
-@st.cache_resource(show_spinner=False)
 def get_analyst() -> Analyst:
+    """Cheap to build (settings are cached, the OpenAI client is created lazily).
+
+    Deliberately NOT cached with st.cache_resource: a cached instance survives code updates
+    on Streamlit Cloud and would keep serving an outdated class.
+    """
     return Analyst()
 
 
