@@ -94,6 +94,8 @@ svg[data-baseweb="icon"] { fill:var(--text2); }
 button[data-baseweb="tab"] { color:var(--text2); }
 button[data-baseweb="tab"][aria-selected="true"] { color:var(--accent); }
 hr { border-color:var(--border); }
+[data-testid="stAlert"], [data-testid="stAlertContainer"] { background:var(--surface2) !important; color:var(--text) !important; border:1px solid var(--border) !important; border-radius:8px; }
+[data-testid="stAlert"] *, [data-testid="stAlertContainer"] * { color:var(--text) !important; }
 .lt-brand { display:flex; align-items:center; gap:.6rem; padding:.2rem 0 .8rem; }
 .lt-logo { width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,var(--accent),#6250d6);
   color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.05rem; }

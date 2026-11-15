@@ -35,7 +35,7 @@ def main() -> None:
     shared.init_theme()
     shared.sidebar_brand()
     if backend() == "snapshot":
-        st.sidebar.info("Showcase edition: bundled data snapshot, AI in demo mode.")
+        st.sidebar.markdown('<div class="lt-banner info">Showcase edition: bundled data snapshot, AI in demo mode.</div>', unsafe_allow_html=True)
     nav = st.navigation(PAGES, position="hidden")
     for pg in PAGES:
         st.sidebar.page_link(pg)
