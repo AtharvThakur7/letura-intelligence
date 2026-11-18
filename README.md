@@ -14,8 +14,8 @@ A database-backed market-intelligence application: MySQL data pipeline → analy
 ### Data Flow and  Engineering Layers
 ![Market Analytics](https://github.com/AtharvThakur7/letura-intelligence/blob/a362748d245ae473d8a8bac2249afb5bd6c26502/docs/Screenshot%202026-11-18%20212039.png)
 
-### AI Analyst
-![AI Analyst](PASTE_GITHUB_IMAGE_URL_HERE)
+### AI Analyst And Dashboard
+![AI Analyst](https://github.com/AtharvThakur7/letura-intelligence/blob/a1ca40787c3cde513fab34a0a63f8ead212f868d/docs/Screenshot%202026-11-18%20212107.png)
 
 ## Quick start (Windows)
 
