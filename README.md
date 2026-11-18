@@ -9,7 +9,7 @@ A database-backed market-intelligence application: MySQL data pipeline → analy
 
 
 ### Dashboard Overview
-![Dashboard](https://github.com/AtharvThakur7/letura-intelligence/blob/main/docs/images/dashboard.png?raw=true)
+![Dashboard](https://github.com/AtharvThakur7/letura-intelligence/blob/879889b0d4434148ce1fd7334bc255d9b8351343/docs/Screenshot%202026-11-18%20212023.png)
 
 ### Market Analytics
 ![Market Analytics](PASTE_GITHUB_IMAGE_URL_HERE)
