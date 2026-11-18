@@ -3,7 +3,7 @@
 A database-backed market-intelligence application: MySQL data pipeline → analytics tables → a seven-page Streamlit dashboard (light and dark modes) → an OpenAI-powered analyst that answers questions using real query results.
 
 **Project links:** [Live Demo](https://mainpy-tsmwzgucehnwtfmxknjxjf.streamlit.app/) · [GitHub Repository](https://github.com/AtharvThakur7/letura-intelligence) ·
-[Download Project Overview (PDF)](docs/Letura_Project_Overview.pdf)
+
 
 > **Data scope:** Rental listings are historical advertised cold rents (September 2018–February 2020), across four independent snapshots—not current 2026 prices. The Hamburg Mietenspiegel 2025 is an official reference table (reference date: 1 April 2025). These are different concepts and are not presented as a same-period premium comparison or legal rent determination.
 
