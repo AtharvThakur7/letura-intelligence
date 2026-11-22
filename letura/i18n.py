@@ -22,7 +22,7 @@ TRANSLATIONS: dict[str, str] = {
     "Neighbourhoods": "Stadtteile",
     "Properties": "Immobilien",
     "Official rents": "Offizielle Mieten",
-    "Ask AI": "KI fragen",
+    "Letura AI": "Letura AI",
 
     # ---- sidebar / filters
     "Filters": "Filter",
@@ -89,6 +89,33 @@ TRANSLATIONS: dict[str, str] = {
     "and ask questions in plain English.":
         "Sehen Sie, was Wohnungen in jedem Stadtteil kosten, vergleichen Sie mit offiziellen Referenzmieten "
         "und stellen Sie Fragen in einfacher Sprache.",
+    "Hamburg rental market intelligence": "Hamburgs Mietmarkt-Intelligenz",
+    "The rental market intelligence platform for Hamburg real estate.":
+        "Die Mietmarkt-Intelligenzplattform für Hamburger Immobilien.",
+    "Letura Intelligence turns raw listing data into pricing benchmarks, neighbourhood comparisons "
+    "and official-rent compliance checks — so landlords, investors and analysts can price with "
+    "confidence and back every decision with evidence.":
+        "Letura Intelligence verwandelt rohe Anzeigendaten in Preis-Benchmarks, Stadtteilvergleiche und "
+        "Abgleiche mit dem offiziellen Mietenspiegel — damit Vermieter, Investoren und Analysten mit "
+        "Sicherheit kalkulieren und jede Entscheidung mit Daten belegen können.",
+    "What Letura Intelligence gives you": "Das bietet Ihnen Letura Intelligence",
+    "Six tools, one dataset — each one answers a different question a landlord, investor or analyst would ask.":
+        "Sechs Werkzeuge, ein Datensatz — jedes beantwortet eine andere Frage, die Vermieter, Investoren "
+        "oder Analysten stellen.",
+    "One executive view of the whole market: headline KPIs, trend sparklines and auto-generated insights.":
+        "Eine Übersicht für den gesamten Markt: zentrale Kennzahlen, Trend-Sparklines und automatisch "
+        "generierte Erkenntnisse.",
+    "The city-wide picture: price trends, distribution and property mix at a glance.":
+        "Der stadtweite Überblick: Preistrends, Verteilung und Immobilienmix auf einen Blick.",
+    "Rank, compare and benchmark every Hamburg neighbourhood and district.":
+        "Jeden Hamburger Stadtteil und Bezirk einordnen, vergleichen und bewerten.",
+    "See how size, age, type and features move the price per m².":
+        "Sehen Sie, wie Größe, Alter, Typ und Ausstattung den Preis pro m² beeinflussen.",
+    "Benchmark advertised rents against Hamburg's official 2025 Mietenspiegel.":
+        "Angebotsmieten mit Hamburgs offiziellem Mietenspiegel 2025 vergleichen.",
+    "Get a straight answer in plain language, backed by the real numbers behind it.":
+        "Erhalten Sie eine klare Antwort in einfacher Sprache, belegt mit den echten Zahlen dahinter.",
+    "Open": "Öffnen",
     "Hamburg listings": "Hamburger Anzeigen",
     "Median asking rent": "Median-Angebotsmiete",
     "Periods covered 2018–2020": "Erfasste Zeiträume 2018–2020",
@@ -105,6 +132,58 @@ TRANSLATIONS: dict[str, str] = {
     "Not current prices and not a legal rent determination.":
         "Basierend auf historischen Angebotsmieten (2018–2020) und offiziellen Referenzmieten 2025. "
         "Keine aktuellen Preise und keine rechtsverbindliche Mietfestsetzung.",
+
+    # ---- p6 dashboard
+    "Dashboard": "Dashboard",
+    "The Hamburg rental market at a glance — the numbers that matter most, in one view.":
+        "Der Hamburger Mietmarkt auf einen Blick — die wichtigsten Kennzahlen in einer Ansicht.",
+    "Median Asking Rent": "Median-Angebotsmiete",
+    "The core pricing benchmark: the midpoint of advertised cold rent per square metre "
+    "across listings in view. The change compares the first to the last snapshot shown.":
+        "Der zentrale Preis-Benchmark: der Mittelwert der Angebots-Kaltmiete pro Quadratmeter über die "
+        "angezeigten Anzeigen. Die Veränderung vergleicht den ersten mit dem letzten gezeigten Zeitpunkt.",
+    "Active Listings": "Aktive Anzeigen",
+    "Live inventory matching your current filters — the size of the market you're viewing.":
+        "Aktueller Bestand gemäß Ihren Filtern — die Größe des Marktausschnitts, den Sie betrachten.",
+    "Avg. Unit Size": "Ø Wohnungsgröße",
+    "Average living area across listings in view — a quick read on typical unit size in this market.":
+        "Durchschnittliche Wohnfläche der angezeigten Anzeigen — ein schneller Blick auf die typische "
+        "Wohnungsgröße in diesem Markt.",
+    "Neighbourhoods Covered": "Abgedeckte Stadtteile",
+    "Distinct Hamburg neighbourhoods represented in view — breadth of market coverage.":
+        "Verschiedene Hamburger Stadtteile in der aktuellen Ansicht — Breite der Marktabdeckung.",
+    "Location-Quality Match Rate": "Lagequalität-Zuordnungsrate",
+    "Share of listings matched to Hamburg's official street-level location-quality register — "
+    "data reliability for location-based pricing.":
+        "Anteil der Anzeigen, die der offiziellen straßengenauen Lagequalitätsliste Hamburgs zugeordnet "
+        "wurden — Datenverlässlichkeit für lagebasierte Preisbildung.",
+    "Premium vs. Official Benchmark": "Aufschlag ggü. offiziellem Benchmark",
+    "Median gap between advertised asking rents and the 2025 Mietenspiegel reference for "
+    "matching construction periods — how the market prices above or below the official "
+    "benchmark. Contextual only — different periods and methods.":
+        "Mediane Differenz zwischen Angebotsmieten und der Mietenspiegel-Referenz 2025 für übereinstimmende "
+        "Baualtersklassen — zeigt, ob der Markt über oder unter dem offiziellen Benchmark liegt. Nur zur "
+        "Einordnung — unterschiedliche Zeiträume und Methoden.",
+    "What the data tells us": "Was die Daten zeigen",
+    "Median rent moved **{delta:+.1f}%** from {first} to {last}.":
+        "Die Median-Miete veränderte sich um **{delta:+.1f}%** von {first} bis {last}.",
+    "**{top}** is the most expensive neighbourhood in view at {top_v}; "
+    "**{bottom}** is the most affordable at {bottom_v}.":
+        "**{top}** ist der teuerste Stadtteil in der Ansicht mit {top_v}; "
+        "**{bottom}** ist am günstigsten mit {bottom_v}.",
+    "Advertised rents run **{gap} €/m² {direction}** the official 2025 reference rent for "
+    "comparable flats, on average.":
+        "Angebotsmieten liegen im Schnitt **{gap} €/m² {direction}** der offiziellen Referenzmiete 2025 "
+        "für vergleichbare Wohnungen.",
+    "above": "über",
+    "below": "unter",
+    "The market, combined": "Der Markt im Überblick",
+    "Most expensive neighbourhoods (€/m²)": "Teuerste Stadtteile (€/m²)",
+    "Historical rents vs. official 2025 reference": "Historische Mieten vs. offizielle Referenz 2025",
+    "Historical asking rent (2018–20)": "Historische Angebotsmiete (2018–20)",
+    "Official reference (2025)": "Offizielle Referenz (2025)",
+    "Official reference data is unavailable right now.": "Offizielle Referenzdaten sind derzeit nicht verfügbar.",
+    "Explore further": "Weiter erkunden",
 
     # ---- p1 market overview
     "Market overview": "Marktübersicht",

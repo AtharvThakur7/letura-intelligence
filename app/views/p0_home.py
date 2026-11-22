@@ -78,15 +78,52 @@ def _page(url_path: str):
     return next((p for p in st.session_state.get("_pages", []) if p.url_path == url_path), None)
 
 
+def _skyline_svg() -> str:
+    """Flat-design Hamburg skyline silhouette for the hero — ties the page to the real-estate business."""
+    buildings = [(0, 96, 46, 0.10), (44, 58, 54, 0.14), (96, 118, 38, 0.10),
+                 (132, 28, 60, 0.18), (190, 70, 40, 0.12), (228, 32, 52, 0.15)]
+    rects = []
+    for x, y, h, op in buildings:
+        rects.append(f'<rect x="{x}" y="{160 - h}" width="{y}" height="{h}" rx="2" fill="rgba(255,255,255,{op})"/>')
+        rows = max(2, h // 22)
+        cols = max(2, y // 16)
+        for r in range(rows):
+            for c in range(cols):
+                wx, wy = x + 6 + c * 14, 160 - h + 8 + r * 20
+                if wy < 150 and wx < x + y - 8:
+                    rects.append(f'<rect x="{wx}" y="{wy}" width="6" height="9" rx="1" fill="rgba(255,214,122,.55)"/>')
+    return (f'<svg class="lt-hero-skyline" viewBox="0 0 260 160" preserveAspectRatio="xMaxYMax meet" '
+            f'xmlns="http://www.w3.org/2000/svg" aria-hidden="true">{"".join(rects)}</svg>')
+
+
+FEATURES = [
+    ("dashboard", "📊", ":material/dashboard:", "Dashboard",
+     "One executive view of the whole market: headline KPIs, trend sparklines and auto-generated insights."),
+    ("market", "📈", ":material/insights:", "Market",
+     "The city-wide picture: price trends, distribution and property mix at a glance."),
+    ("neighbourhoods", "🏙️", ":material/location_city:", "Neighbourhoods",
+     "Rank, compare and benchmark every Hamburg neighbourhood and district."),
+    ("properties", "🏢", ":material/apartment:", "Properties",
+     "See how size, age, type and features move the price per m²."),
+    ("official-rents", "⚖️", ":material/balance:", "Official rents",
+     "Benchmark advertised rents against Hamburg's official 2025 Mietenspiegel."),
+    ("ask-ai", "🤖", ":material/smart_toy:", "Letura AI",
+     "Get a straight answer in plain language, backed by the real numbers behind it."),
+]
+
+
 def render() -> None:
     df = shared.load_listings_or_stop()
 
-    # ---- hero (kept light: one idea, two sentences)
-    hero_sub = t("Hamburg's rental market, made simple.")
-    hero_text = t("See what flats cost in every neighbourhood, compare with official reference rents, "
-                  "and ask questions in plain English.")
+    # ---- hero: a product pitch, not a data dump — the live numbers have their own section below
+    tag = t("Hamburg rental market intelligence")
+    hero_sub = t("The rental market intelligence platform for Hamburg real estate.")
+    hero_text = t("Letura Intelligence turns raw listing data into pricing benchmarks, neighbourhood comparisons "
+                  "and official-rent compliance checks — so landlords, investors and analysts can price with "
+                  "confidence and back every decision with evidence.")
     st.markdown(f"""
-<div class="lt-hero"><div class="lt-hero-glow"></div>
+<div class="lt-hero"><div class="lt-hero-glow"></div>{_skyline_svg()}
+  <span class="lt-hero-tag">{html.escape(tag)}</span>
   <h1>Letura Intelligence</h1>
   <p class="lt-hero-sub">{hero_sub}</p>
   <p class="lt-hero-text">{hero_text}</p>
@@ -99,15 +136,20 @@ def render() -> None:
         (t("Periods covered 2018–2020"), float(df["snapshot"].astype(str).nunique()), 0, "", ""),
     ])
 
-    # ---- three clear next steps
-    cols = st.columns(3)
-    for col, (url_path, label, icon) in zip(cols, [("market", t("See the market overview"), ":material/insights:"),
-                                                    ("neighbourhoods", t("Compare neighbourhoods"), ":material/location_city:"),
-                                                    ("ask-ai", t("Ask the AI analyst"), ":material/smart_toy:")]):
-        pg = _page(url_path)
-        if pg is not None:
+    # ---- what we built: a feature tour that doubles as navigation
+    C.section(t("What Letura Intelligence gives you"),
+              t("Six tools, one dataset — each one answers a different question a landlord, investor or analyst would ask."))
+    for row in (FEATURES[:3], FEATURES[3:]):
+        cols = st.columns(3)
+        for col, (url_path, emoji, icon, title, desc) in zip(cols, row):
+            pg = _page(url_path)
             with col:
-                st.page_link(pg, label=label, icon=icon, width="stretch")
+                with st.container(border=True):
+                    st.markdown(f'<div class="lt-feat-icon">{emoji}</div>', unsafe_allow_html=True)
+                    st.markdown(f"**{t(title)}**")
+                    st.caption(t(desc))
+                    if pg is not None:
+                        st.page_link(pg, label=t("Open"), icon=icon, width="stretch")
 
     # ---- ask the market (interactive)
     C.section(t("Try a question"))

@@ -28,7 +28,7 @@ def _ask(question: str) -> None:
 
 
 def render() -> None:
-    C.page_header(t("Ask AI"), t("Ask about Hamburg rents in plain English. Every answer shows the numbers it is based on."))
+    C.page_header(t("Letura AI"), t("Ask about Hamburg rents in plain English. Every answer shows the numbers it is based on."))
     df_all = shared.load_listings_or_stop()
     analyst = get_analyst()
     filters = shared.current_filters(df_all)

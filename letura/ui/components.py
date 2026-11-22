@@ -63,6 +63,41 @@ def kpi_row(items: Iterable[tuple]) -> None:
     st.write("")
 
 
+def _rgba(hex_color: str, alpha: float) -> str:
+    h = hex_color.lstrip("#")
+    r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+    return f"rgba({r},{g},{b},{alpha})"
+
+
+def sparkline(values: list[float], height: int = 44) -> go.Figure:
+    """Tiny trend line for a metric card. Built on our own Plotly styling (always transparent,
+    theme-correct) rather than a native widget's built-in chart, so it never breaks in dark mode."""
+    tok = theme.tokens(mode())
+    fig = go.Figure(go.Scatter(y=values, mode="lines", line=dict(color=tok["accent"], width=2.4),
+                               fill="tozeroy", fillcolor=_rgba(tok["accent"], .15), hoverinfo="skip"))
+    fig.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", showlegend=False,
+                      margin=dict(l=0, r=0, t=2, b=0), height=height,
+                      xaxis=dict(visible=False), yaxis=dict(visible=False))
+    return fig
+
+
+def metric_card(label: str, value: str, icon: str = "", delta: str | None = None, delta_kind: str = "neutral",
+                help: str = "", spark: go.Figure | None = None, key: str | None = None) -> None:
+    """Theme-safe KPI card: a bordered container (already correct in both modes, like every other
+    card in the app) with custom HTML content — never a native widget whose internal theme can drift
+    from ours. `delta_kind` is 'good' | 'bad' | 'neutral' and only colors the delta text."""
+    with st.container(border=True):
+        delta_html = f'<span class="lt-kpi2-delta {delta_kind}">{html.escape(delta)}</span>' if delta else ""
+        st.markdown(
+            f'<div class="lt-kpi2" title="{html.escape(help)}">'
+            f'<div class="lt-kpi2-top"><span class="lt-kpi2-icon">{icon}</span>'
+            f'<span class="lt-kpi2-label">{html.escape(label)}</span></div>'
+            f'<div class="lt-kpi2-row"><span class="lt-kpi2-value">{html.escape(value)}</span>{delta_html}</div>'
+            f'</div>', unsafe_allow_html=True)
+        if spark is not None:
+            st.plotly_chart(spark, theme=None, width="stretch", key=key, config={"displayModeBar": False, "staticPlot": True})
+
+
 def pills(labels: Iterable[tuple[str, str]]) -> None:
     st.markdown("".join(f'<span class="lt-pill {k}">{html.escape(t)}</span>' for t, k in labels), unsafe_allow_html=True)
 

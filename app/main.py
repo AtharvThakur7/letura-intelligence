@@ -15,25 +15,26 @@ import streamlit as st  # noqa: E402
 
 from app import shared  # noqa: E402
 from app.views import (p0_home, p1_executive, p3_neighbourhoods, p4_property, p5_mietenspiegel,  # noqa: E402
-                       p7_ai_analyst)
+                       p6_dashboard, p7_ai_analyst)
 from letura import APP_NAME, APP_SUBTITLE  # noqa: E402
 from letura.db import backend  # noqa: E402
 from letura.i18n import t  # noqa: E402
 
 st.set_page_config(page_title=f"{APP_NAME} – {APP_SUBTITLE}", page_icon="🏙️", layout="wide", initial_sidebar_state="expanded")
 
-FILTER_URL_PATHS = {"market", "neighbourhoods", "properties", "ask-ai"}   # filters are only shown where they apply
+FILTER_URL_PATHS = {"dashboard", "market", "neighbourhoods", "properties", "ask-ai"}   # filters are only shown where they apply
 
 
 def build_pages() -> list[st.Page]:
     """Rebuilt on every rerun so nav titles follow the active language."""
     return [
         st.Page(p0_home.render, title=t("Home"), icon=":material/home:", default=True, url_path="home"),
+        st.Page(p6_dashboard.render, title=t("Dashboard"), icon=":material/dashboard:", url_path="dashboard"),
         st.Page(p1_executive.render, title=t("Market"), icon=":material/insights:", url_path="market"),
         st.Page(p3_neighbourhoods.render, title=t("Neighbourhoods"), icon=":material/location_city:", url_path="neighbourhoods"),
         st.Page(p4_property.render, title=t("Properties"), icon=":material/apartment:", url_path="properties"),
         st.Page(p5_mietenspiegel.render, title=t("Official rents"), icon=":material/balance:", url_path="official-rents"),
-        st.Page(p7_ai_analyst.render, title=t("Ask AI"), icon=":material/smart_toy:", url_path="ask-ai"),
+        st.Page(p7_ai_analyst.render, title=t("Letura AI"), icon=":material/smart_toy:", url_path="ask-ai"),
     ]
 
 

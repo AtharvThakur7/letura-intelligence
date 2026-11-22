@@ -16,11 +16,9 @@ FILTER_KEYS = ["f_snap", "f_nbh", "f_type", "f_rooms", "f_area", "f_year", "f_am
 
 
 def init_theme() -> None:
-    if "theme_mode" not in st.session_state:
-        try:
-            st.session_state.theme_mode = "dark" if st.context.theme.type == "dark" else "light"
-        except Exception:  # noqa: BLE001
-            st.session_state.theme_mode = "light"
+    # Light is the product default regardless of the visitor's OS/browser theme; dark only once the
+    # user explicitly flips the sidebar toggle (sidebar_theme_toggle persists that choice for the session).
+    st.session_state.setdefault("theme_mode", "light")
     st.markdown(theme.css(st.session_state.theme_mode), unsafe_allow_html=True)
 
 
