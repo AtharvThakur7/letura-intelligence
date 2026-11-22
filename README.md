@@ -7,6 +7,16 @@ A database-backed market-intelligence application: MySQL data pipeline → analy
 
 > **Data scope:** Rental listings are historical advertised cold rents (September 2018–February 2020), across four independent snapshots—not current 2026 prices. The Hamburg Mietenspiegel 2025 is an official reference table (reference date: 1 April 2025). These are different concepts and are not presented as a same-period premium comparison or legal rent determination.
 
+
+###  Overview
+![Dashboard](https://github.com/AtharvThakur7/letura-intelligence/blob/879889b0d4434148ce1fd7334bc255d9b8351343/docs/Screenshot%202026-11-18%20212023.png)
+
+### Data Flow and  Engineering Layers
+![Market Analytics](https://github.com/AtharvThakur7/letura-intelligence/blob/a362748d245ae473d8a8bac2249afb5bd6c26502/docs/Screenshot%202026-11-18%20212039.png)
+
+### AI Analyst And Dashboard
+![AI Analyst](https://github.com/AtharvThakur7/letura-intelligence/blob/a1ca40787c3cde513fab34a0a63f8ead212f868d/docs/Screenshot%202026-11-18%20212107.png)
+
 ## Quick start (Windows)
 
 ```powershell
