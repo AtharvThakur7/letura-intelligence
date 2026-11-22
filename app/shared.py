@@ -8,6 +8,7 @@ from letura import APP_NAME, APP_SUBTITLE
 from letura.analytics import repo, transforms as T
 from letura.analytics.filters import AMENITIES, FilterState, apply_filters
 from letura.db import DatabaseUnavailable
+from letura.i18n import LANGUAGES, lang, set_lang, t
 from letura.ui import theme
 
 AREA_MAX = 250.0
@@ -21,6 +22,11 @@ def init_theme() -> None:
         except Exception:  # noqa: BLE001
             st.session_state.theme_mode = "light"
     st.markdown(theme.css(st.session_state.theme_mode), unsafe_allow_html=True)
+
+
+def init_language() -> None:
+    if "lang" not in st.session_state:
+        st.session_state.lang = "en"
 
 
 DROPDOWN_FIX_JS = """
@@ -88,10 +94,20 @@ def sidebar_brand() -> None:
 
 
 def sidebar_theme_toggle() -> None:
-    dark = st.sidebar.toggle("Dark mode", value=st.session_state.get("theme_mode") == "dark", key="dark_toggle")
+    dark = st.sidebar.toggle(t("Dark mode"), value=st.session_state.get("theme_mode") == "dark", key="dark_toggle")
     new = "dark" if dark else "light"
     if new != st.session_state.get("theme_mode"):
         st.session_state.theme_mode = new
+        st.rerun()
+
+
+def sidebar_language_toggle() -> None:
+    codes = list(LANGUAGES)
+    choice = st.sidebar.segmented_control(t("Language"), codes, format_func=LANGUAGES.get,
+                                          default=lang(), key="lang_toggle", label_visibility="collapsed")
+    choice = choice or lang()
+    if choice != lang():
+        set_lang(choice)
         st.rerun()
 
 
@@ -100,17 +116,17 @@ def sidebar_filters(df) -> FilterState:
     active = current_filters(df).is_active()
     # Always open by default. The label must stay constant: a changing label makes Streamlit rebuild
     # the expander, which would snap it shut when filters are cleared.
-    with st.sidebar.expander("Filters", expanded=True):
-        st.multiselect("Period", T.SNAPSHOT_ORDER, key="f_snap", placeholder="All")
-        st.multiselect("Neighbourhood", sorted(df["neighbourhood"].dropna().unique()), key="f_nbh", placeholder="All")
-        st.multiselect("Property type", sorted(df["property_type"].dropna().unique()), key="f_type", placeholder="All")
-        st.multiselect("Rooms", T.ROOM_BAND_ORDER, key="f_rooms", placeholder="Any")
-        st.slider("Living area (m²)", 0.0, AREA_MAX, (0.0, AREA_MAX), step=1.0, key="f_area",
-                  help=f"Capped at {AREA_MAX:.0f} m²; drag to the far right to include larger flats.")
-        st.slider("Year built", 1850, 2020, (1850, 2020), key="f_year",
-                  help="Only flats with a known year are kept when this is narrowed.")
-        st.multiselect("Must have", list(AMENITIES), format_func=AMENITIES.get, key="f_amen", placeholder="Any")
-        st.button("Clear filters", on_click=reset_filters, width="stretch")
+    with st.sidebar.expander(t("Filters"), expanded=True):
+        st.multiselect(t("Period"), T.SNAPSHOT_ORDER, key="f_snap", placeholder=t("All"))
+        st.multiselect(t("Neighbourhood"), sorted(df["neighbourhood"].dropna().unique()), key="f_nbh", placeholder=t("All"))
+        st.multiselect(t("Property type"), sorted(df["property_type"].dropna().unique()), key="f_type", placeholder=t("All"))
+        st.multiselect(t("Rooms"), T.ROOM_BAND_ORDER, key="f_rooms", placeholder=t("Any"))
+        st.slider(t("Living area (m²)"), 0.0, AREA_MAX, (0.0, AREA_MAX), step=1.0, key="f_area",
+                  help=t("Capped at {max} m²; drag to the far right to include larger flats.", max=f"{AREA_MAX:.0f}"))
+        st.slider(t("Year built"), 1850, 2020, (1850, 2020), key="f_year",
+                  help=t("Only flats with a known year are kept when this is narrowed."))
+        st.multiselect(t("Must have"), list(AMENITIES), format_func=lambda k: t(AMENITIES.get(k, k)), key="f_amen", placeholder=t("Any"))
+        st.button(t("Clear filters"), on_click=reset_filters, width="stretch")
     return current_filters(df)
 
 
@@ -130,5 +146,6 @@ def current_filters(df=None) -> FilterState:
 def filtered(df, f: FilterState):
     out = apply_filters(df, f)
     if f.is_active():
-        st.caption(f"Showing **{len(out):,}** of {len(df):,} listings · {f.describe()}")
+        st.caption(t("Showing **{shown}** of {total} listings · {desc}",
+                     shown=f"{len(out):,}", total=f"{len(df):,}", desc=f.describe()))
     return out

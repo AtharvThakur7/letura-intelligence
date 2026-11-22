@@ -10,6 +10,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from letura.analytics import stats
+from letura.i18n import t
 from letura.ui import theme
 
 HISTORICAL_NOTE = ("Historical advertised cold rents (ImmoScout24 snapshots, Sep 2018 – Feb 2020). "
@@ -46,7 +47,7 @@ def section(title: str, help: str | None = None) -> None:
 
 
 def banner(text: str, kind: str = "warn") -> None:
-    st.markdown(f'<div class="lt-banner {kind}">{html.escape(text)}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="lt-banner {kind}">{html.escape(t(text))}</div>', unsafe_allow_html=True)
 
 
 def kpi(label: str, value: str, sub: str = "", help: str = "") -> str:
@@ -66,13 +67,13 @@ def pills(labels: Iterable[tuple[str, str]]) -> None:
     st.markdown("".join(f'<span class="lt-pill {k}">{html.escape(t)}</span>' for t, k in labels), unsafe_allow_html=True)
 
 
-def empty_state(msg: str = "No listings match the current filters. Widen or reset the filters.") -> None:
-    banner(msg, "info")
+def empty_state(msg: str | None = None) -> None:
+    banner(msg or "No listings match the current filters. Widen or reset the filters.", "info")
 
 
-def download_csv(df: pd.DataFrame, filename: str, label: str = "Download CSV", key: str | None = None) -> None:
-    st.download_button(label, csv_bytes(df), file_name=filename, mime="text/csv", key=key or f"dl_{filename}",
-                       disabled=df.empty)
+def download_csv(df: pd.DataFrame, filename: str, label: str | None = None, key: str | None = None) -> None:
+    st.download_button(t(label or "Download CSV"), csv_bytes(df), file_name=filename, mime="text/csv",
+                       key=key or f"dl_{filename}", disabled=df.empty)
 
 
 def csv_bytes(df: pd.DataFrame) -> bytes:
@@ -86,23 +87,23 @@ def show(fig: go.Figure, height: int = 360, key: str | None = None) -> None:
 
 # ---------------------------------------------------------------- chart builders
 def hist(df: pd.DataFrame, col: str, title: str, xlabel: str, nbins: int = 40, median: bool = True) -> go.Figure:
-    t = theme.tokens(mode())
-    fig = px.histogram(df, x=col, nbins=nbins, title=title, color_discrete_sequence=[t["series"][0]])
+    tok = theme.tokens(mode())
+    fig = px.histogram(df, x=col, nbins=nbins, title=title, color_discrete_sequence=[tok["series"][0]])
     fig.update_traces(marker_line_width=0, hovertemplate=f"{xlabel}: %{{x}}<br>Listings: %{{y}}<extra></extra>")
     if median and df[col].notna().any():
         m = df[col].median()
-        fig.add_vline(x=m, line_dash="dash", line_color=t["text2"], annotation_text=f"Median {m:,.2f}",
-                      annotation_font_color=t["text2"])
-    fig.update_layout(xaxis_title=xlabel, yaxis_title="Listings", showlegend=False)
+        fig.add_vline(x=m, line_dash="dash", line_color=tok["text2"], annotation_text=f"Median {m:,.2f}",
+                      annotation_font_color=tok["text2"])
+    fig.update_layout(xaxis_title=xlabel, yaxis_title=t("Listings"), showlegend=False)
     return fig
 
 
 def bar(df: pd.DataFrame, x: str, y: str, title: str, xlabel: str = "", ylabel: str = "", horizontal: bool = False,
         text: str | None = None, color: str | None = None, hover: list[str] | None = None,
         order: list[str] | None = None) -> go.Figure:
-    t = theme.tokens(mode())
+    tok = theme.tokens(mode())
     kw = dict(x=y, y=x, orientation="h") if horizontal else dict(x=x, y=y)
-    fig = px.bar(df, title=title, color=color, color_discrete_sequence=t["series"] if color else [t["series"][0]],
+    fig = px.bar(df, title=title, color=color, color_discrete_sequence=tok["series"] if color else [tok["series"][0]],
                  hover_data=hover, text=text, category_orders={x: order} if order else None, **kw)
     fig.update_traces(marker_line_width=0, textposition="outside", cliponaxis=False)
     fig.update_layout(xaxis_title=ylabel if horizontal else xlabel, yaxis_title=xlabel if horizontal else ylabel)
@@ -113,8 +114,8 @@ def bar(df: pd.DataFrame, x: str, y: str, title: str, xlabel: str = "", ylabel: 
 
 def box(df: pd.DataFrame, x: str, y: str, title: str, order: list[str] | None = None, xlabel: str = "",
         ylabel: str = "€/m²") -> go.Figure:
-    t = theme.tokens(mode())
-    fig = px.box(df, x=x, y=y, title=title, points="outliers", color_discrete_sequence=[t["series"][0]],
+    tok = theme.tokens(mode())
+    fig = px.box(df, x=x, y=y, title=title, points="outliers", color_discrete_sequence=[tok["series"][0]],
                  category_orders={x: order} if order else None)
     fig.update_traces(marker=dict(size=4, opacity=.55))
     fig.update_layout(xaxis_title=xlabel, yaxis_title=ylabel, showlegend=False)
@@ -123,27 +124,27 @@ def box(df: pd.DataFrame, x: str, y: str, title: str, order: list[str] | None = 
 
 def scatter(df: pd.DataFrame, x: str, y: str, title: str, color: str | None = None, xlabel: str = "",
             ylabel: str = "", hover: list[str] | None = None, trend: bool = False) -> go.Figure:
-    t = theme.tokens(mode())
+    tok = theme.tokens(mode())
     fig = px.scatter(df, x=x, y=y, color=color, title=title, hover_data=hover, opacity=.65,
-                     color_discrete_sequence=t["series"])
+                     color_discrete_sequence=tok["series"])
     fig.update_traces(marker=dict(size=6, line=dict(width=0)))
     d = df.dropna(subset=[x, y])
     if trend and len(d) > 12 and d[x].nunique() > 3:
         bins = pd.qcut(d[x], q=min(12, d[x].nunique()), duplicates="drop")
         tr = d.groupby(bins, observed=True).agg(bx=(x, "median"), by=(y, "median"))
         fig.add_trace(go.Scatter(x=tr.bx, y=tr.by, mode="lines+markers", name="Binned median",
-                                 line=dict(color=t["text"], width=2),
-                                 marker=dict(size=7, line=dict(color=t["surface"], width=2))))
+                                 line=dict(color=tok["text"], width=2),
+                                 marker=dict(size=7, line=dict(color=tok["surface"], width=2))))
     fig.update_layout(xaxis_title=xlabel, yaxis_title=ylabel)
     return fig
 
 
 def line(df: pd.DataFrame, x: str, y: str, title: str, color: str | None = None, ylabel: str = "",
          order: list[str] | None = None) -> go.Figure:
-    t = theme.tokens(mode())
-    fig = px.line(df, x=x, y=y, color=color, title=title, markers=True, color_discrete_sequence=t["series"],
+    tok = theme.tokens(mode())
+    fig = px.line(df, x=x, y=y, color=color, title=title, markers=True, color_discrete_sequence=tok["series"],
                   category_orders={x: order} if order else None)
-    fig.update_traces(line=dict(width=2.5), marker=dict(size=9, line=dict(color=t["surface"], width=2)))
+    fig.update_traces(line=dict(width=2.5), marker=dict(size=9, line=dict(color=tok["surface"], width=2)))
     fig.update_layout(yaxis_title=ylabel, xaxis_title="")
     return fig
 

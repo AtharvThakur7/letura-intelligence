@@ -5,6 +5,7 @@ import streamlit as st
 
 from app import shared
 from letura.ai.analyst import SUGGESTED_QUESTIONS, Analyst
+from letura.i18n import t
 from letura.ui import ai_render, components as C
 
 FEATURED = [
@@ -27,7 +28,7 @@ def _ask(question: str) -> None:
 
 
 def render() -> None:
-    C.page_header("Ask AI", "Ask about Hamburg rents in plain English. Every answer shows the numbers it is based on.")
+    C.page_header(t("Ask AI"), t("Ask about Hamburg rents in plain English. Every answer shows the numbers it is based on."))
     df_all = shared.load_listings_or_stop()
     analyst = get_analyst()
     filters = shared.current_filters(df_all)
@@ -35,21 +36,21 @@ def render() -> None:
     st.session_state.setdefault("ai_tokens", 0)
 
     if analyst.showcase_note():
-        C.banner("Live AI is switched off in this demo to manage API costs and credit usage. "
+        C.banner(t("Live AI is switched off in this demo to manage API costs and credit usage. "
                  "The suggested questions show real answers the AI analyst generated from this data in advance. "
-                 "Questions you type are answered by the built-in analysis, which uses the same data.", "info")
+                 "Questions you type are answered by the built-in analysis, which uses the same data."), "info")
 
     use_filters = True
     if filters.is_active():
-        use_filters = st.toggle(f"Use my filters ({filters.describe()})", value=True, key="ai_use_filters")
+        use_filters = st.toggle(t("Use my filters ({desc})", desc=filters.describe()), value=True, key="ai_use_filters")
 
     if not st.session_state["chat"]:
-        st.markdown("**Try one of these**")
+        st.markdown(f"**{t('Try one of these')}**")
         cols = st.columns(2)
         for i, q in enumerate(FEATURED):
             with cols[i % 2]:
                 st.button(q, key=f"sq_f{i}", on_click=_ask, args=(q,), width="stretch")
-    with st.expander("More questions"):
+    with st.expander(t("More questions")):
         for cat, qs in SUGGESTED_QUESTIONS.items():
             st.caption(cat)
             for i, q in enumerate(qs):
@@ -67,19 +68,19 @@ def render() -> None:
                 for j, r in enumerate(m.get("results", [])):
                     ai_render.render_result(r, f"chat{i}_{j}")
 
-    typed = st.chat_input("Ask about rents, neighbourhoods, property types or the official 2025 rents…")
+    typed = st.chat_input(t("Ask about rents, neighbourhoods, property types or the official 2025 rents…"))
     question = st.session_state.pop("pending_question", None) or typed
     if question:
         st.session_state["chat"].append({"role": "user", "content": question})
         history = [{"role": m["role"], "content": m["content"], "tool_calls": m.get("tool_calls"), "memory": m.get("memory")}
                    for m in st.session_state["chat"][:-1]]
-        with st.spinner("Looking at the data…"):
+        with st.spinner(t("Looking at the data…")):
             reply = analyst.answer(question, history, filters, use_filters)
         st.session_state["ai_tokens"] += reply.tokens
         st.session_state["chat"].append({"role": "assistant", "content": reply.text, "results": reply.results, "mode": reply.mode,
                                          "notice": reply.notice, "tool_calls": reply.tool_calls, "seconds": reply.seconds, "tokens": reply.tokens})
         st.rerun()
 
-    if st.session_state["chat"] and st.button("Start over"):
+    if st.session_state["chat"] and st.button(t("Start over")):
         st.session_state["chat"] = []
         st.rerun()

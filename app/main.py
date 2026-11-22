@@ -18,38 +18,47 @@ from app.views import (p0_home, p1_executive, p3_neighbourhoods, p4_property, p5
                        p7_ai_analyst)
 from letura import APP_NAME, APP_SUBTITLE  # noqa: E402
 from letura.db import backend  # noqa: E402
+from letura.i18n import t  # noqa: E402
 
 st.set_page_config(page_title=f"{APP_NAME} – {APP_SUBTITLE}", page_icon="🏙️", layout="wide", initial_sidebar_state="expanded")
 
-PAGES = [
-    st.Page(p0_home.render, title="Home", icon=":material/home:", default=True),
-    st.Page(p1_executive.render, title="Market", icon=":material/insights:", url_path="market"),
-    st.Page(p3_neighbourhoods.render, title="Neighbourhoods", icon=":material/location_city:", url_path="neighbourhoods"),
-    st.Page(p4_property.render, title="Properties", icon=":material/apartment:", url_path="properties"),
-    st.Page(p5_mietenspiegel.render, title="Official rents", icon=":material/balance:", url_path="official-rents"),
-    st.Page(p7_ai_analyst.render, title="Ask AI", icon=":material/smart_toy:", url_path="ask-ai"),
-]
-FILTER_PAGES = {"Market", "Neighbourhoods", "Properties", "Ask AI"}   # filters are only shown where they apply
+FILTER_URL_PATHS = {"market", "neighbourhoods", "properties", "ask-ai"}   # filters are only shown where they apply
+
+
+def build_pages() -> list[st.Page]:
+    """Rebuilt on every rerun so nav titles follow the active language."""
+    return [
+        st.Page(p0_home.render, title=t("Home"), icon=":material/home:", default=True, url_path="home"),
+        st.Page(p1_executive.render, title=t("Market"), icon=":material/insights:", url_path="market"),
+        st.Page(p3_neighbourhoods.render, title=t("Neighbourhoods"), icon=":material/location_city:", url_path="neighbourhoods"),
+        st.Page(p4_property.render, title=t("Properties"), icon=":material/apartment:", url_path="properties"),
+        st.Page(p5_mietenspiegel.render, title=t("Official rents"), icon=":material/balance:", url_path="official-rents"),
+        st.Page(p7_ai_analyst.render, title=t("Ask AI"), icon=":material/smart_toy:", url_path="ask-ai"),
+    ]
 
 
 def main() -> None:
     shared.init_theme()
+    shared.init_language()
     shared.inject_dropdown_fix()
-    st.session_state["_pages"] = PAGES
+    pages = build_pages()
+    st.session_state["_pages"] = pages
     shared.sidebar_brand()
-    nav = st.navigation(PAGES, position="hidden")
-    for pg in PAGES:
+    nav = st.navigation(pages, position="hidden")
+    for pg in pages:
         st.sidebar.page_link(pg)
     st.sidebar.divider()
     df = shared.load_listings_or_stop()
-    if nav.title in FILTER_PAGES:
+    if nav.url_path in FILTER_URL_PATHS:
         shared.sidebar_filters(df)
     shared.sidebar_theme_toggle()
+    shared.sidebar_language_toggle()
     if backend() == "snapshot":
-        st.sidebar.caption("Demo version · AI answers are pre-generated.")
+        st.sidebar.caption(t("Demo version · AI answers are pre-generated."))
     nav.run()
-    st.markdown('<div class="lt-footer">Letura Intelligence · Historical asking rents 2018–2020 and official 2025 reference data · '
-                'Not current prices and not a legal rent determination.</div>', unsafe_allow_html=True)
+    footer = t("Letura Intelligence · Historical asking rents 2018–2020 and official 2025 reference data · "
+               "Not current prices and not a legal rent determination.")
+    st.markdown(f'<div class="lt-footer">{footer}</div>', unsafe_allow_html=True)
 
 
 main()

@@ -7,6 +7,7 @@ import streamlit as st
 from app import shared
 from letura.analytics import stats, transforms as T
 from letura.analytics.filters import AMENITIES
+from letura.i18n import t
 from letura.ui import components as C
 
 TABLE_COLUMNS = {
@@ -18,22 +19,22 @@ TABLE_COLUMNS = {
 
 def listing_table(df: pd.DataFrame, key: str, filename: str) -> None:
     """Searchable, sortable listing table + CSV export. Outliers are flagged, never removed."""
-    q = st.text_input("Search", key=f"{key}_q", placeholder="Neighbourhood, street, type or postcode, e.g. Eppendorf")
-    only_flagged = st.checkbox("Only unusual listings (very high prices or odd values)", key=f"{key}_flag")
-    t = df
+    q = st.text_input(t("Search"), key=f"{key}_q", placeholder=t("Neighbourhood, street, type or postcode, e.g. Eppendorf"))
+    only_flagged = st.checkbox(t("Only unusual listings (very high prices or odd values)"), key=f"{key}_flag")
+    tbl = df
     if q:
-        hay = (t["neighbourhood"].fillna("") + " " + t["street_decoded"].fillna("") + " " + t["property_type"].fillna("")
-               + " " + t["geo_plz"].fillna(""))
-        t = t[hay.str.contains(q.strip(), case=False, regex=False)]
+        hay = (tbl["neighbourhood"].fillna("") + " " + tbl["street_decoded"].fillna("") + " " + tbl["property_type"].fillna("")
+               + " " + tbl["geo_plz"].fillna(""))
+        tbl = tbl[hay.str.contains(q.strip(), case=False, regex=False)]
     if only_flagged:
-        t = t[t["is_flagged"].astype(bool)]
-    out = t[list(TABLE_COLUMNS)].rename(columns=TABLE_COLUMNS).copy()
+        tbl = tbl[tbl["is_flagged"].astype(bool)]
+    out = tbl[list(TABLE_COLUMNS)].rename(columns=TABLE_COLUMNS).copy()
     out["Period"] = out["Period"].astype(str)
-    st.caption(f"{len(out):,} listings shown. Click a column header to sort.")
+    st.caption(t("{n} listings shown. Click a column header to sort.", n=f"{len(out):,}"))
     st.dataframe(out, width="stretch", hide_index=True, height=380, column_config={
         "€/m²": st.column_config.NumberColumn(format="%.2f"), "Base rent €": st.column_config.NumberColumn(format="%.0f"),
         "Year built": st.column_config.NumberColumn(format="%d")})
-    C.download_csv(out, filename, "Download as CSV", key=f"{key}_dl")
+    C.download_csv(out, filename, t("Download as CSV"), key=f"{key}_dl")
 
 
 def render() -> None:

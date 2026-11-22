@@ -11,6 +11,7 @@ import streamlit.components.v1 as components
 from app import shared
 from letura.ai.analyst import Analyst
 from letura.analytics import transforms as T
+from letura.i18n import t
 from letura.ui import ai_render, components as C, theme
 
 SHOWCASE_QUESTIONS = [
@@ -73,46 +74,48 @@ def treemap(df: pd.DataFrame, snapshot: str) -> go.Figure:
     return fig
 
 
-def _page(title: str):
-    return next((p for p in st.session_state.get("_pages", []) if p.title == title), None)
+def _page(url_path: str):
+    return next((p for p in st.session_state.get("_pages", []) if p.url_path == url_path), None)
 
 
 def render() -> None:
     df = shared.load_listings_or_stop()
 
     # ---- hero (kept light: one idea, two sentences)
-    st.markdown("""
+    hero_sub = t("Hamburg's rental market, made simple.")
+    hero_text = t("See what flats cost in every neighbourhood, compare with official reference rents, "
+                  "and ask questions in plain English.")
+    st.markdown(f"""
 <div class="lt-hero"><div class="lt-hero-glow"></div>
   <h1>Letura Intelligence</h1>
-  <p class="lt-hero-sub">Hamburg's rental market, made simple.</p>
-  <p class="lt-hero-text">See what flats cost in every neighbourhood, compare with official reference rents,
-  and ask questions in plain English.</p>
+  <p class="lt-hero-sub">{hero_sub}</p>
+  <p class="lt-hero-text">{hero_text}</p>
 </div>""", unsafe_allow_html=True)
 
     counters([
-        ("Hamburg listings", float(len(df)), 0, "", ""),
-        ("Neighbourhoods", float(df["neighbourhood"].nunique()), 0, "", ""),
-        ("Median asking rent", float(df["rent_per_sqm"].median()), 2, "€", "/m²"),
-        ("Periods covered 2018–2020", float(df["snapshot"].astype(str).nunique()), 0, "", ""),
+        (t("Hamburg listings"), float(len(df)), 0, "", ""),
+        (t("Neighbourhoods"), float(df["neighbourhood"].nunique()), 0, "", ""),
+        (t("Median asking rent"), float(df["rent_per_sqm"].median()), 2, "€", "/m²"),
+        (t("Periods covered 2018–2020"), float(df["snapshot"].astype(str).nunique()), 0, "", ""),
     ])
 
     # ---- three clear next steps
     cols = st.columns(3)
-    for col, (title, label, icon) in zip(cols, [("Market", "See the market overview", ":material/insights:"),
-                                                ("Neighbourhoods", "Compare neighbourhoods", ":material/location_city:"),
-                                                ("Ask AI", "Ask the AI analyst", ":material/smart_toy:")]):
-        pg = _page(title)
+    for col, (url_path, label, icon) in zip(cols, [("market", t("See the market overview"), ":material/insights:"),
+                                                    ("neighbourhoods", t("Compare neighbourhoods"), ":material/location_city:"),
+                                                    ("ask-ai", t("Ask the AI analyst"), ":material/smart_toy:")]):
+        pg = _page(url_path)
         if pg is not None:
             with col:
                 st.page_link(pg, label=label, icon=icon, width="stretch")
 
     # ---- ask the market (interactive)
-    C.section("Try a question")
-    choice = st.pills("Question", SHOWCASE_QUESTIONS, default=SHOWCASE_QUESTIONS[0], key="home_q", label_visibility="collapsed")
+    C.section(t("Try a question"))
+    choice = st.pills(t("Question"), SHOWCASE_QUESTIONS, default=SHOWCASE_QUESTIONS[0], key="home_q", label_visibility="collapsed")
     if choice:
         reply = Analyst.stored_answer(choice)
         if reply is None:
-            with st.spinner("Thinking…"):
+            with st.spinner(t("Thinking…")):
                 reply = Analyst().answer(choice, [], None, False)
         with st.container(border=True):
             st.markdown(reply.text)
@@ -120,8 +123,10 @@ def render() -> None:
                 ai_render.render_result(r, f"home_{abs(hash(choice)) % 10**6}_{i}")
 
     # ---- treemap
-    C.section("Hamburg at a glance", "Bigger box = more listings · darker = higher rent. Click a district to zoom in.")
-    snap = st.segmented_control("Period", ["All"] + T.SNAPSHOT_ORDER, default="All", key="home_snap", label_visibility="collapsed") or "All"
+    C.section(t("Hamburg at a glance"), t("Bigger box = more listings · darker = higher rent. Click a district to zoom in."))
+    snap = st.segmented_control(t("Period"), ["All"] + T.SNAPSHOT_ORDER, default="All", key="home_snap",
+                                format_func=lambda v: t("All") if v == "All" else v, label_visibility="collapsed") or "All"
     C.show(treemap(df, "All snapshots" if snap == "All" else snap), 480, "home_tree")
 
-    st.caption("Based on historical asking rents (2018–2020) and official 2025 reference rents. Not current prices and not a legal rent determination.")
+    st.caption(t("Based on historical asking rents (2018–2020) and official 2025 reference rents. "
+                 "Not current prices and not a legal rent determination."))

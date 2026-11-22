@@ -5,6 +5,8 @@ from dataclasses import dataclass, field, asdict
 
 import pandas as pd
 
+from letura.i18n import t
+
 AMENITIES = {"has_balcony": "Balcony", "has_garden": "Garden", "has_lift": "Lift",
              "has_kitchen": "Fitted kitchen", "is_new_construction": "New construction", "has_cellar": "Cellar"}
 
@@ -32,15 +34,15 @@ class FilterState:
 
     def describe(self) -> str:
         if not self.is_active():
-            return "No filters (all 3,759 Hamburg listings)"
+            return t("No filters (all 3,759 Hamburg listings)")
         parts = []
-        if self.snapshots: parts.append("Snapshot: " + ", ".join(self.snapshots))
-        if self.neighbourhoods: parts.append("Neighbourhood: " + _short(self.neighbourhoods, "neighbourhoods"))
-        if self.property_types: parts.append("Type: " + _short(self.property_types, "types"))
-        if self.rooms: parts.append("Rooms: " + ", ".join(self.rooms))
-        if self.area_range: parts.append(f"Area: {self.area_range[0]:.0f}–{self.area_range[1]:.0f} m²")
-        if self.year_range: parts.append(f"Built: {self.year_range[0]}–{self.year_range[1]}")
-        if self.amenities: parts.append("Amenities: " + ", ".join(AMENITIES.get(a, a) for a in self.amenities))
+        if self.snapshots: parts.append(t("Snapshot") + ": " + ", ".join(self.snapshots))
+        if self.neighbourhoods: parts.append(t("Neighbourhood") + ": " + _short(self.neighbourhoods, "neighbourhoods"))
+        if self.property_types: parts.append(t("Type") + ": " + _short(self.property_types, "types"))
+        if self.rooms: parts.append(t("Rooms") + ": " + ", ".join(self.rooms))
+        if self.area_range: parts.append(t("Area") + f": {self.area_range[0]:.0f}–{self.area_range[1]:.0f} m²")
+        if self.year_range: parts.append(t("Built") + f": {self.year_range[0]}–{self.year_range[1]}")
+        if self.amenities: parts.append(t("Amenities") + ": " + ", ".join(t(AMENITIES.get(a, a)) for a in self.amenities))
         return "; ".join(parts)
 
 
